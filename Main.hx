@@ -3,24 +3,6 @@ import format.pex.Data.ValueWithVariance;
 import hl.Bytes;
 import chipmunk.Native.Apple;
 
-// class AppleHL extends chipmunk.Native.Apple{
-// 	function
-// }
-
-// @:generic
-// function NativeArrayToBytes(array : hl.NativeArray<T>) : hl.Bytes {
-// 	if (Std.isOfType(array[0], Apple)) {
-// 		trace("Apple");
-// 	}
-
-// 	trace("Unknown type");
-
-// 	return new hl.Bytes(1);
-// }
-
-function BytesToNativeArray(){
-
-}
 
 class Main {
 
