@@ -1,0 +1,7 @@
+-lib hl-idl
+-lib heaps
+-lib hldx
+-lib chipmunk
+-cp .
+-main Main
+-hl example.hl

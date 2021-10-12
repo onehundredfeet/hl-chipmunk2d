@@ -1,0 +1,52 @@
+typedef cpFloat float;
+
+// interface cpVect
+// {
+// 	void cpVect();
+//     attribute cpFloat x;
+// 	attribute cpFloat y;
+// };
+
+// interface cpBB
+// {
+// 	void cpBB();
+//     attribute cpFloat l;
+// 	attribute cpFloat b;
+// 	attribute cpFloat r;
+// 	attribute cpFloat t;
+// };
+
+interface Apple
+{
+	void Apple();
+	attribute int x;
+	attribute int y;
+};
+
+interface Chipmunk2D 
+{
+	[Static, Cast="Apple*"] VoidPtr getApples();
+	[Static] void alterApples([Cast="Apple*"] VoidPtr apples);
+	
+	//[Static] Apple* getApples();
+
+	// [Static] cpFloat cpMomentForCircle(cpFloat m, cpFloat r1, cpFloat r2, [Ref] cpVect offset);
+
+	// [Static] cpFloat cpAreaForCircle(cpFloat r1, cpFloat r2);
+	
+	// [Static] cpFloat cpMomentForSegment(cpFloat m, [Ref] cpVect a, [Ref] cpVect b, cpFloat radius);
+
+	// [Static] cpFloat cpAreaForSegment([Ref] cpVect a, [Ref] cpVect b, cpFloat radius);
+
+	// [Static] cpFloat cpMomentForPoly([Ref] cpFloat m, int count, [Const] cpVect[] verts, [Ref] cpVect offset, cpFloat radius);
+
+	// [Static] cpFloat cpAreaForPoly([Const] int count, [Const] cpVect verts, cpFloat radius);
+
+	// [Static] cpFloat cpAreaForPoly([Const] int count, [Const] cpVect verts, cpFloat radius);
+
+	//[Static] cpVect cpCentroidForPoly([Const] int count, [Const] cpVect[] verts); // TODO this must be cpVect
+
+	// [Static] cpFloat cpMomentForBox(cpFloat m, cpFloat width, cpFloat height);
+
+	// [Static] cpFloat cpMomentForBox2(cpFloat m, cpBB box);
+};
