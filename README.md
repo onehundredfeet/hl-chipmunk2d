@@ -1,4 +1,4 @@
-# hl-recast
+# hl-chipmunk2d
 
 THIS PROJECT IS IN PROGRESS - DO NOT CLONE, IT DOES NOT WORK
 
@@ -23,13 +23,13 @@ haxelib git hl-idl https://github.com/onehundredfeet/hl-idl.git
 
 Open new terminal in this directory.  
 ```sh
-haxelib dev hl-recast hl-recast
+haxelib dev hl-chipmunk2d hl-chipmunk2d
 ```
 
-This tells haxe to look for the library 'hl-recast' in the directory 'hl-recast'.  The 'dev' keyword tells haxe that the library is local and will be directly referenced instead of being installed to the library cache.
+This tells haxe to look for the library 'hl-chipmunk2d' in the directory 'hl-chipmunk2d'.  The 'dev' keyword tells haxe that the library is local and will be directly referenced instead of being installed to the library cache.
 
-2.2 Clone recast c++ sources as a submodule in hl-recast
-From the hl-recast root, run
+2.2 Clone chipmunk2d c++ sources as a submodule in hl-chipmunk2d
+From the hl-chipmunk2d root, run
 
 ```sh
 git submodule update --init --recursive
@@ -37,25 +37,25 @@ git submodule update --init --recursive
 
 2.3 Generate the binding cpp file.
 
-Change directory into the hl-recast root.
+Change directory into the hl-chipmunk2d root.
 
 .Open new terminal under and run 
 ```sh
 make genhl
 ```
 
-This will generate src/recast.cpp from recast/recast.idl
+This will generate src/chipmunk2d.cpp from chipmunk2d/chipmunk2d.idl
 
 
 2.4 Generate cmake and build.  
 **Note: At this step there are differences between platforms**  
-    Create new dir : HL-RECAST-ROOT/build  
-    Open new terminal in the directory HL-recast-ROOT/build and run:  
+    Create new dir : HL-chipmunk2d-ROOT/build  
+    Open new terminal in the directory HL-chipmunk2d-ROOT/build and run:  
 
 **For linux:**  
 ```sh
     cmake ..
-      -DRECAST_SRC_DIR="ext/recast" # This is the /src from step 2
+      -DCHIPMUNK2D_SRC_DIR="ext/chipmunk2d" # This is the /src from step 2
       -DHL_INCLUDE_DIR="<path-to-hashlink headers>" # Path to where hashlink headers (hl.h, ...) are located. Usually under ...hashlink-x.xx/src 
       -DHL_LIB_DIR="<path-to-hashlink>" # Path to where hashlink binaries (libhl.so, ...) are located. Usually ...hashlink-x.xx
       -HDLL_DESTINATION="final/install/destination" #The path of all *hdll binaries, usually this is 'usr/lib' or 'usr/local/lib'
@@ -67,19 +67,19 @@ This will generate src/recast.cpp from recast/recast.idl
     make install
 ```
 
-DEVELOPER NOTE: recast WILL REQUIRE MULTIPLE SOURCE DIRS.
+DEVELOPER NOTE: chipmunk2d WILL REQUIRE MULTIPLE SOURCE DIRS.
 They have submodules netcode.io reliable.io
 
 specific cmake command example on linux:  
 ```sh
-    cmake .. -Drecast_SRC_DIR="ext/recast" -DHL_INCLUDE_DIR="/usr/local/include" -DHL_LIB_DIR="/usr/local/lib" -DHDLL_DESTINATION="/usr/local/lib"
+    cmake .. -DCHIPMUNK2D_SRC_DIR="ext/chipmunk2d" -DHL_INCLUDE_DIR="/usr/local/include" -DHL_LIB_DIR="/usr/local/lib" -DHDLL_DESTINATION="/usr/local/lib"
    ```
 
 **For windows:**  
 
 ```sh
     cmake .. -A x64 -G "Visual Studio 15 2017" 
-    -Drecast_SRC_DIR="<path-to-bullet3>/src" # This is the /src from step 2
+    -DCHIPMUNK2D_SRC_DIR="<path-to-bullet3>/src" # This is the /src from step 2
       -DHL_INCLUDE_DIR="<path-to-hashlink>/include"
       -DHL_LIB_DIR="<path-to-hashlink>"  # Path to where hashlink binaries (libhl.lib, ...) are located
       -HDLL_DESTINATION="final/install/destination" # Usually <path-to-hashlink>
@@ -94,7 +94,7 @@ specific cmake command example on linux:
 Ninja is optional.  You can use make just by removing -GNinja.
 
 ```sh
- cmake -GNinja .. -DRECAST_SRC_DIR="ext/recast/Recast" -DHL_INCLUDE_DIR="/usr/local/include" -DHL_LIB_DIR="/usr/local/lib" -DDETOUR_SRC_DIR="ext/recast/Detour" -DHDLL_DESTINATION="/usr/local/lib"
+ cmake -GNinja .. -DCHIPMUNK2D_SRC_DIR="ext/chipmunk2d/chipmunk2d" -DHL_INCLUDE_DIR="/usr/local/include" -DHL_LIB_DIR="/usr/local/lib" -DDETOUR_SRC_DIR="ext/chipmunk2d/Detour" -DHDLL_DESTINATION="/usr/local/lib"
 ```
 ```sh
     make
@@ -105,7 +105,7 @@ Ninja is optional.  You can use make just by removing -GNinja.
 
 
 cmake .. -A x64 -G "Visual Studio 15 2017" 
--DRECAST_SRC_DIR="C:/Projects/RecastToHL/recastnavigation_cpp/Recast" 
+-DCHIPMUNK2D_SRC_DIR="C:/Projects/chipmunk2dToHL/chipmunk2dnavigation_cpp/chipmunk2d" 
 -DHL_INCLUDE_DIR="C:/HaxeToolkit/HashLink/hl-1.11.0-win/include" 
 -DHL_LIB_DIR="C:/HaxeToolkit/HashLink/hl-1.11.0-win" 
 -DHDLL_DESTINATION="C:/HaxeToolkit/HashLink/hl-1.11.0-win"

@@ -67,7 +67,7 @@ void alterApples(Apple* apples){
 ";
 	
 	public static function generateCpp() {	
-		var options = { idlFile : "generator/chipmunk.idl", nativeLib : "chipmunk", outputDir : "src", includeCode : INCLUDE, autoGC : true };
+		var options = { idlFile : "src/chipmunk.idl", nativeLib : "chipmunk", outputDir : "src", includeCode : INCLUDE, autoGC : true };
 		webidl.Generate.generateCpp(options);
 	}
 

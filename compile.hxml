@@ -2,6 +2,6 @@
 -lib heaps
 -lib hldx
 -lib chipmunk
--cp .
+-cp tests
 -main Main
 -hl example.hl

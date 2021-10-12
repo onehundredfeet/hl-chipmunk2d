@@ -1,39 +1,68 @@
 cmake_minimum_required(VERSION 3.10)
 project (chipmunk)
 
+if (NOT CHIPMUNK_ROOT) 
+set(CHIPMUNK_ROOT "ext/chipmunk2d")
+endif()
+
+if (NOT CHIPMUNK_SRC_DIR) 
+set(CHIPMUNK_SRC_DIR "${CHIPMUNK_ROOT}/src")
+endif()
+
+if (NOT CHIPMUNK_INC_DIR) 
+set(CHIPMUNK_INC_DIR "${CHIPMUNK_ROOT}/include")
+endif()
+
+if (NOT HL_INCLUDE_DIR) 
+    set(HL_INCLUDE_DIR "/usr/local/include")
+endif()
+
+if (NOT HL_LIB_DIR) 
+    set(HL_LIB_DIR "/usr/local/lib")
+endif()
+
+if (NOT COMMON_LIB_DIR) 
+    set(COMMON_LIB_DIR "/usr/local/lib")
+endif()
+
+if (NOT HDLL_DESTINATION) 
+    set(HDLL_DESTINATION "/usr/local/lib")
+endif()
+
+
 add_library(chipmunk.hdll SHARED
-${CHIPMUNK_ROOT_DIR}/src/chipmunk.c
-${CHIPMUNK_ROOT_DIR}/src/cpArbiter.c
-${CHIPMUNK_ROOT_DIR}/src/cpArray.c
-${CHIPMUNK_ROOT_DIR}/src/cpBBTree.c
-${CHIPMUNK_ROOT_DIR}/src/cpBody.c
-${CHIPMUNK_ROOT_DIR}/src/cpCollision.c
-${CHIPMUNK_ROOT_DIR}/src/cpConstraint.c
-${CHIPMUNK_ROOT_DIR}/src/cpDampedRotarySpring.c
-${CHIPMUNK_ROOT_DIR}/src/cpDampedSpring.c
-${CHIPMUNK_ROOT_DIR}/src/cpGearJoint.c
-${CHIPMUNK_ROOT_DIR}/src/cpGrooveJoint.c
-${CHIPMUNK_ROOT_DIR}/src/cpHashSet.c
-${CHIPMUNK_ROOT_DIR}/src/cpHastySpace.c
-${CHIPMUNK_ROOT_DIR}/src/cpMarch.c
-${CHIPMUNK_ROOT_DIR}/src/cpPinJoint.c
-${CHIPMUNK_ROOT_DIR}/src/cpPivotJoint.c
-${CHIPMUNK_ROOT_DIR}/src/cpPolyline.c
-${CHIPMUNK_ROOT_DIR}/src/cpPolyShape.c
-${CHIPMUNK_ROOT_DIR}/src/cpRatchetJoint.c
-${CHIPMUNK_ROOT_DIR}/src/cpRobust.c
-${CHIPMUNK_ROOT_DIR}/src/cpRotaryLimitJoint.c
-${CHIPMUNK_ROOT_DIR}/src/cpShape.c
-${CHIPMUNK_ROOT_DIR}/src/cpSimpleMotor.c
-${CHIPMUNK_ROOT_DIR}/src/cpSlideJoint.c
-${CHIPMUNK_ROOT_DIR}/src/cpSpace.c
-${CHIPMUNK_ROOT_DIR}/src/cpSpaceComponent.c
-${CHIPMUNK_ROOT_DIR}/src/cpSpaceDebug.c
-${CHIPMUNK_ROOT_DIR}/src/cpSpaceHash.c
-${CHIPMUNK_ROOT_DIR}/src/cpSpaceQuery.c
-${CHIPMUNK_ROOT_DIR}/src/cpSpaceStep.c
-${CHIPMUNK_ROOT_DIR}/src/cpSpatialIndex.c
-${CHIPMUNK_ROOT_DIR}/src/cpSweep1D.c
+${CHIPMUNK_SRC_DIR}/chipmunk.c
+${CHIPMUNK_SRC_DIR}/cpArbiter.c
+${CHIPMUNK_SRC_DIR}/cpArray.c
+${CHIPMUNK_SRC_DIR}/cpBBTree.c
+${CHIPMUNK_SRC_DIR}/cpBody.c
+${CHIPMUNK_SRC_DIR}/cpCollision.c
+${CHIPMUNK_SRC_DIR}/cpConstraint.c
+${CHIPMUNK_SRC_DIR}/cpDampedRotarySpring.c
+${CHIPMUNK_SRC_DIR}/cpDampedSpring.c
+${CHIPMUNK_SRC_DIR}/cpGearJoint.c
+${CHIPMUNK_SRC_DIR}/cpGrooveJoint.c
+${CHIPMUNK_SRC_DIR}/cpHashSet.c
+${CHIPMUNK_SRC_DIR}/cpHastySpace.c
+${CHIPMUNK_SRC_DIR}/cpMarch.c
+${CHIPMUNK_SRC_DIR}/cpPinJoint.c
+${CHIPMUNK_SRC_DIR}/cpPivotJoint.c
+${CHIPMUNK_SRC_DIR}/cpPolyline.c
+${CHIPMUNK_SRC_DIR}/cpPolyShape.c
+${CHIPMUNK_SRC_DIR}/cpRatchetJoint.c
+${CHIPMUNK_SRC_DIR}/cpRobust.c
+${CHIPMUNK_SRC_DIR}/cpRotaryLimitJoint.c
+${CHIPMUNK_SRC_DIR}/cpShape.c
+${CHIPMUNK_SRC_DIR}/cpSimpleMotor.c
+${CHIPMUNK_SRC_DIR}/cpSlideJoint.c
+${CHIPMUNK_SRC_DIR}/cpSpace.c
+${CHIPMUNK_SRC_DIR}/cpSpaceComponent.c
+${CHIPMUNK_SRC_DIR}/cpSpaceDebug.c
+${CHIPMUNK_SRC_DIR}/cpSpaceHash.c
+${CHIPMUNK_SRC_DIR}/cpSpaceQuery.c
+${CHIPMUNK_SRC_DIR}/cpSpaceStep.c
+${CHIPMUNK_SRC_DIR}/cpSpatialIndex.c
+${CHIPMUNK_SRC_DIR}/cpSweep1D.c
 src/chipmunk.cpp
 )
 
@@ -51,8 +80,8 @@ cmake_policy(SET CMP0015 NEW)
 target_include_directories(chipmunk.hdll
 PRIVATE
 ${HL_INCLUDE_DIR}
-${CHIPMUNK_ROOT_DIR}/src
-${CHIPMUNK_ROOT_DIR}/include
+${CHIPMUNK_SRC_DIR}
+${CHIPMUNK_INC_DIR}
 )
 
 
