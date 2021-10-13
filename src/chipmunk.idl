@@ -62,6 +62,127 @@ interface cpBB
 
 
 // ---------------------------------------------------------------------------------------------------------
+// cpBody.h
+//----------------------------------------------------------------------------------------------------------
+// enum cpBodyTypeHL {
+// 	"CP_BODY_TYPE_DYNAMIC",
+// 	"CP_BODY_TYPE_KINEMATIC",
+// 	"CP_BODY_TYPE_STATIC"
+// };
+
+[Internal="cpBody"]	
+interface cpBody {
+	
+	void cpBody();
+
+	[Static] cpBody cpBodyAlloc();
+
+	[Static] cpBody cpBodyInit(cpBody body, cpFloat mass, cpFloat moment);
+
+	[Static] cpBody cpBodyNew(cpFloat mass, cpFloat moment);
+
+	[Static] cpBody cpBodyNewKinematic();
+
+	[Static] cpBody cpBodyNewStatic();
+
+	[CObject] void cpBodyDestroy();
+	
+	[CObject] void cpBodyFree();
+
+	[CObject] void cpBodyActivate();
+
+	//[CObject] void cpBodyActivateStatic( cpShape filter);
+
+	[CObject] void cpBodySleep();
+
+	[CObject] void cpBodySleepWithGroup(cpBody group);
+
+	[CObject] cpBool cpBodyIsSleeping();
+
+	//[CObject] cpBodyType cpBodyGetType();
+
+	//[CObject] void cpBodySetType(cpBodyType type);
+
+	// [CObject] cpSpace cpBodyGetSpace();
+
+	[CObject] cpFloat cpBodyGetMass();
+
+	[CObject] void cpBodySetMass(cpFloat m);
+
+	[CObject] cpFloat cpBodyGetMoment();
+
+	[CObject] void cpBodySetMoment(cpFloat i);
+
+	[CObject,AddressOf] cpVect cpBodyGetPosition();
+
+	[CObject] void cpBodySetPosition([Deref] cpVect pos);
+
+	[CObject,AddressOf] cpVect cpBodyGetCenterOfGravity();
+	
+	[CObject] void cpBodySetCenterOfGravity([Deref] cpVect cog);
+
+	[CObject,AddressOf] cpVect cpBodyGetVelocity();
+
+	[CObject] void cpBodySetVelocity([Deref] cpVect velocity);
+
+	[CObject,AddressOf] cpVect cpBodyGetForce();
+
+	[CObject] void cpBodySetForce([Deref] cpVect force);
+
+	[CObject] cpFloat cpBodyGetAngle();
+
+	[CObject] void cpBodySetAngle(cpFloat a);
+
+	[CObject] cpFloat cpBodyGetAngularVelocity();
+
+	[CObject] void cpBodySetAngularVelocity(cpFloat angularVelocity);
+
+	[CObject] cpFloat cpBodyGetTorque();
+
+	[CObject] void cpBodySetTorque(cpFloat torque);
+
+	[CObject,AddressOf] cpVect cpBodyGetRotation();
+
+	//[CObject] cpDataPointer cpBodyGetUserData();
+
+	//[CObject] void cpBodySetUserData(cpDataPointer userData);
+
+	// [CObject] void cpBodySetVelocityUpdateFunc(cpBodyVelocityFunc velocityFunc); // TODO
+
+	// [CObject] void cpBodySetPositionUpdateFunc(cpBodyPositionFunc positionFunc); // TODO
+
+	[CObject] void cpBodyUpdateVelocity([Deref] cpVect gravity, cpFloat damping, cpFloat dt);
+	
+	[CObject] void cpBodyUpdatePosition(cpFloat dt);
+
+	[CObject,AddressOf] cpVect cpBodyLocalToWorld([Const,Deref] cpVect point);
+
+	[CObject,AddressOf] cpVect cpBodyWorldToLocal([Const,Deref] cpVect point);
+
+	[CObject] void cpBodyApplyForceAtWorldPoint([Deref] cpVect force, [Deref] cpVect point);
+
+	[CObject] void cpBodyApplyForceAtLocalPoint([Deref] cpVect force, [Deref] cpVect point);
+
+	[CObject] void cpBodyApplyImpulseAtWorldPoint([Deref] cpVect impulse, [Deref] cpVect point);
+	
+	[CObject] void cpBodyApplyImpulseAtLocalPoint([Deref] cpVect impulse, [Deref] cpVect point);
+
+	[CObject,AddressOf] cpVect cpBodyGetVelocityAtWorldPoint([Deref] cpVect point);
+	
+	[CObject,AddressOf]  cpVect cpBodyGetVelocityAtLocalPoint([Deref] cpVect point);
+
+	[CObject] cpFloat cpBodyKineticEnergy();
+
+	// TODO
+	// [CObject] void cpBodyEachShape(cpBodyShapeIteratorFunc func, void *data);
+
+	// [CObject] void cpBodyEachConstraint(cpBodyConstraintIteratorFunc func, void *data);
+
+	// [CObject] void cpBodyEachArbiter(cpBodyArbiterIteratorFunc func, void *data);
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
 // chipmunk.h
 //----------------------------------------------------------------------------------------------------------
 interface Chipmunk2D 
