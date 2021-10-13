@@ -1,7 +1,7 @@
 -lib hl-idl
 -lib heaps
 -lib hldx
--lib chipmunk
 -cp tests
+-cp src
 -main Main
--hl example.hl
+-hl bin/example.hl

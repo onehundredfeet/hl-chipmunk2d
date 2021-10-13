@@ -39,6 +39,18 @@ class Main {
     static function main() {
 		trace("main");
 
+		var x1 = chipmunk.Native.Chipmunk2D.cpMomentForCircle(1., 1., 1., new Vec2(0., 0.));
+		var x2 = chipmunk.Native.Chipmunk2D.cpMomentForSegment(1.,  new Vec2(0., 0.), new Vec2(1., 1.), 1.);
+		var vecArray = Vec2Array.allocate(10);
+
+		for (i in 0...10) {
+			vecArray[i] = new Vec2(i, i);
+		}
+	
+		trace (vecArray);
+		chipmunk.Native.Chipmunk2D.cpMomentForPoly( 1., vecArray.length, vecArray, new Vec2(0., 0.), 1. );
+
+		/*
 		// Get raw data from C
 		var bytes = chipmunk.Native.Chipmunk2D.getApples();
 
@@ -58,5 +70,6 @@ class Main {
 		trace("Altered: ");
 		trace("array[0].x : " + array[0].x);
 		trace("array[0].y : " + array[0].y);
+		*/
     }
 }

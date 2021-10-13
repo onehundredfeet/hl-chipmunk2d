@@ -3,3 +3,4 @@ sample.hl
 .vscode/
 src/recast.cpp
 src/chipmunk.cpp
+bin/example.hl
