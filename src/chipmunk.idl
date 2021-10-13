@@ -1,14 +1,9 @@
-typedef cpFloat double;
-// typedef cpVect double2;
 
-interface cpBB
-{
-    void cpBB();
-    attribute cpFloat l;
-    attribute cpFloat b;
-    attribute cpFloat r;
-    attribute cpFloat t;
-};
+// ---------------------------------------------------------------------------------------------------------
+// chipmunk_types.h
+//----------------------------------------------------------------------------------------------------------
+typedef cpFloat double;
+typedef cpBool uchar;
 
 interface cpVect
 {
@@ -17,6 +12,58 @@ interface cpVect
     attribute cpFloat y;
 };
 
+interface cpTransform {
+	void cpTransform();
+	attribute cpFloat a;
+	attribute cpFloat b;
+	attribute cpFloat c;
+	attribute cpFloat d;
+	attribute cpFloat tx; 
+	attribute cpFloat ty;
+};
+
+interface cpMat2x2 {
+	void cpMat2x2();
+	attribute cpFloat a; 
+	attribute cpFloat b;
+	attribute cpFloat c;
+	attribute cpFloat d;
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpBB.h
+//----------------------------------------------------------------------------------------------------------
+interface cpBB
+{
+    void cpBB();
+    attribute cpFloat l;
+    attribute cpFloat b;
+    attribute cpFloat r;
+    attribute cpFloat t;
+	
+	[Static,AddressOf] cpBB cpBBNew([Const] cpFloat l, [Const] cpFloat b, [Const] cpFloat r, [Const] cpFloat t);
+	[Static,AddressOf] cpBB cpBBNewForExtents([Const,Deref] cpVect c, [Const] cpFloat hw, [Const] cpFloat hh);
+	[Static,AddressOf] cpBB cpBBNewForCircle([Const,Deref] cpVect p, [Const] cpFloat r);
+	[Static] cpBool cpBBIntersects([Const,Deref] cpBB a, [Const,Deref] cpBB b);
+	[Static] cpBool cpBBContainsBB([Const,Deref] cpBB bb, [Const,Deref] cpBB other);
+	[Static] cpBool cpBBContainsVect([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
+	[Static,AddressOf] cpBB cpBBMerge([Const,Deref] cpBB a, [Const,Deref] cpBB b);
+	[Static,AddressOf] cpBB cpBBExpand([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
+	[Static,AddressOf] cpVect cpBBCenter([Deref] cpBB bb);
+	[Static] cpFloat cpBBArea([Deref] cpBB bb);
+	[Static] cpFloat cpBBMergedArea([Deref] cpBB a, [Deref] cpBB b);
+	[Static] cpFloat cpBBSegmentQuery([Deref] cpBB bb, [Deref] cpVect a, [Deref] cpVect b);
+	[Static] cpBool cpBBIntersectsSegment([Deref] cpBB bb, [Deref] cpVect a, [Deref] cpVect b);
+	[Static,AddressOf] cpVect cpBBClampVect([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
+	[Static,AddressOf] cpVect cpBBWrapVect([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
+	[Static,AddressOf] cpBB cpBBOffset([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// chipmunk.h
+//----------------------------------------------------------------------------------------------------------
 interface Chipmunk2D 
 {
 	[Static] cpFloat cpMomentForCircle(cpFloat m, cpFloat r1, cpFloat r2, [Deref] cpVect offset);
@@ -43,5 +90,6 @@ interface Chipmunk2D
 
 	[Static,AddressOf] cpVect cpClosetPointOnSegment( [Deref] cpVect p, 
 							 [Deref] cpVect a, [Deref] cpVect b);
+
 
 };
