@@ -32,7 +32,7 @@ interface Chipmunk2D
 
 	[Static] cpFloat cpAreaForPoly([Const] int count, [Const,Cast="cpVect*"] double[] verts, cpFloat radius);
 
-	[Static,Deref] cpVect cpCentroidForPoly([Const] int count, [Cast="cpVect*"] double[] verts);
+	[Static,AddressOf] cpVect cpCentroidForPoly([Const] int count, [Cast="cpVect*"] double[] verts);
 
 	[Static] cpFloat cpMomentForBox(cpFloat m, cpFloat width, cpFloat height);
 
@@ -41,7 +41,7 @@ interface Chipmunk2D
 	[Static] int cpConvexHull(int count,  [Const,Cast="cpVect*"] double[] verts, 
 							[Cast="cpVect*"] double[] result, int[] first, cpFloat tol);
 
-	[Static,Deref] cpVect cpClosetPointOnSegment( [Deref] cpVect p, 
+	[Static,AddressOf] cpVect cpClosetPointOnSegment( [Deref] cpVect p, 
 							 [Deref] cpVect a, [Deref] cpVect b);
 
 };
