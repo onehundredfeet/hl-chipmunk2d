@@ -44,26 +44,6 @@ class Generator {
 
 struct Chipmunk2D {};
 
-struct Apple{
-	int x;
-	int y;
-};
-
-Apple* getApples(){
-	Apple* apples = new Apple[2];
-	apples[0].x = 0;
-	apples[0].y = 1;
-	apples[1].x = 2;
-	apples[1].y = 3;
-	return apples;
-}
-
-void alterApples(Apple* apples){
-	apples[0].x = 10;
-	apples[0].y = 11;
-	apples[1].x = 12;
-	apples[1].y = 13;
-}
 ";
 	
 	public static function generateCpp() {	
