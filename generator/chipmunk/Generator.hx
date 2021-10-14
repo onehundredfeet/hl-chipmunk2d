@@ -14,12 +14,12 @@ class Generator {
 #include<chipmunk/chipmunk.h>
 // #include<chipmunk/chipmunk_ffi.h>
 // #include<chipmunk/chipmunk_private.h>
-// #include<chipmunk/chipmunk_structs.h>
+#include<chipmunk/chipmunk_structs.h>
 #include<chipmunk/chipmunk_types.h>
 // #include<chipmunk/chipmunk_unsafe.h>
 // #include<chipmunk/cpArbiter.h>
 #include<chipmunk/cpBB.h>
-// #include<chipmunk/cpBody.h>
+#include<chipmunk/cpBody.h>
 // #include<chipmunk/cpConstraint.h>
 // #include<chipmunk/cpDampedRotarySpring.h>
 // #include<chipmunk/cpDampedSpring.h>

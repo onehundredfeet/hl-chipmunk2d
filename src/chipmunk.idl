@@ -1,14 +1,9 @@
-typedef cpFloat double;
-// typedef cpVect double2;
 
-interface cpBB
-{
-    void cpBB();
-    attribute cpFloat l;
-    attribute cpFloat b;
-    attribute cpFloat r;
-    attribute cpFloat t;
-};
+// ---------------------------------------------------------------------------------------------------------
+// chipmunk_types.h
+//----------------------------------------------------------------------------------------------------------
+typedef cpFloat double;
+typedef cpBool uchar;
 
 interface cpVect
 {
@@ -17,6 +12,179 @@ interface cpVect
     attribute cpFloat y;
 };
 
+interface cpTransform {
+	void cpTransform();
+	attribute cpFloat a;
+	attribute cpFloat b;
+	attribute cpFloat c;
+	attribute cpFloat d;
+	attribute cpFloat tx; 
+	attribute cpFloat ty;
+};
+
+interface cpMat2x2 {
+	void cpMat2x2();
+	attribute cpFloat a; 
+	attribute cpFloat b;
+	attribute cpFloat c;
+	attribute cpFloat d;
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpBB.h
+//----------------------------------------------------------------------------------------------------------
+interface cpBB
+{
+    void cpBB();
+    attribute cpFloat l;
+    attribute cpFloat b;
+    attribute cpFloat r;
+    attribute cpFloat t;
+	
+	[Static,AddressOf] cpBB cpBBNew([Const] cpFloat l, [Const] cpFloat b, [Const] cpFloat r, [Const] cpFloat t);
+	[Static,AddressOf] cpBB cpBBNewForExtents([Const,Deref] cpVect c, [Const] cpFloat hw, [Const] cpFloat hh);
+	[Static,AddressOf] cpBB cpBBNewForCircle([Const,Deref] cpVect p, [Const] cpFloat r);
+	[Static] cpBool cpBBIntersects([Const,Deref] cpBB a, [Const,Deref] cpBB b);
+	[Static] cpBool cpBBContainsBB([Const,Deref] cpBB bb, [Const,Deref] cpBB other);
+	[Static] cpBool cpBBContainsVect([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
+	[Static,AddressOf] cpBB cpBBMerge([Const,Deref] cpBB a, [Const,Deref] cpBB b);
+	[Static,AddressOf] cpBB cpBBExpand([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
+	[Static,AddressOf] cpVect cpBBCenter([Deref] cpBB bb);
+	[Static] cpFloat cpBBArea([Deref] cpBB bb);
+	[Static] cpFloat cpBBMergedArea([Deref] cpBB a, [Deref] cpBB b);
+	[Static] cpFloat cpBBSegmentQuery([Deref] cpBB bb, [Deref] cpVect a, [Deref] cpVect b);
+	[Static] cpBool cpBBIntersectsSegment([Deref] cpBB bb, [Deref] cpVect a, [Deref] cpVect b);
+	[Static,AddressOf] cpVect cpBBClampVect([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
+	[Static,AddressOf] cpVect cpBBWrapVect([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
+	[Static,AddressOf] cpBB cpBBOffset([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpBody.h
+//----------------------------------------------------------------------------------------------------------
+// enum cpBodyTypeHL {
+// 	"CP_BODY_TYPE_DYNAMIC",
+// 	"CP_BODY_TYPE_KINEMATIC",
+// 	"CP_BODY_TYPE_STATIC"
+// };
+
+[Internal="cpBody"]	
+interface cpBody {
+	
+	void cpBody();
+
+	[Static] cpBody cpBodyAlloc();
+
+	[Static] cpBody cpBodyInit(cpBody body, cpFloat mass, cpFloat moment);
+
+	[Static] cpBody cpBodyNew(cpFloat mass, cpFloat moment);
+
+	[Static] cpBody cpBodyNewKinematic();
+
+	[Static] cpBody cpBodyNewStatic();
+
+	[CObject] void cpBodyDestroy();
+	
+	[CObject] void cpBodyFree();
+
+	[CObject] void cpBodyActivate();
+
+	//[CObject] void cpBodyActivateStatic( cpShape filter);
+
+	[CObject] void cpBodySleep();
+
+	[CObject] void cpBodySleepWithGroup(cpBody group);
+
+	[CObject] cpBool cpBodyIsSleeping();
+
+	//[CObject] cpBodyType cpBodyGetType();
+
+	//[CObject] void cpBodySetType(cpBodyType type);
+
+	// [CObject] cpSpace cpBodyGetSpace();
+
+	[CObject] cpFloat cpBodyGetMass();
+
+	[CObject] void cpBodySetMass(cpFloat m);
+
+	[CObject] cpFloat cpBodyGetMoment();
+
+	[CObject] void cpBodySetMoment(cpFloat i);
+
+	[CObject,AddressOf] cpVect cpBodyGetPosition();
+
+	[CObject] void cpBodySetPosition([Deref] cpVect pos);
+
+	[CObject,AddressOf] cpVect cpBodyGetCenterOfGravity();
+	
+	[CObject] void cpBodySetCenterOfGravity([Deref] cpVect cog);
+
+	[CObject,AddressOf] cpVect cpBodyGetVelocity();
+
+	[CObject] void cpBodySetVelocity([Deref] cpVect velocity);
+
+	[CObject,AddressOf] cpVect cpBodyGetForce();
+
+	[CObject] void cpBodySetForce([Deref] cpVect force);
+
+	[CObject] cpFloat cpBodyGetAngle();
+
+	[CObject] void cpBodySetAngle(cpFloat a);
+
+	[CObject] cpFloat cpBodyGetAngularVelocity();
+
+	[CObject] void cpBodySetAngularVelocity(cpFloat angularVelocity);
+
+	[CObject] cpFloat cpBodyGetTorque();
+
+	[CObject] void cpBodySetTorque(cpFloat torque);
+
+	[CObject,AddressOf] cpVect cpBodyGetRotation();
+
+	//[CObject] cpDataPointer cpBodyGetUserData();
+
+	//[CObject] void cpBodySetUserData(cpDataPointer userData);
+
+	// [CObject] void cpBodySetVelocityUpdateFunc(cpBodyVelocityFunc velocityFunc); // TODO
+
+	// [CObject] void cpBodySetPositionUpdateFunc(cpBodyPositionFunc positionFunc); // TODO
+
+	[CObject] void cpBodyUpdateVelocity([Deref] cpVect gravity, cpFloat damping, cpFloat dt);
+	
+	[CObject] void cpBodyUpdatePosition(cpFloat dt);
+
+	[CObject,AddressOf] cpVect cpBodyLocalToWorld([Const,Deref] cpVect point);
+
+	[CObject,AddressOf] cpVect cpBodyWorldToLocal([Const,Deref] cpVect point);
+
+	[CObject] void cpBodyApplyForceAtWorldPoint([Deref] cpVect force, [Deref] cpVect point);
+
+	[CObject] void cpBodyApplyForceAtLocalPoint([Deref] cpVect force, [Deref] cpVect point);
+
+	[CObject] void cpBodyApplyImpulseAtWorldPoint([Deref] cpVect impulse, [Deref] cpVect point);
+	
+	[CObject] void cpBodyApplyImpulseAtLocalPoint([Deref] cpVect impulse, [Deref] cpVect point);
+
+	[CObject,AddressOf] cpVect cpBodyGetVelocityAtWorldPoint([Deref] cpVect point);
+	
+	[CObject,AddressOf]  cpVect cpBodyGetVelocityAtLocalPoint([Deref] cpVect point);
+
+	[CObject] cpFloat cpBodyKineticEnergy();
+
+	// TODO
+	// [CObject] void cpBodyEachShape(cpBodyShapeIteratorFunc func, void *data);
+
+	// [CObject] void cpBodyEachConstraint(cpBodyConstraintIteratorFunc func, void *data);
+
+	// [CObject] void cpBodyEachArbiter(cpBodyArbiterIteratorFunc func, void *data);
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// chipmunk.h
+//----------------------------------------------------------------------------------------------------------
 interface Chipmunk2D 
 {
 	[Static] cpFloat cpMomentForCircle(cpFloat m, cpFloat r1, cpFloat r2, [Deref] cpVect offset);
@@ -43,5 +211,6 @@ interface Chipmunk2D
 
 	[Static,AddressOf] cpVect cpClosetPointOnSegment( [Deref] cpVect p, 
 							 [Deref] cpVect a, [Deref] cpVect b);
+
 
 };
