@@ -42,22 +42,22 @@ interface cpBB
     attribute cpFloat r;
     attribute cpFloat t;
 	
-	[Static,AddressOf] cpBB cpBBNew([Const] cpFloat l, [Const] cpFloat b, [Const] cpFloat r, [Const] cpFloat t);
-	[Static,AddressOf] cpBB cpBBNewForExtents([Const,Deref] cpVect c, [Const] cpFloat hw, [Const] cpFloat hh);
-	[Static,AddressOf] cpBB cpBBNewForCircle([Const,Deref] cpVect p, [Const] cpFloat r);
+	[Static,Value] cpBB cpBBNew([Const] cpFloat l, [Const] cpFloat b, [Const] cpFloat r, [Const] cpFloat t);
+	[Static,Value] cpBB cpBBNewForExtents([Const,Deref] cpVect c, [Const] cpFloat hw, [Const] cpFloat hh);
+	[Static,Value] cpBB cpBBNewForCircle([Const,Deref] cpVect p, [Const] cpFloat r);
 	[Static] cpBool cpBBIntersects([Const,Deref] cpBB a, [Const,Deref] cpBB b);
 	[Static] cpBool cpBBContainsBB([Const,Deref] cpBB bb, [Const,Deref] cpBB other);
 	[Static] cpBool cpBBContainsVect([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
-	[Static,AddressOf] cpBB cpBBMerge([Const,Deref] cpBB a, [Const,Deref] cpBB b);
-	[Static,AddressOf] cpBB cpBBExpand([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
-	[Static,AddressOf] cpVect cpBBCenter([Deref] cpBB bb);
+	[Static,Value] cpBB cpBBMerge([Const,Deref] cpBB a, [Const,Deref] cpBB b);
+	[Static,Value] cpBB cpBBExpand([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
+	[Static,Value] cpVect cpBBCenter([Deref] cpBB bb);
 	[Static] cpFloat cpBBArea([Deref] cpBB bb);
 	[Static] cpFloat cpBBMergedArea([Deref] cpBB a, [Deref] cpBB b);
 	[Static] cpFloat cpBBSegmentQuery([Deref] cpBB bb, [Deref] cpVect a, [Deref] cpVect b);
 	[Static] cpBool cpBBIntersectsSegment([Deref] cpBB bb, [Deref] cpVect a, [Deref] cpVect b);
-	[Static,AddressOf] cpVect cpBBClampVect([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
-	[Static,AddressOf] cpVect cpBBWrapVect([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
-	[Static,AddressOf] cpBB cpBBOffset([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
+	[Static,Value] cpVect cpBBClampVect([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
+	[Static,Value] cpVect cpBBWrapVect([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
+	[Static,Value] cpBB cpBBOffset([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
 };
 
 
@@ -113,19 +113,19 @@ interface cpBody {
 
 	[CObject] void cpBodySetMoment(cpFloat i);
 
-	[CObject,AddressOf] cpVect cpBodyGetPosition();
+	[CObject,Value] cpVect cpBodyGetPosition();
 
 	[CObject] void cpBodySetPosition([Deref] cpVect pos);
 
-	[CObject,AddressOf] cpVect cpBodyGetCenterOfGravity();
+	[CObject,Value] cpVect cpBodyGetCenterOfGravity();
 	
 	[CObject] void cpBodySetCenterOfGravity([Deref] cpVect cog);
 
-	[CObject,AddressOf] cpVect cpBodyGetVelocity();
+	[CObject,Value] cpVect cpBodyGetVelocity();
 
 	[CObject] void cpBodySetVelocity([Deref] cpVect velocity);
 
-	[CObject,AddressOf] cpVect cpBodyGetForce();
+	[CObject,Value] cpVect cpBodyGetForce();
 
 	[CObject] void cpBodySetForce([Deref] cpVect force);
 
@@ -141,7 +141,7 @@ interface cpBody {
 
 	[CObject] void cpBodySetTorque(cpFloat torque);
 
-	[CObject,AddressOf] cpVect cpBodyGetRotation();
+	[CObject,Value] cpVect cpBodyGetRotation();
 
 	//[CObject] cpDataPointer cpBodyGetUserData();
 
@@ -155,9 +155,9 @@ interface cpBody {
 	
 	[CObject] void cpBodyUpdatePosition(cpFloat dt);
 
-	[CObject,AddressOf] cpVect cpBodyLocalToWorld([Const,Deref] cpVect point);
+	[CObject,Value] cpVect cpBodyLocalToWorld([Const,Deref] cpVect point);
 
-	[CObject,AddressOf] cpVect cpBodyWorldToLocal([Const,Deref] cpVect point);
+	[CObject,Value] cpVect cpBodyWorldToLocal([Const,Deref] cpVect point);
 
 	[CObject] void cpBodyApplyForceAtWorldPoint([Deref] cpVect force, [Deref] cpVect point);
 
@@ -167,9 +167,9 @@ interface cpBody {
 	
 	[CObject] void cpBodyApplyImpulseAtLocalPoint([Deref] cpVect impulse, [Deref] cpVect point);
 
-	[CObject,AddressOf] cpVect cpBodyGetVelocityAtWorldPoint([Deref] cpVect point);
+	[CObject,Value] cpVect cpBodyGetVelocityAtWorldPoint([Deref] cpVect point);
 	
-	[CObject,AddressOf]  cpVect cpBodyGetVelocityAtLocalPoint([Deref] cpVect point);
+	[CObject,Value]  cpVect cpBodyGetVelocityAtLocalPoint([Deref] cpVect point);
 
 	[CObject] cpFloat cpBodyKineticEnergy();
 
@@ -200,7 +200,7 @@ interface Chipmunk2D
 
 	[Static] cpFloat cpAreaForPoly([Const] int count, [Const,Cast="cpVect*"] double[] verts, cpFloat radius);
 
-	[Static,AddressOf] cpVect cpCentroidForPoly([Const] int count, [Cast="cpVect*"] double[] verts);
+	[Static,Value] cpVect cpCentroidForPoly([Const] int count, [Cast="cpVect*"] double[] verts);
 
 	[Static] cpFloat cpMomentForBox(cpFloat m, cpFloat width, cpFloat height);
 
@@ -209,7 +209,7 @@ interface Chipmunk2D
 	[Static] int cpConvexHull(int count,  [Const,Cast="cpVect*"] double[] verts, 
 							[Cast="cpVect*"] double[] result, int[] first, cpFloat tol);
 
-	[Static,AddressOf] cpVect cpClosetPointOnSegment( [Deref] cpVect p, 
+	[Static,Value] cpVect cpClosetPointOnSegment( [Deref] cpVect p, 
 							 [Deref] cpVect a, [Deref] cpVect b);
 
 

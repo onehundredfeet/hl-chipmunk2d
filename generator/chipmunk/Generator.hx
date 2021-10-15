@@ -19,7 +19,7 @@ class Generator {
 // #include<chipmunk/chipmunk_unsafe.h>
 // #include<chipmunk/cpArbiter.h>
 #include<chipmunk/cpBB.h>
-#include<chipmunk/cpBody.h>
+//#include<chipmunk/cpBody.h>
 // #include<chipmunk/cpConstraint.h>
 // #include<chipmunk/cpDampedRotarySpring.h>
 // #include<chipmunk/cpDampedSpring.h>
