@@ -4,6 +4,9 @@
 //----------------------------------------------------------------------------------------------------------
 typedef cpFloat double;
 typedef cpBool uchar;
+typedef cpDataPointer VoidPtr;
+typedef cpGroup int64;
+typedef cpBitmask uint;
 
 interface cpVect
 {
@@ -181,6 +184,137 @@ interface cpBody {
 	// [CObject] void cpBodyEachArbiter(cpBodyArbiterIteratorFunc func, void *data);
 };
 
+
+// ---------------------------------------------------------------------------------------------------------
+// cpShape.h
+//----------------------------------------------------------------------------------------------------------
+
+interface cpPointQueryInfo 
+{
+	void cpPointQueryInfo();
+	[Const] attribute cpShape shape;
+	[Value] attribute cpVect point;
+	attribute cpFloat distance;
+	[Value] attribute cpVect gradient;
+};
+
+interface cpSegmentQueryInfo {
+	void cpSegmentQueryInfo();
+	[Const] attribute cpShape shape;
+	[Value] attribute cpVect point;
+	[Value] attribute cpVect normal;
+	attribute cpFloat alpha;
+};
+
+interface cpShapeFilter {
+	attribute cpGroup group;
+	attribute cpBitmask categories;
+	attribute cpBitmask mask;
+};
+
+interface cpShape
+{
+	void cpShape();
+
+	[Static,AddressOf] cpShapeFilter cpShapeFilterNew(cpGroup group, cpBitmask categories, cpBitmask mask);
+
+	[CObject] void cpShapeDestroy();
+
+	[CObject] void cpShapeFree();
+
+	[CObject,AddressOf] cpBB cpShapeCacheBB();
+
+	[CObject,AddressOf] cpBB cpShapeUpdate([Deref] cpTransform transform);
+
+	[CObject] cpFloat cpShapePointQuery([Deref] cpVect p, cpPointQueryInfo out);
+
+	[CObject] cpBool cpShapeSegmentQuery([Deref] cpVect a, [Deref] cpVect b, cpFloat radius, cpSegmentQueryInfo info);
+
+	[Static,AddressOf] cpContactPointSet cpShapesCollide([Const] cpShape a, [Const] cpShape b);
+
+	[CObject] cpSpace cpShapeGetSpace();
+
+	[CObject] cpBody cpShapeGetBody();
+
+	[CObject] void cpShapeSetBody(cpBody body);
+
+	[CObject] cpFloat cpShapeGetMass();
+
+	[CObject] void cpShapeSetMass(cpFloat mass);
+
+	[CObject] cpFloat cpShapeGetDensity();
+
+	[CObject] void cpShapeSetDensity(cpFloat density);
+
+	[CObject] cpFloat cpShapeGetMoment();
+
+	[CObject] cpFloat cpShapeGetArea();
+
+	[CObject,AddressOf] cpVect cpShapeGetCenterOfGravity();
+
+	[CObject,AddressOf] cpBB cpShapeGetBB();
+
+	[CObject] cpBool cpShapeGetSensor();
+
+	[CObject] void cpShapeSetSensor(cpBool sensor);
+
+	[CObject] cpFloat cpShapeGetElasticity();
+
+	[CObject] void cpShapeSetElasticity(cpFloat elasticity);
+
+	[CObject] cpFloat cpShapeGetFriction();
+
+	[CObject] void cpShapeSetFriction(cpFloat friction);
+
+	[CObject,AddressOf] cpVect cpShapeGetSurfaceVelocity();
+
+	[CObject] void cpShapeSetSurfaceVelocity([Deref] cpVect surfaceVelocity);
+
+	[CObject] cpDataPointer cpShapeGetUserData();
+
+	[CObject] void cpShapeSetUserData(cpDataPointer userData);
+
+	// [CObject] cpCollisionType cpShapeGetCollisionType();
+
+	// [CObject] void cpShapeSetCollisionType(cpCollisionType collisionType);
+
+	[CObject,AddressOf] cpShapeFilter cpShapeGetFilter();
+
+	[CObject] void cpShapeSetFilter([Deref] cpShapeFilter filter);
+};
+
+interface cpCircleShape
+{
+	
+}
+
+// ---------------------------------------------------------------------------------------------------------
+// cpSpace.h
+//----------------------------------------------------------------------------------------------------------
+interface cpSpace
+{
+	
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpArbiter.h
+//----------------------------------------------------------------------------------------------------------
+interface cpContactPointSet {
+	/// The number of contact points in the set.
+	// int count;
+	
+	// cpVect normal;
+	
+	// /// The array of contact points.
+	// struct {
+	// 	/// The position of the contact on the surface of each shape.
+	// 	cpVect pointA, pointB;
+	// 	/// Penetration distance of the two shapes. Overlapping means it will be negative.
+	// 	/// This value is calculated as cpvdot(cpvsub(point2, point1), normal) and is ignored by cpArbiterSetContactPointSet().
+	// 	cpFloat distance;
+	// } points[CP_MAX_CONTACTS_PER_ARBITER];
+};
 
 // ---------------------------------------------------------------------------------------------------------
 // chipmunk.h

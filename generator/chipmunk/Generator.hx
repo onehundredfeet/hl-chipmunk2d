@@ -34,7 +34,7 @@ class Generator {
 // #include<chipmunk/cpRatchetJoint.h>
 // #include<chipmunk/cpRobust.h>
 // #include<chipmunk/cpRotaryLimitJoint.h>
-// #include<chipmunk/cpShape.h>
+#include<chipmunk/cpShape.h>
 // #include<chipmunk/cpSimpleMotor.h>
 // #include<chipmunk/cpSlideJoint.h>
 // #include<chipmunk/cpSpace.h>
