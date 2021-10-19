@@ -4,3 +4,4 @@ sample.hl
 src/recast.cpp
 src/chipmunk.cpp
 bin/example.hl
+.DS_Store
