@@ -6,9 +6,24 @@ class Main {
 
     static function main() {
 		trace("main");
-		test_cpCentroidForPoly();
-		test_cpMomentForPoly();
+		test_cpShape();
+		// test_cpCentroidForPoly();
+		// test_cpMomentForPoly();
     }
+
+	static function test_cpShape(){
+		var pointQueryInfo = new chipmunk.Native.PointQueryInfo();
+
+		pointQueryInfo.point.x = 1.0;
+		pointQueryInfo.point.y = 2.0;
+		trace("Direct point.x setter result : " + pointQueryInfo.point.x + ", "  + pointQueryInfo.point.y);
+
+		var point = pointQueryInfo.point;
+		point.x = 1;
+		point.y = 2;
+		pointQueryInfo.point = point;
+		trace("Setter via aux reference: " + pointQueryInfo.point.x + ", "  + pointQueryInfo.point.y);
+	}
 
 	static function test_cpCentroidForPoly(){
 		trace('test_cpCentroidForPoly');

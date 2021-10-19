@@ -17,12 +17,12 @@ class Generator {
 #include<chipmunk/chipmunk_structs.h>
 #include<chipmunk/chipmunk_types.h>
 // #include<chipmunk/chipmunk_unsafe.h>
-// #include<chipmunk/cpArbiter.h>
-#include<chipmunk/cpBB.h>
+//#include<chipmunk/cpArbiter.h> // -done
+#include<chipmunk/cpBB.h> // -done
 //#include<chipmunk/cpBody.h>
-// #include<chipmunk/cpConstraint.h>
-// #include<chipmunk/cpDampedRotarySpring.h>
-// #include<chipmunk/cpDampedSpring.h>
+#include<chipmunk/cpConstraint.h> // -done
+// #include<chipmunk/cpDampedRotarySpring.h> // -done
+// #include<chipmunk/cpDampedSpring.h>  // -done
 // #include<chipmunk/cpGearJoint.h>
 // #include<chipmunk/cpGrooveJoint.h>
 // #include<chipmunk/cpHastySpace.h>
@@ -34,7 +34,7 @@ class Generator {
 // #include<chipmunk/cpRatchetJoint.h>
 // #include<chipmunk/cpRobust.h>
 // #include<chipmunk/cpRotaryLimitJoint.h>
-// #include<chipmunk/cpShape.h>
+#include<chipmunk/cpShape.h>
 // #include<chipmunk/cpSimpleMotor.h>
 // #include<chipmunk/cpSlideJoint.h>
 // #include<chipmunk/cpSpace.h>
