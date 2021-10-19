@@ -17,10 +17,10 @@ class Generator {
 #include<chipmunk/chipmunk_structs.h>
 #include<chipmunk/chipmunk_types.h>
 // #include<chipmunk/chipmunk_unsafe.h>
-// #include<chipmunk/cpArbiter.h>
-#include<chipmunk/cpBB.h>
+//#include<chipmunk/cpArbiter.h>
+#include<chipmunk/cpBB.h> // -done
 //#include<chipmunk/cpBody.h>
-// #include<chipmunk/cpConstraint.h>
+#include<chipmunk/cpConstraint.h> // -done
 // #include<chipmunk/cpDampedRotarySpring.h>
 // #include<chipmunk/cpDampedSpring.h>
 // #include<chipmunk/cpGearJoint.h>

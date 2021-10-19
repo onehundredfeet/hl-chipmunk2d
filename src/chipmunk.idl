@@ -216,21 +216,21 @@ interface cpShape
 {
 	void cpShape();
 
-	[Static,AddressOf] cpShapeFilter cpShapeFilterNew(cpGroup group, cpBitmask categories, cpBitmask mask);
+	[Static,Value] cpShapeFilter cpShapeFilterNew(cpGroup group, cpBitmask categories, cpBitmask mask);
 
 	[CObject] void cpShapeDestroy();
 
 	[CObject] void cpShapeFree();
 
-	[CObject,AddressOf] cpBB cpShapeCacheBB();
+	[CObject,Value] cpBB cpShapeCacheBB();
 
-	[CObject,AddressOf] cpBB cpShapeUpdate([Deref] cpTransform transform);
+	[CObject,Value] cpBB cpShapeUpdate([Deref] cpTransform transform);
 
 	[CObject] cpFloat cpShapePointQuery([Deref] cpVect p, cpPointQueryInfo out);
 
 	[CObject] cpBool cpShapeSegmentQuery([Deref] cpVect a, [Deref] cpVect b, cpFloat radius, cpSegmentQueryInfo info);
 
-	[Static,AddressOf] cpContactPointSet cpShapesCollide([Const] cpShape a, [Const] cpShape b);
+	[Static,Value] cpContactPointSet cpShapesCollide([Const] cpShape a, [Const] cpShape b);
 
 	[CObject] cpSpace cpShapeGetSpace();
 
@@ -250,9 +250,9 @@ interface cpShape
 
 	[CObject] cpFloat cpShapeGetArea();
 
-	[CObject,AddressOf] cpVect cpShapeGetCenterOfGravity();
+	[CObject,Value] cpVect cpShapeGetCenterOfGravity();
 
-	[CObject,AddressOf] cpBB cpShapeGetBB();
+	[CObject,Value] cpBB cpShapeGetBB();
 
 	[CObject] cpBool cpShapeGetSensor();
 
@@ -266,7 +266,7 @@ interface cpShape
 
 	[CObject] void cpShapeSetFriction(cpFloat friction);
 
-	[CObject,AddressOf] cpVect cpShapeGetSurfaceVelocity();
+	[CObject,Value] cpVect cpShapeGetSurfaceVelocity();
 
 	[CObject] void cpShapeSetSurfaceVelocity([Deref] cpVect surfaceVelocity);
 
@@ -278,15 +278,39 @@ interface cpShape
 
 	// [CObject] void cpShapeSetCollisionType(cpCollisionType collisionType);
 
-	[CObject,AddressOf] cpShapeFilter cpShapeGetFilter();
+	[CObject,Value] cpShapeFilter cpShapeGetFilter();
 
 	[CObject] void cpShapeSetFilter([Deref] cpShapeFilter filter);
 };
 
 interface cpCircleShape
 {
-	
-}
+	[Static] cpCircleShape cpCircleShapeAlloc();
+	[Static] cpCircleShape cpCircleShapeInit(cpCircleShape circle, cpBody body, cpFloat radius, [Deref] cpVect offset);
+	[Static] cpShape cpCircleShapeNew(cpBody body, cpFloat radius, [Deref] cpVect offset);
+	[Static,Value] cpVect cpCircleShapeGetOffset([Const] cpShape shape);
+	[Static] cpFloat cpCircleShapeGetRadius([Const] cpShape shape);
+};
+
+interface cpSegmentShape
+{
+	[Static] cpSegmentShape cpSegmentShapeAlloc();
+
+	[Static] cpSegmentShape cpSegmentShapeInit(cpSegmentShape seg, cpBody body, 
+				[Deref] cpVect a, [Deref] cpVect b, cpFloat radius);
+
+	[Static] cpShape cpSegmentShapeNew(cpBody body, [Deref] cpVect a, [Deref] cpVect b, cpFloat radius);
+
+	[Static] void cpSegmentShapeSetNeighbors(cpShape shape, [Deref] cpVect prev, [Deref] cpVect next);
+
+	[Static,Value] cpVect cpSegmentShapeGetA([Const] cpShape shape);
+
+	[Static,Value] cpVect cpSegmentShapeGetB([Const] cpShape shape);
+
+	[Static,Value] cpVect cpSegmentShapeGetNormal([Const] cpShape shape);
+
+	[Static] cpFloat cpSegmentShapeGetRadius([Const] cpShape shape);
+};
 
 // ---------------------------------------------------------------------------------------------------------
 // cpSpace.h
@@ -301,20 +325,150 @@ interface cpSpace
 // cpArbiter.h
 //----------------------------------------------------------------------------------------------------------
 interface cpContactPointSet {
-	/// The number of contact points in the set.
-	// int count;
 	
-	// cpVect normal;
-	
-	// /// The array of contact points.
-	// struct {
-	// 	/// The position of the contact on the surface of each shape.
-	// 	cpVect pointA, pointB;
-	// 	/// Penetration distance of the two shapes. Overlapping means it will be negative.
-	// 	/// This value is calculated as cpvdot(cpvsub(point2, point1), normal) and is ignored by cpArbiterSetContactPointSet().
-	// 	cpFloat distance;
-	// } points[CP_MAX_CONTACTS_PER_ARBITER];
 };
+
+interface cpArbiter
+{
+	[CObject] cpFloat cpArbiterGetRestitution();
+
+	[CObject] void cpArbiterSetRestitution(cpFloat restitution);
+
+	[CObject] cpFloat cpArbiterGetFriction();
+
+	[CObject] void cpArbiterSetFriction(cpFloat friction);
+
+	[CObject,Value] cpVect cpArbiterGetSurfaceVelocity();
+
+	[CObject] void cpArbiterSetSurfaceVelocity([Deref] cpVect vr);
+
+	[CObject] cpDataPointer cpArbiterGetUserData();
+
+	[CObject] void cpArbiterSetUserData(cpDataPointer userData);
+
+	[CObject,Value] cpVect cpArbiterTotalImpulse();
+
+	[CObject] cpFloat cpArbiterTotalKE();
+
+	[CObject] cpBool cpArbiterIgnore();
+
+	// CP_EXPORT void cpArbiterGetShapes(const cpArbiter *arb, cpShape **a, cpShape **b);
+
+	// CP_EXPORT void cpArbiterGetBodies(const cpArbiter *arb, cpBody **a, cpBody **b);
+
+	[CObject,Value] cpContactPointSet cpArbiterGetContactPointSet();
+
+	[CObject] void cpArbiterSetContactPointSet(cpContactPointSet set);
+
+	[CObject] cpBool cpArbiterIsFirstContact();
+
+	[CObject] cpBool cpArbiterIsRemoval();
+
+	[CObject] int cpArbiterGetCount();
+
+	[CObject,Value] cpVect cpArbiterGetNormal();
+
+	[CObject,Value] cpVect cpArbiterGetPointA(int i);
+
+	[CObject,Value] cpVect cpArbiterGetPointB(int i);
+
+	[CObject] cpFloat cpArbiterGetDepth(int i);
+
+	[CObject] cpBool cpArbiterCallWildcardBeginA(cpSpace space);
+
+	[CObject] cpBool cpArbiterCallWildcardBeginB(cpSpace space);
+
+	[CObject] cpBool cpArbiterCallWildcardPreSolveA(cpSpace space);
+
+	[CObject] cpBool cpArbiterCallWildcardPreSolveB(cpSpace space);
+
+	[CObject] void cpArbiterCallWildcardPostSolveA(cpSpace space);
+
+	[CObject] void cpArbiterCallWildcardPostSolveB(cpSpace space);
+
+	[CObject] void cpArbiterCallWildcardSeparateA(cpSpace space);
+
+	[CObject] void cpArbiterCallWildcardSeparateB(cpSpace space);
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpConstraint.h
+//----------------------------------------------------------------------------------------------------------
+interface cpConstraint
+{
+	[CObject] void cpConstraintDestroy();
+
+	[CObject] void cpConstraintFree();
+
+	[CObject] cpSpace cpConstraintGetSpace();
+
+	[CObject] cpBody cpConstraintGetBodyA();
+
+	[CObject] cpBody cpConstraintGetBodyB();
+
+	[CObject] cpFloat cpConstraintGetMaxForce();
+	
+	[CObject] void cpConstraintSetMaxForce(cpFloat maxForce);
+
+	[CObject] cpFloat cpConstraintGetErrorBias();
+
+	[CObject] void cpConstraintSetErrorBias(cpFloat errorBias);
+
+	[CObject] cpFloat cpConstraintGetMaxBias();
+
+	[CObject] void cpConstraintSetMaxBias(cpFloat maxBias);
+
+	[CObject] cpBool cpConstraintGetCollideBodies();
+
+	[CObject] void cpConstraintSetCollideBodies(cpBool collideBodies);
+
+	//[CObject] cpConstraintPreSolveFunc cpConstraintGetPreSolveFunc();
+
+	//[CObject] void cpConstraintSetPreSolveFunc(cpConstraintPreSolveFunc preSolveFunc);
+
+	//[CObject] cpConstraintPostSolveFunc cpConstraintGetPostSolveFunc();
+
+	//[CObject] void cpConstraintSetPostSolveFunc(cpConstraintPostSolveFunc postSolveFunc);
+
+	[CObject] cpDataPointer cpConstraintGetUserData();
+
+	[CObject] void cpConstraintSetUserData(cpDataPointer userData);
+
+	[CObject] cpFloat cpConstraintGetImpulse();
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpDampedRotarySpring.h
+//----------------------------------------------------------------------------------------------------------
+interface cpDampedRotarySpring
+{
+	[Static] cpBool cpConstraintIsDampedRotarySpring([Const] cpConstraint constraint);
+
+	[Static] cpDampedRotarySpring cpDampedRotarySpringAlloc();
+
+	[Static] cpDampedRotarySpring cpDampedRotarySpringInit(cpDampedRotarySpring *joint, cpBody *a, cpBody *b, cpFloat restAngle, cpFloat stiffness, cpFloat damping);
+
+	[Static] cpConstraint cpDampedRotarySpringNew(cpBody a, cpBody b, cpFloat restAngle, cpFloat stiffness, cpFloat damping);
+
+	[Static] cpFloat cpDampedRotarySpringGetRestAngle([Const] cpConstraint constraint);
+
+	[Static] void cpDampedRotarySpringSetRestAngle(cpConstraint constraint, cpFloat restAngle);
+
+	[Static] cpFloat cpDampedRotarySpringGetStiffness([Const] cpConstraint constraint);
+
+	[Static] void cpDampedRotarySpringSetStiffness([Const] cpConstraint constraint, cpFloat stiffness);
+
+	[Static] cpFloat cpDampedRotarySpringGetDamping([Const] cpConstraint constraint);
+
+	[Static] void cpDampedRotarySpringSetDamping(cpConstraint constraint, cpFloat damping);
+
+	// [Static] cpDampedRotarySpringTorqueFunc cpDampedRotarySpringGetSpringTorqueFunc(const cpConstraint *constraint);
+
+	//[Static] void cpDampedRotarySpringSetSpringTorqueFunc(cpConstraint *constraint, cpDampedRotarySpringTorqueFunc springTorqueFunc);
+};
+
 
 // ---------------------------------------------------------------------------------------------------------
 // chipmunk.h
@@ -345,6 +499,5 @@ interface Chipmunk2D
 
 	[Static,Value] cpVect cpClosetPointOnSegment( [Deref] cpVect p, 
 							 [Deref] cpVect a, [Deref] cpVect b);
-
 
 };
