@@ -448,9 +448,11 @@ interface cpDampedRotarySpring
 
 	[Static] cpDampedRotarySpring cpDampedRotarySpringAlloc();
 
-	[Static] cpDampedRotarySpring cpDampedRotarySpringInit(cpDampedRotarySpring *joint, cpBody *a, cpBody *b, cpFloat restAngle, cpFloat stiffness, cpFloat damping);
+	[Static] cpDampedRotarySpring cpDampedRotarySpringInit(cpDampedRotarySpring joint, 
+			cpBody a, cpBody b, cpFloat restAngle, cpFloat stiffness, cpFloat damping);
 
-	[Static] cpConstraint cpDampedRotarySpringNew(cpBody a, cpBody b, cpFloat restAngle, cpFloat stiffness, cpFloat damping);
+	[Static] cpConstraint cpDampedRotarySpringNew(cpBody a, cpBody b, cpFloat restAngle, 
+			cpFloat stiffness, cpFloat damping);
 
 	[Static] cpFloat cpDampedRotarySpringGetRestAngle([Const] cpConstraint constraint);
 
@@ -467,6 +469,118 @@ interface cpDampedRotarySpring
 	// [Static] cpDampedRotarySpringTorqueFunc cpDampedRotarySpringGetSpringTorqueFunc(const cpConstraint *constraint);
 
 	//[Static] void cpDampedRotarySpringSetSpringTorqueFunc(cpConstraint *constraint, cpDampedRotarySpringTorqueFunc springTorqueFunc);
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpDampedSpring.h
+//----------------------------------------------------------------------------------------------------------
+interface cpDampedSpring
+{
+	[Static] cpBool cpConstraintIsDampedSpring([Const] cpConstraint constraint);
+
+	[Static] cpDampedSpring cpDampedSpringAlloc();
+
+	[Static] cpDampedSpring cpDampedSpringInit(cpDampedSpring joint, cpBody a, cpBody b, 
+			[Deref] cpVect anchorA, [Deref] cpVect anchorB, cpFloat restLength, cpFloat stiffness, cpFloat damping);
+
+	[Static] cpConstraint cpDampedSpringNew(cpBody a, cpBody b, [Deref] cpVect anchorA, [Deref] cpVect anchorB, 
+			cpFloat restLength, cpFloat stiffness, cpFloat damping);
+
+	[Static,Value] cpVect cpDampedSpringGetAnchorA([Const] cpConstraint constraint);
+
+	[Static] void cpDampedSpringSetAnchorA(cpConstraint constraint, [Deref] cpVect anchorA);
+
+	[Static,Value] cpVect cpDampedSpringGetAnchorB([Const] cpConstraint constraint);
+
+	[Static] void cpDampedSpringSetAnchorB(cpConstraint constraint, [Deref] cpVect anchorB);
+
+	[Static] cpFloat cpDampedSpringGetRestLength([Const] cpConstraint constraint);
+
+	[Static] void cpDampedSpringSetRestLength(cpConstraint constraint, cpFloat restLength);
+
+	[Static] cpFloat cpDampedSpringGetStiffness([Const] cpConstraint constraint);
+
+	[Static] void cpDampedSpringSetStiffness(cpConstraint constraint, cpFloat stiffness);
+
+	[Static] cpFloat cpDampedSpringGetDamping([Const] cpConstraint constraint);
+
+	[Static] void cpDampedSpringSetDamping(cpConstraint constraint, cpFloat damping);
+
+	// [Static] cpDampedSpringForceFunc cpDampedSpringGetSpringForceFunc(const cpConstraint *constraint);
+
+	// [Static] void cpDampedSpringSetSpringForceFunc(cpConstraint *constraint, cpDampedSpringForceFunc springForceFunc);
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpGearJoint.h
+//----------------------------------------------------------------------------------------------------------
+interface cpGearJoint
+{
+	[Static] cpBool cpConstraintIsGearJoint([Const]  cpConstraint constraint);
+
+	[Static] cpGearJoint cpGearJointAlloc();
+
+	[Static] cpGearJoint cpGearJointInit(cpGearJoint joint, cpBody a, cpBody b, cpFloat phase, cpFloat ratio);
+
+	[Static] cpConstraint cpGearJointNew(cpBody a, cpBody b, cpFloat phase, cpFloat ratio);
+
+	[Static] cpFloat cpGearJointGetPhase([Const] cpConstraint constraint);
+
+	[Static] void cpGearJointSetPhase(cpConstraint constraint, cpFloat phase);
+
+	[Static] cpFloat cpGearJointGetRatio([Const] cpConstraint constraint);
+
+	[Static] void cpGearJointSetRatio(cpConstraint constraint, cpFloat ratio);
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpSimpleMotor.h
+//----------------------------------------------------------------------------------------------------------
+interface cpSimpleMotor
+{
+	[Static] cpBool cpConstraintIsSimpleMotor([Const] cpConstraint constraint);
+
+	[Static] cpSimpleMotor cpSimpleMotorAlloc();
+
+	[Static] cpSimpleMotor cpSimpleMotorInit(cpSimpleMotor joint, cpBody a, cpBody b, cpFloat rate);
+
+	[Static] cpConstraint cpSimpleMotorNew(cpBody a, cpBody b, cpFloat rate);
+
+	[Static] cpFloat cpSimpleMotorGetRate([Const] cpConstraint constraint);
+
+	[Static] void cpSimpleMotorSetRate(cpConstraint constraint, cpFloat rate);
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpGrooveJoint.h
+//----------------------------------------------------------------------------------------------------------
+interface cpGrooveJoint
+{
+	[Static] cpBool cpConstraintIsGrooveJoint([Const] cpConstraint constraint);
+
+	[Static] cpGrooveJoint cpGrooveJointAlloc();
+
+	[Static] cpGrooveJoint cpGrooveJointInit(cpGrooveJoint joint, cpBody a, cpBody b, [Deref] cpVect groove_a, 
+			[Deref] cpVect groove_b, [Deref] cpVect anchorB);
+
+	[Static] cpConstraint cpGrooveJointNew(cpBody a, cpBody b, [Deref] cpVect groove_a, [Deref] cpVect groove_b, 
+			[Deref] cpVect anchorB);
+
+	[Static,Value] cpVect cpGrooveJointGetGrooveA([Const] cpConstraint constraint);
+
+	[Static] void cpGrooveJointSetGrooveA(cpConstraint constraint, [Deref] cpVect grooveA);
+
+	[Static,Value] cpVect cpGrooveJointGetGrooveB([Const] cpConstraint constraint);
+
+	[Static] void cpGrooveJointSetGrooveB(cpConstraint constraint, [Deref] cpVect grooveB);
+
+	[Static,Value] cpVect cpGrooveJointGetAnchorB([Const] cpConstraint constraint);
+
+	[Static] void cpGrooveJointSetAnchorB(cpConstraint constraint, [Deref] cpVect anchorB);
 };
 
 
