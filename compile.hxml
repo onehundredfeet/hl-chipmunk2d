@@ -3,5 +3,5 @@
 -lib hldx
 -cp tests
 -cp src
--main Main
+-main LogoSmash
 -hl bin/example.hl
