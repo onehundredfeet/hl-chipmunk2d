@@ -44,14 +44,16 @@ class Generator {
 
 struct Chipmunk2D {};
 
-// Transform from 
-// cpShape* cpSpaceAddShape(space, shape); -- to -->  void cpSpaceAddShape(space, shape);
+// README 
+// I had to replace the original functions because each call was duplicating the space.
+// Transform from  cpShape* cpSpaceAddShape(space, shape); -- to -->  void cpSpaceAddShape(space, shape);
 void cpSpaceAddShapeVoid(cpSpace* space, cpShape *shape) {
 	cpSpaceAddShape(space, shape);
 }
 
-// Transform from 
-// cpBody* cpSpaceAddBody(space, body); -- to -->  void cpSpaceAddBody(space, body);
+// README 
+// I had to replace the original functions because each call was duplicating the space.
+// Transform from  cpBody* cpSpaceAddBody(space, body); -- to -->  void cpSpaceAddBody(space, body);
 void cpSpaceAddBodyVoid(cpSpace* space, cpBody *body) {
 	cpSpaceAddBody(space, body);
 }
