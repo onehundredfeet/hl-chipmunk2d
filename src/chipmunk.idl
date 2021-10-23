@@ -373,9 +373,9 @@ interface cpSpace
 
 	// [CObject] cpCollisionHandler *cpSpaceAddWildcardHandler(cpCollisionType type);
 
-	[CObject] cpShape cpSpaceAddShape(cpShape shape);
+	[CObject] void cpSpaceAddShapeVoid(cpShape shape);
 
-	[CObject] cpBody cpSpaceAddBody(cpBody body);
+	[CObject] void cpSpaceAddBodyVoid(cpBody body);
 
 	[CObject] cpConstraint cpSpaceAddConstraint(cpConstraint constraint);
 

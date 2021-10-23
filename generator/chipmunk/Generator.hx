@@ -44,6 +44,18 @@ class Generator {
 
 struct Chipmunk2D {};
 
+// Transform from 
+// cpShape* cpSpaceAddShape(space, shape); -- to -->  void cpSpaceAddShape(space, shape);
+void cpSpaceAddShapeVoid(cpSpace* space, cpShape *shape) {
+	cpSpaceAddShape(space, shape);
+}
+
+// Transform from 
+// cpBody* cpSpaceAddBody(space, body); -- to -->  void cpSpaceAddBody(space, body);
+void cpSpaceAddBodyVoid(cpSpace* space, cpBody *body) {
+	cpSpaceAddBody(space, body);
+}
+
 ";
 	
 	public static function generateCpp() {	
