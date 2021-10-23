@@ -62,8 +62,8 @@ class LogoSmash extends hxd.App{
 		var shape = makeBall(20, 295, circleRadius);
 		// Set velocity to the chipmunk object
 		var velocity = new chipmunk.Native.CpVect();
-		velocity.x = 500;
-		velocity.y = 100;
+		velocity.x = 300;
+		velocity.y = 50;
 		cpBodyList[cpBodyList.length - 1].cpBodySetVelocity(velocity);
 		// -----------------------
 
