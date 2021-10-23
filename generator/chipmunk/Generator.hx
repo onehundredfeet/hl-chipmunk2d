@@ -23,7 +23,7 @@ class Generator {
 #include<chipmunk/cpConstraint.h> // -done
 // #include<chipmunk/cpDampedRotarySpring.h> // -done
 // #include<chipmunk/cpDampedSpring.h>  // -done
-// #include<chipmunk/cpGearJoint.h>
+// #include<chipmunk/cpGearJoint.h> // -done
 // #include<chipmunk/cpGrooveJoint.h>
 // #include<chipmunk/cpHastySpace.h>
 // #include<chipmunk/cpMarch.h>
@@ -35,7 +35,7 @@ class Generator {
 // #include<chipmunk/cpRobust.h>
 // #include<chipmunk/cpRotaryLimitJoint.h>
 #include<chipmunk/cpShape.h>
-// #include<chipmunk/cpSimpleMotor.h>
+// #include<chipmunk/cpSimpleMotor.h> // -done
 // #include<chipmunk/cpSlideJoint.h>
 // #include<chipmunk/cpSpace.h>
 // #include<chipmunk/cpSpatialIndex.h>
@@ -43,6 +43,20 @@ class Generator {
 #include<chipmunk/cpVect.h>
 
 struct Chipmunk2D {};
+
+// README 
+// I had to replace the original functions because each call was duplicating the space.
+// Transform from  cpShape* cpSpaceAddShape(space, shape); -- to -->  void cpSpaceAddShape(space, shape);
+void cpSpaceAddShapeVoid(cpSpace* space, cpShape *shape) {
+	cpSpaceAddShape(space, shape);
+}
+
+// README 
+// I had to replace the original functions because each call was duplicating the space.
+// Transform from  cpBody* cpSpaceAddBody(space, body); -- to -->  void cpSpaceAddBody(space, body);
+void cpSpaceAddBodyVoid(cpSpace* space, cpBody *body) {
+	cpSpaceAddBody(space, body);
+}
 
 ";
 	

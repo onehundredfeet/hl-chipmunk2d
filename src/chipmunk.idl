@@ -317,7 +317,109 @@ interface cpSegmentShape
 //----------------------------------------------------------------------------------------------------------
 interface cpSpace
 {
-	
+	[Static] cpSpace cpSpaceInit(cpSpace space);
+
+	[Static] cpSpace cpSpaceNew();
+
+	[CObject] void cpSpaceDestroy();
+
+	[CObject] void cpSpaceFree();
+
+	[CObject] int cpSpaceGetIterations();
+
+	[CObject] void cpSpaceSetIterations(int iterations);
+
+	[CObject,Value] cpVect cpSpaceGetGravity();
+
+	[CObject] void cpSpaceSetGravity([Deref] cpVect gravity);
+
+	[CObject] cpFloat cpSpaceGetDamping();
+
+	[CObject] void cpSpaceSetDamping(cpFloat damping);
+
+	[CObject] cpFloat cpSpaceGetIdleSpeedThreshold();
+
+	[CObject] void cpSpaceSetIdleSpeedThreshold(cpFloat idleSpeedThreshold);
+
+	[CObject] cpFloat cpSpaceGetSleepTimeThreshold();
+
+	[CObject] void cpSpaceSetSleepTimeThreshold(cpFloat sleepTimeThreshold);
+
+	[CObject] cpFloat cpSpaceGetCollisionSlop();
+
+	[CObject] void cpSpaceSetCollisionSlop(cpFloat collisionSlop);
+
+	[CObject] cpFloat cpSpaceGetCollisionBias();
+
+	[CObject] void cpSpaceSetCollisionBias(cpFloat collisionBias);
+
+	// [CObject] cpTimestamp cpSpaceGetCollisionPersistence();
+
+	// [CObject] void cpSpaceSetCollisionPersistence(cpTimestamp collisionPersistence);
+
+	[CObject] cpDataPointer cpSpaceGetUserData();
+
+	[CObject] void cpSpaceSetUserData(cpDataPointer userData);
+
+	[CObject] cpBody cpSpaceGetStaticBody();
+
+	[CObject] cpFloat cpSpaceGetCurrentTimeStep();
+
+	[CObject] cpBool cpSpaceIsLocked();
+
+	// [CObject] cpCollisionHandler *cpSpaceAddDefaultCollisionHandler();
+
+	// [CObject] cpCollisionHandler *cpSpaceAddCollisionHandler(cpCollisionType a, cpCollisionType b);
+
+	// [CObject] cpCollisionHandler *cpSpaceAddWildcardHandler(cpCollisionType type);
+
+	[CObject] void cpSpaceAddShapeVoid(cpShape shape); // README. I had to replace the original functions because each call was duplicating the space.
+
+	[CObject] void cpSpaceAddBodyVoid(cpBody body); // README. I had to replace the original functions because each call was duplicating the space.
+
+	[CObject] cpConstraint cpSpaceAddConstraint(cpConstraint constraint);
+
+	[CObject] void cpSpaceRemoveShape(cpShape shape);
+
+	[CObject] void cpSpaceRemoveBody(cpBody body);
+
+	[CObject] void cpSpaceRemoveConstraint(cpConstraint constraint);
+
+	[CObject] cpBool cpSpaceContainsShape(cpShape shape);
+
+	[CObject] cpBool cpSpaceContainsBody(cpBody body);
+
+	[CObject] cpBool cpSpaceContainsConstraint(cpConstraint constraint);
+
+	// [CObject] cpBool cpSpaceAddPostStepCallback(cpPostStepFunc func, void *key, void *data);
+
+	// [CObject] void cpSpacePointQuery(cpVect point, cpFloat maxDistance, cpShapeFilter filter, cpSpacePointQueryFunc func, void *data);
+
+	// [CObject] cpShape cpSpacePointQueryNearest(cpVect point, cpFloat maxDistance, cpShapeFilter filter, cpPointQueryInfo *out);
+
+	// [CObject] void cpSpaceSegmentQuery(cpVect start, cpVect end, cpFloat radius, cpShapeFilter filter, cpSpaceSegmentQueryFunc func, void *data);
+
+	// [CObject] cpShape cpSpaceSegmentQueryFirst(cpVect start, cpVect end, cpFloat radius, cpShapeFilter filter, cpSegmentQueryInfo *out);
+
+	// [CObject] void cpSpaceBBQuery(cpBB bb, cpShapeFilter filter, cpSpaceBBQueryFunc func, void *data);
+
+	// [CObject] cpBool cpSpaceShapeQuery(cpShape shape, cpSpaceShapeQueryFunc func, void *data);
+
+	// [CObject] void cpSpaceEachBody(cpSpaceBodyIteratorFunc func, void *data);
+
+	// [CObject] void cpSpaceEachShape(cpSpaceShapeIteratorFunc func, void *data);
+
+	// [CObject] void cpSpaceEachConstraint(cpSpaceConstraintIteratorFunc func, void *data);
+
+	[CObject] void cpSpaceReindexStatic();
+
+	[CObject] void cpSpaceReindexShape(cpShape shape);
+
+	[CObject] void cpSpaceReindexShapesForBody(cpBody body);
+
+	[CObject] void cpSpaceUseSpatialHash(cpFloat dim, int count);
+
+	[CObject] void cpSpaceStep(cpFloat dt);
 };
 
 
