@@ -23,7 +23,7 @@ class Generator {
 #include<chipmunk/cpConstraint.h> // -done
 // #include<chipmunk/cpDampedRotarySpring.h> // -done
 // #include<chipmunk/cpDampedSpring.h>  // -done
-// #include<chipmunk/cpGearJoint.h>
+// #include<chipmunk/cpGearJoint.h> // -done
 // #include<chipmunk/cpGrooveJoint.h>
 // #include<chipmunk/cpHastySpace.h>
 // #include<chipmunk/cpMarch.h>
@@ -35,7 +35,7 @@ class Generator {
 // #include<chipmunk/cpRobust.h>
 // #include<chipmunk/cpRotaryLimitJoint.h>
 #include<chipmunk/cpShape.h>
-// #include<chipmunk/cpSimpleMotor.h>
+// #include<chipmunk/cpSimpleMotor.h> // -done
 // #include<chipmunk/cpSlideJoint.h>
 // #include<chipmunk/cpSpace.h>
 // #include<chipmunk/cpSpatialIndex.h>
