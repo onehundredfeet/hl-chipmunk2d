@@ -15,15 +15,21 @@ THIS PROJECT IS IN PROGRESS - DO NOT CLONE, IT DOES NOT WORK
 haxelib git hl-idl https://github.com/onehundredfeet/hl-idl.git
 ```
 
-
-### Ext operations
-ren *.c *.cpp
-ren chipmunk.cpp chipmunk_c.cpp
-# ------------------------------------------------------------------------- TODO UPDATE ---------------------------------------------------------------------------------------
-
 ### 2. Build
 
-2.1. Clone this repo into a clean directory.
+2.1. Clone original chipmunk repo.
+
+Open new terminal in some clean directory.
+```sh
+git clone https://github.com/slembcke/Chipmunk2D.git
+```
+Now, *.c files must be renamed to *.cpp, in order to avoid linkage errors.
+```sh
+cd chipmunk2d/src
+ren *.c *.cpp
+ren chipmunk.cpp chipmunk_c.cpp
+```
+
 
 Open new terminal in this directory.  
 ```sh
