@@ -12,11 +12,11 @@ class Generator {
 #endif
 
 #include<chipmunk/chipmunk.h>
-// #include<chipmunk/chipmunk_ffi.h>
-// #include<chipmunk/chipmunk_private.h>
-#include<chipmunk/chipmunk_structs.h>
-#include<chipmunk/chipmunk_types.h>
-// #include<chipmunk/chipmunk_unsafe.h>
+// #include<chipmunk/chipmunk_ffi.h>  // TODO ?
+// #include<chipmunk/chipmunk_private.h> // done
+#include<chipmunk/chipmunk_structs.h> // -done
+#include<chipmunk/chipmunk_types.h> // -done
+// #include<chipmunk/chipmunk_unsafe.h> // TODO ?
 //#include<chipmunk/cpArbiter.h> // -done
 #include<chipmunk/cpBB.h> // -done 
 //#include<chipmunk/cpBody.h> // -done
@@ -30,17 +30,17 @@ class Generator {
 // #include<chipmunk/cpPinJoint.h> // done
 // #include<chipmunk/cpPivotJoint.h> //done
 #include<chipmunk/cpPolyline.h> //done
-// #include<chipmunk/cpPolyShape.h>
-// #include<chipmunk/cpRatchetJoint.h>
-// #include<chipmunk/cpRobust.h>
-// #include<chipmunk/cpRotaryLimitJoint.h>
-#include<chipmunk/cpShape.h>
+// #include<chipmunk/cpPolyShape.h> //done
+// #include<chipmunk/cpRatchetJoint.h> //done
+#include<chipmunk/cpRobust.h> //done
+// #include<chipmunk/cpRotaryLimitJoint.h> //done
+#include<chipmunk/cpShape.h> //done
 // #include<chipmunk/cpSimpleMotor.h> // -done
-// #include<chipmunk/cpSlideJoint.h>
-// #include<chipmunk/cpSpace.h>
-// #include<chipmunk/cpSpatialIndex.h>
-// #include<chipmunk/cpTransform.h>
-#include<chipmunk/cpVect.h>
+// #include<chipmunk/cpSlideJoint.h>  // -done
+// #include<chipmunk/cpSpace.h>  // -done
+// #include<chipmunk/cpSpatialIndex.h>  // -done
+// #include<chipmunk/cpTransform.h> // -done
+#include<chipmunk/cpVect.h> // -done
 
 struct Chipmunk2D {};
 
