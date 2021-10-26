@@ -18,18 +18,18 @@ class Generator {
 #include<chipmunk/chipmunk_types.h>
 // #include<chipmunk/chipmunk_unsafe.h>
 //#include<chipmunk/cpArbiter.h> // -done
-#include<chipmunk/cpBB.h> // -done
-//#include<chipmunk/cpBody.h>
+#include<chipmunk/cpBB.h> // -done 
+//#include<chipmunk/cpBody.h> // -done
 #include<chipmunk/cpConstraint.h> // -done
 // #include<chipmunk/cpDampedRotarySpring.h> // -done
 // #include<chipmunk/cpDampedSpring.h>  // -done
 // #include<chipmunk/cpGearJoint.h> // -done
-// #include<chipmunk/cpGrooveJoint.h>
-// #include<chipmunk/cpHastySpace.h>
-// #include<chipmunk/cpMarch.h>
-// #include<chipmunk/cpPinJoint.h>
-// #include<chipmunk/cpPivotJoint.h>
-// #include<chipmunk/cpPolyline.h>
+// #include<chipmunk/cpGrooveJoint.h> // -done
+// #include<chipmunk/cpHastySpace.h> // IDL, c++ compile error
+#include<chipmunk/cpMarch.h> // TODO. Function pointer arguments
+// #include<chipmunk/cpPinJoint.h> // done
+// #include<chipmunk/cpPivotJoint.h> //done
+#include<chipmunk/cpPolyline.h>
 // #include<chipmunk/cpPolyShape.h>
 // #include<chipmunk/cpRatchetJoint.h>
 // #include<chipmunk/cpRobust.h>

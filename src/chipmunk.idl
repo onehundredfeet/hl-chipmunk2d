@@ -687,6 +687,106 @@ interface cpGrooveJoint
 
 
 // ---------------------------------------------------------------------------------------------------------
+// cpHastySpace.h
+//----------------------------------------------------------------------------------------------------------
+// interface cpHastySpace
+// {
+// 	[Static] cpSpace cpHastySpaceNew();
+// 	[Static] void cpHastySpaceFree(cpSpace space);
+// 	[Static] void cpHastySpaceSetThreads(cpSpace space, uint threads);
+// 	[Static] uint cpHastySpaceGetThreads(cpSpace space);
+// 	[Static] void cpHastySpaceStep(cpSpace space, cpFloat dt);
+// };
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpHastySpace.h
+//----------------------------------------------------------------------------------------------------------
+interface cpPinJoint
+{	
+	[Static] cpBool cpConstraintIsPinJoint([Const] cpConstraint constraint);
+
+	[Static] cpPinJoint cpPinJointAlloc();
+
+	[Static] cpPinJoint cpPinJointInit(cpPinJoint joint, cpBody a, cpBody b, 
+				[Deref] cpVect anchorA, [Deref] cpVect anchorB);
+
+	[Static] cpConstraint cpPinJointNew(cpBody a, cpBody b, [Deref] cpVect anchorA, [Deref] cpVect anchorB);
+
+	[Static,Value] cpVect cpPinJointGetAnchorA([Const] cpConstraint constraint);
+
+	[Static] void cpPinJointSetAnchorA(cpConstraint constraint, [Deref] cpVect anchorA);
+
+	[Static,Value] cpVect cpPinJointGetAnchorB([Const] cpConstraint constraint);
+
+	[Static] void cpPinJointSetAnchorB(cpConstraint constraint, [Deref] cpVect anchorB);
+
+	[Static] cpFloat cpPinJointGetDist([Const] cpConstraint constraint);
+
+	[Static] void cpPinJointSetDist(cpConstraint constraint, cpFloat dist);
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpPivotJoint.h
+//----------------------------------------------------------------------------------------------------------
+interface cpPivotJoint
+{
+	[Static] cpBool cpConstraintIsPivotJoint([Const] cpConstraint constraint);
+
+	[Static] cpPivotJoint cpPivotJointAlloc();
+
+	[Static] cpPivotJoint cpPivotJointInit(cpPivotJoint joint, cpBody a, cpBody b, [Deref] cpVect anchorA, [Deref] cpVect anchorB);
+
+	[Static] cpConstraint cpPivotJointNew(cpBody a, cpBody b, [Deref] cpVect pivot);
+
+	[Static] cpConstraint cpPivotJointNew2(cpBody a, cpBody b, [Deref] cpVect anchorA, [Deref] cpVect anchorB);
+
+	[Static,Value] cpVect cpPivotJointGetAnchorA([Const] cpConstraint constraint);
+
+	[Static] void cpPivotJointSetAnchorA(cpConstraint constraint, [Deref] cpVect anchorA);
+
+	[Static,Value] cpVect cpPivotJointGetAnchorB([Const] cpConstraint constraint);
+
+	[Static] void cpPivotJointSetAnchorB(cpConstraint constraint, [Deref] cpVect anchorB);
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpPolyline.h
+//----------------------------------------------------------------------------------------------------------
+interface cpPolyline
+{
+	[Static] void cpPolylineFree(cpPolyline line);
+
+	[Static] cpBool cpPolylineIsClosed(cpPolyline line);
+
+	[Static] cpPolyline cpPolylineSimplifyCurves(cpPolyline line, cpFloat tol);
+
+	[Static] cpPolyline cpPolylineSimplifyVertexes(cpPolyline line, cpFloat tol);
+
+	[Static] cpPolyline cpPolylineToConvexHull(cpPolyline line, cpFloat tol);
+};
+
+interface cpPolylineSet
+{
+	[Static] cpPolylineSet cpPolylineSetAlloc();
+
+	[Static] cpPolylineSet cpPolylineSetInit(cpPolylineSet set);
+
+	[Static] cpPolylineSet cpPolylineSetNew();
+
+	[Static] void cpPolylineSetDestroy(cpPolylineSet set, cpBool freePolylines);
+
+	[Static] void cpPolylineSetFree(cpPolylineSet set, cpBool freePolylines);
+
+	[Static] void cpPolylineSetCollectSegment([Deref] cpVect v0, [Deref] cpVect v1, cpPolylineSet lines);
+
+	[Static] cpPolylineSet cpPolylineConvexDecomposition(cpPolyline line, cpFloat tol);
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
 // chipmunk.h
 //----------------------------------------------------------------------------------------------------------
 interface Chipmunk2D 
