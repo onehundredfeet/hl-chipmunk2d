@@ -25,11 +25,11 @@ class Generator {
 // #include<chipmunk/cpDampedSpring.h>  // -done
 // #include<chipmunk/cpGearJoint.h> // -done
 // #include<chipmunk/cpGrooveJoint.h> // -done
-// #include<chipmunk/cpHastySpace.h> // IDL, c++ compile error
+#include<chipmunk/cpHastySpace.h> // done
 #include<chipmunk/cpMarch.h> // TODO. Function pointer arguments
 // #include<chipmunk/cpPinJoint.h> // done
 // #include<chipmunk/cpPivotJoint.h> //done
-#include<chipmunk/cpPolyline.h>
+#include<chipmunk/cpPolyline.h> //done
 // #include<chipmunk/cpPolyShape.h>
 // #include<chipmunk/cpRatchetJoint.h>
 // #include<chipmunk/cpRobust.h>

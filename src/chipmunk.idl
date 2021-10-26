@@ -689,14 +689,14 @@ interface cpGrooveJoint
 // ---------------------------------------------------------------------------------------------------------
 // cpHastySpace.h
 //----------------------------------------------------------------------------------------------------------
-// interface cpHastySpace
-// {
-// 	[Static] cpSpace cpHastySpaceNew();
-// 	[Static] void cpHastySpaceFree(cpSpace space);
-// 	[Static] void cpHastySpaceSetThreads(cpSpace space, uint threads);
-// 	[Static] uint cpHastySpaceGetThreads(cpSpace space);
-// 	[Static] void cpHastySpaceStep(cpSpace space, cpFloat dt);
-// };
+interface cpHastySpace
+{
+	[Static] cpSpace cpHastySpaceNew();
+	[Static] void cpHastySpaceFree(cpSpace space);
+	[Static] void cpHastySpaceSetThreads(cpSpace space, uint threads);
+	[Static] uint cpHastySpaceGetThreads(cpSpace space);
+	[Static] void cpHastySpaceStep(cpSpace space, cpFloat dt);
+};
 
 
 // ---------------------------------------------------------------------------------------------------------

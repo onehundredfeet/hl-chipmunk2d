@@ -15,6 +15,10 @@ THIS PROJECT IS IN PROGRESS - DO NOT CLONE, IT DOES NOT WORK
 haxelib git hl-idl https://github.com/onehundredfeet/hl-idl.git
 ```
 
+
+### Ext operations
+ren *.c *.cpp
+ren chipmunk.cpp chipmunk_c.cpp
 # ------------------------------------------------------------------------- TODO UPDATE ---------------------------------------------------------------------------------------
 
 ### 2. Build
