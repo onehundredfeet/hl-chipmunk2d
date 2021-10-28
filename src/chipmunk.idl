@@ -8,22 +8,121 @@ typedef cpDataPointer VoidPtr;
 typedef cpGroup int64;
 typedef cpBitmask uint;
 
+
+// ---------------------------------------------------------------------------------------------------------
+// cpVect.h
+//----------------------------------------------------------------------------------------------------------
 interface cpVect
 {
-	void cpVect();
 	attribute cpFloat x;
     attribute cpFloat y;
+	
+	void cpVect();
+
+	[Static,Value] cpVect cpv([Const] cpFloat x, [Const] cpFloat y);
+
+	[Static] cpBool cpveql([Const,Deref] cpVect v1, [Const,Deref] cpVect v2);
+
+	[Static,Value] cpVect cpvadd([Const,Deref] cpVect v1, [Const,Deref] cpVect v2);
+
+	[Static,Value] cpVect cpvsub([Const,Deref] cpVect v1, [Const,Deref] cpVect v2);
+
+	[Static,Value] cpVect cpvneg([Const,Deref] cpVect v);
+
+	[Static,Value] cpVect cpvmult([Const,Deref] cpVect v, [Const] cpFloat s);
+
+	[Static] cpFloat cpvdot([Const,Deref] cpVect v1, [Const,Deref] cpVect v2);
+
+	[Static] cpFloat cpvcross([Const,Deref] cpVect v1, [Const,Deref] cpVect v2);
+
+	[Static,Value] cpVect cpvperp([Const,Deref] cpVect v);
+
+	[Static,Value] cpVect cpvrperp([Const,Deref] cpVect v);
+
+	[Static,Value] cpVect cpvproject([Const,Deref] cpVect v1, [Const,Deref] cpVect v2);
+
+	[Static,Value] cpVect cpvforangle([Const] cpFloat a);
+
+	[Static] cpFloat cpvtoangle([Const,Deref] cpVect v);
+
+	[Static,Value] cpVect cpvrotate([Const,Deref] cpVect v1, [Const,Deref] cpVect v2);
+
+	[Static,Value] cpVect cpvunrotate([Const,Deref] cpVect v1, [Const,Deref] cpVect v2);
+
+	[Static] cpFloat cpvlengthsq([Const,Deref] cpVect v);
+
+	[Static] cpFloat cpvlength([Const,Deref] cpVect v);
+
+	[Static,Value] cpVect cpvlerp([Const,Deref] cpVect v1, [Const,Deref] cpVect v2, [Const] cpFloat t);
+
+	[Static,Value] cpVect cpvnormalize([Const,Deref] cpVect v);
+
+	[Static,Value] cpVect cpvslerp([Const,Deref] cpVect v1, [Const,Deref] cpVect v2, [Const] cpFloat t);
+	
+	[Static,Value] cpVect cpvslerpconst([Const,Deref] cpVect v1, [Const,Deref] cpVect v2, [Const] cpFloat a);
+	
+	[Static,Value] cpVect cpvclamp([Const,Deref] cpVect v, [Const] cpFloat len);
+	
+	[Static,Value] cpVect cpvlerpconst([Deref] cpVect v1, [Deref] cpVect v2, cpFloat d);
+	
+	[Static] cpFloat cpvdist([Const,Deref] cpVect v1, [Const,Deref] cpVect v2);
+	
+	[Static] cpFloat cpvdistsq([Const,Deref] cpVect v1, [Const,Deref] cpVect v2);
+	
+	[Static] cpBool cpvnear([Const,Deref] cpVect v1, [Const,Deref] cpVect v2, [Const] cpFloat dist);
 };
 
-interface cpTransform {
-	void cpTransform();
+
+// ---------------------------------------------------------------------------------------------------------
+// cpTransform.h
+//----------------------------------------------------------------------------------------------------------
+interface cpTransform 
+{
 	attribute cpFloat a;
 	attribute cpFloat b;
 	attribute cpFloat c;
 	attribute cpFloat d;
 	attribute cpFloat tx; 
 	attribute cpFloat ty;
+
+	void cpTransform();
+
+	[Static,Value] cpTransform cpTransformNew(cpFloat a, cpFloat b, cpFloat c, cpFloat d, cpFloat tx, cpFloat ty);
+
+	[Static,Value] cpTransform cpTransformNewTranspose(cpFloat a, cpFloat c, cpFloat tx, cpFloat b, cpFloat d, cpFloat ty);
+
+	[Static,Value] cpTransform cpTransformInverse([Deref] cpTransform t);
+
+	[Static,Value] cpTransform cpTransformMult([Deref] cpTransform t1, [Deref] cpTransform t2);
+
+	[Static,Value] cpVect cpTransformPoint([Deref] cpTransform t, [Deref] cpVect p);
+
+	[Static,Value] cpVect cpTransformVect([Deref] cpTransform t, [Deref] cpVect v);
+
+	[Static,Value] cpBB cpTransformbBB([Deref] cpTransform t, [Deref] cpBB bb);
+
+	[Static,Value] cpTransform cpTransformTranslate([Deref] cpVect translate);
+
+	[Static,Value] cpTransform cpTransformScale(cpFloat scaleX, cpFloat scaleY);
+
+	[Static,Value] cpTransform cpTransformRotate(cpFloat radians);
+
+	[Static,Value] cpTransform cpTransformRigid([Deref] cpVect translate, cpFloat radians);
+
+	[Static,Value] cpTransform cpTransformRigidInverse([Deref] cpTransform t);
+
+	[Static,Value] cpTransform cpTransformWrap([Deref] cpTransform outer, [Deref] cpTransform inner);
+
+	[Static,Value] cpTransform cpTransformWrapInverse([Deref] cpTransform outer, [Deref] cpTransform inner);
+
+	[Static,Value] cpTransform cpTransformOrtho([Deref] cpBB bb);
+
+	[Static,Value] cpTransform cpTransformBoneScale([Deref] cpVect v0, [Deref] cpVect v1);
+
+	[Static,Value] cpTransform cpTransformAxialScale([Deref] cpVect axis, [Deref] cpVect pivot, cpFloat scale);
 };
+
+
 
 interface cpMat2x2 {
 	void cpMat2x2();
@@ -687,7 +786,298 @@ interface cpGrooveJoint
 
 
 // ---------------------------------------------------------------------------------------------------------
-// chipmunk.h
+// cpHastySpace.h
+//----------------------------------------------------------------------------------------------------------
+interface cpHastySpace
+{
+	[Static] cpSpace cpHastySpaceNew();
+	[Static] void cpHastySpaceFree(cpSpace space);
+	[Static] void cpHastySpaceSetThreads(cpSpace space, uint threads);
+	[Static] uint cpHastySpaceGetThreads(cpSpace space);
+	[Static] void cpHastySpaceStep(cpSpace space, cpFloat dt);
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpHastySpace.h
+//----------------------------------------------------------------------------------------------------------
+interface cpPinJoint
+{	
+	[Static] cpBool cpConstraintIsPinJoint([Const] cpConstraint constraint);
+
+	[Static] cpPinJoint cpPinJointAlloc();
+
+	[Static] cpPinJoint cpPinJointInit(cpPinJoint joint, cpBody a, cpBody b, 
+				[Deref] cpVect anchorA, [Deref] cpVect anchorB);
+
+	[Static] cpConstraint cpPinJointNew(cpBody a, cpBody b, [Deref] cpVect anchorA, [Deref] cpVect anchorB);
+
+	[Static,Value] cpVect cpPinJointGetAnchorA([Const] cpConstraint constraint);
+
+	[Static] void cpPinJointSetAnchorA(cpConstraint constraint, [Deref] cpVect anchorA);
+
+	[Static,Value] cpVect cpPinJointGetAnchorB([Const] cpConstraint constraint);
+
+	[Static] void cpPinJointSetAnchorB(cpConstraint constraint, [Deref] cpVect anchorB);
+
+	[Static] cpFloat cpPinJointGetDist([Const] cpConstraint constraint);
+
+	[Static] void cpPinJointSetDist(cpConstraint constraint, cpFloat dist);
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpPivotJoint.h
+//----------------------------------------------------------------------------------------------------------
+interface cpPivotJoint
+{
+	[Static] cpBool cpConstraintIsPivotJoint([Const] cpConstraint constraint);
+
+	[Static] cpPivotJoint cpPivotJointAlloc();
+
+	[Static] cpPivotJoint cpPivotJointInit(cpPivotJoint joint, cpBody a, cpBody b, [Deref] cpVect anchorA, [Deref] cpVect anchorB);
+
+	[Static] cpConstraint cpPivotJointNew(cpBody a, cpBody b, [Deref] cpVect pivot);
+
+	[Static] cpConstraint cpPivotJointNew2(cpBody a, cpBody b, [Deref] cpVect anchorA, [Deref] cpVect anchorB);
+
+	[Static,Value] cpVect cpPivotJointGetAnchorA([Const] cpConstraint constraint);
+
+	[Static] void cpPivotJointSetAnchorA(cpConstraint constraint, [Deref] cpVect anchorA);
+
+	[Static,Value] cpVect cpPivotJointGetAnchorB([Const] cpConstraint constraint);
+
+	[Static] void cpPivotJointSetAnchorB(cpConstraint constraint, [Deref] cpVect anchorB);
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpPolyline.h
+//----------------------------------------------------------------------------------------------------------
+interface cpPolyline
+{
+	[Static] void cpPolylineFree(cpPolyline line);
+
+	[Static] cpBool cpPolylineIsClosed(cpPolyline line);
+
+	[Static] cpPolyline cpPolylineSimplifyCurves(cpPolyline line, cpFloat tol);
+
+	[Static] cpPolyline cpPolylineSimplifyVertexes(cpPolyline line, cpFloat tol);
+
+	[Static] cpPolyline cpPolylineToConvexHull(cpPolyline line, cpFloat tol);
+};
+
+interface cpPolylineSet
+{
+	[Static] cpPolylineSet cpPolylineSetAlloc();
+
+	[Static] cpPolylineSet cpPolylineSetInit(cpPolylineSet set);
+
+	[Static] cpPolylineSet cpPolylineSetNew();
+
+	[Static] void cpPolylineSetDestroy(cpPolylineSet set, cpBool freePolylines);
+
+	[Static] void cpPolylineSetFree(cpPolylineSet set, cpBool freePolylines);
+
+	[Static] void cpPolylineSetCollectSegment([Deref] cpVect v0, [Deref] cpVect v1, cpPolylineSet lines);
+
+	[Static] cpPolylineSet cpPolylineConvexDecomposition(cpPolyline line, cpFloat tol);
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpPolyShape.h
+//----------------------------------------------------------------------------------------------------------
+interface cpPolyShape
+{
+	[Static] cpPolyShape cpPolyShapeAlloc();
+
+	[Static] cpPolyShape cpPolyShapeInit(cpPolyShape poly, cpBody body, int count, 
+				[Const,Cast="cpVect*"] double[] verts, [Deref] cpTransform transform, cpFloat radius);
+
+	[Static] cpPolyShape cpPolyShapeInitRaw(cpPolyShape poly, cpBody body, int count, [Const,Cast="cpVect*"] double[] verts, cpFloat radius);
+
+	[Static] cpShape cpPolyShapeNew(cpBody body, int count, [Const,Cast="cpVect*"] double[] verts, [Deref] cpTransform transform, cpFloat radius);
+
+	[Static] cpShape cpPolyShapeNewRaw(cpBody body, int count, [Const,Cast="cpVect*"] double[] verts, cpFloat radius);
+
+	[Static] cpPolyShape cpBoxShapeInit(cpPolyShape poly, cpBody body, cpFloat width, cpFloat height, cpFloat radius);
+
+	[Static] cpPolyShape cpBoxShapeInit2(cpPolyShape poly, cpBody body, [Deref] cpBB box, cpFloat radius);
+
+	[Static] cpShape cpBoxShapeNew(cpBody body, cpFloat width, cpFloat height, cpFloat radius);
+
+	[Static] cpShape cpBoxShapeNew2(cpBody body, [Deref] cpBB box, cpFloat radius);
+
+	[Static] int cpPolyShapeGetCount([Const] cpShape shape);
+
+	[Static,Value] cpVect cpPolyShapeGetVert([Const] cpShape shape, int index);
+
+	[Static] cpFloat cpPolyShapeGetRadius([Const] cpShape shape);
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpRatchetJoint.h
+//----------------------------------------------------------------------------------------------------------
+interface cpRatchetJoint
+{
+	[Static] cpBool cpConstraintIsRatchetJoint([Const] cpConstraint constraint);
+
+	[Static] cpRatchetJoint cpRatchetJointAlloc();
+
+	[Static] cpRatchetJoint cpRatchetJointInit(cpRatchetJoint joint, cpBody a, cpBody b, cpFloat phase, cpFloat ratchet);
+
+	[Static] cpConstraint cpRatchetJointNew(cpBody a, cpBody b, cpFloat phase, cpFloat ratchet);
+
+	[Static] cpFloat cpRatchetJointGetAngle([Const] cpConstraint constraint);
+
+	[Static] void cpRatchetJointSetAngle(cpConstraint constraint, cpFloat angle);
+
+	[Static] cpFloat cpRatchetJointGetPhase([Const] cpConstraint constraint);
+
+	[Static] void cpRatchetJointSetPhase(cpConstraint constraint, cpFloat phase);
+
+	[Static] cpFloat cpRatchetJointGetRatchet([Const] cpConstraint constraint);
+
+	[Static] void cpRatchetJointSetRatchet(cpConstraint constraint, cpFloat ratchet);
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpRotaryLimitJoint
+//----------------------------------------------------------------------------------------------------------
+interface cpRotaryLimitJoint
+{
+	[Static] cpBool cpConstraintIsRotaryLimitJoint([Const] cpConstraint constraint);
+
+	[Static] cpRotaryLimitJoint cpRotaryLimitJointAlloc();
+
+	[Static] cpRotaryLimitJoint cpRotaryLimitJointInit(cpRotaryLimitJoint joint, cpBody a, cpBody b, cpFloat min, cpFloat max);
+	
+	[Static] cpConstraint cpRotaryLimitJointNew(cpBody a, cpBody b, cpFloat min, cpFloat max);
+
+	[Static] cpFloat cpRotaryLimitJointGetMin([Const] cpConstraint constraint);
+
+	[Static] void cpRotaryLimitJointSetMin(cpConstraint constraint, cpFloat min);
+
+	[Static] cpFloat cpRotaryLimitJointGetMax([Const] cpConstraint constraint);
+
+	[Static] void cpRotaryLimitJointSetMax(cpConstraint constraint, cpFloat max);
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpSlideJoint
+//----------------------------------------------------------------------------------------------------------
+interface cpSlideJoint
+{
+	[Static] cpBool cpConstraintIsSlideJoint([Const] cpConstraint constraint);
+
+	[Static] cpSlideJoint cpSlideJointAlloc();
+
+	[Static] cpSlideJoint cpSlideJointInit(cpSlideJoint joint, cpBody a, cpBody b, 
+				[Deref] cpVect anchorA, [Deref] cpVect anchorB, cpFloat min, cpFloat max);
+
+	[Static] cpConstraint cpSlideJointNew(cpBody a, cpBody b, [Deref] cpVect anchorA, [Deref] cpVect anchorB, 
+				cpFloat min, cpFloat max);
+
+	[Static,Value] cpVect cpSlideJointGetAnchorA([Const] cpConstraint constraint);
+
+	[Static] void cpSlideJointSetAnchorA(cpConstraint constraint, [Deref] cpVect anchorA);
+
+	[Static,Value] cpVect cpSlideJointGetAnchorB([Const] cpConstraint constraint);
+
+	[Static] void cpSlideJointSetAnchorB(cpConstraint constraint, [Deref] cpVect anchorB);
+
+	[Static] cpFloat cpSlideJointGetMin([Const] cpConstraint constraint);
+
+	[Static] void cpSlideJointSetMin(cpConstraint constraint, cpFloat min);
+
+	[Static] cpFloat cpSlideJointGetMax([Const] cpConstraint constraint);
+
+	[Static] void cpSlideJointSetMax(cpConstraint constraint, cpFloat max);
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpSpaceHash.c
+//----------------------------------------------------------------------------------------------------------
+interface cpSpaceHash {};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpBBTree.c
+//----------------------------------------------------------------------------------------------------------
+interface cpBBTree {};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// cpSpatialIndex.h
+//----------------------------------------------------------------------------------------------------------
+typedef cpHashValue uint;
+
+interface cpSpatialIndexClass {};
+
+interface cpSpatialIndex
+{
+	[Static] cpSpaceHash cpSpaceHashAlloc();
+
+// CP_EXPORT cpSpatialIndex* cpSpaceHashInit(cpSpaceHash *hash, cpFloat celldim, int numcells, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
+
+// CP_EXPORT cpSpatialIndex* cpSpaceHashNew(cpFloat celldim, int cells, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
+
+	[Static] void cpSpaceHashResize(cpSpaceHash hash, cpFloat celldim, int numcells);
+
+	[Static] cpBBTree cpBBTreeAlloc();
+
+// CP_EXPORT cpSpatialIndex* cpBBTreeInit(cpBBTree *tree, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
+
+// CP_EXPORT cpSpatialIndex* cpBBTreeNew(cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
+
+	[CObject] void cpBBTreeOptimize();
+
+// CP_EXPORT void cpBBTreeSetVelocityFunc(cpSpatialIndex *index, cpBBTreeVelocityFunc func);
+
+	// [Static] cpSweep1D cpSweep1DAlloc();
+
+// CP_EXPORT cpSpatialIndex* cpSweep1DInit(cpSweep1D *sweep, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
+
+// CP_EXPORT cpSpatialIndex* cpSweep1DNew(cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
+
+	[CObject] void cpSpatialIndexFree();
+
+	// [Static] void cpSpatialIndexCollideStatic(cpSpatialIndex dynamicIndex, cpSpatialIndex staticIndex, 
+	// 		cpSpatialIndexQueryFunc func, VoidPtr data);
+
+	[CObject] void cpSpatialIndexDestroy();
+
+	[CObject] int cpSpatialIndexCount();
+
+	// [CObject] void cpSpatialIndexEach(cpSpatialIndexIteratorFunc func, VoidPtr data)
+
+	[CObject] cpBool cpSpatialIndexContains(VoidPtr obj, cpHashValue hashid);
+
+	[CObject] void cpSpatialIndexInsert(VoidPtr obj, cpHashValue hashid);
+
+	[CObject] void cpSpatialIndexRemove(VoidPtr obj, cpHashValue hashid);
+
+	[CObject] void cpSpatialIndexReindex();
+
+	[CObject] void cpSpatialIndexReindexObject(VoidPtr obj, cpHashValue hashid);
+
+// static inline void cpSpatialIndexQuery(cpSpatialIndex *index, void *obj, cpBB bb, 
+				// cpSpatialIndexQueryFunc func, void *data)
+
+// static inline void cpSpatialIndexSegmentQuery(cpSpatialIndex *index, void *obj, cpVect a, cpVect b, 
+				// cpFloat t_exit, cpSpatialIndexSegmentQueryFunc func, void *data)
+
+// static inline void cpSpatialIndexReindexQuery(cpSpatialIndex *index, cpSpatialIndexQueryFunc func, void *data)
+};
+
+
+// ---------------------------------------------------------------------------------------------------------
+// chipmunk.h + cpRobust.h
 //----------------------------------------------------------------------------------------------------------
 interface Chipmunk2D 
 {
@@ -716,4 +1106,8 @@ interface Chipmunk2D
 	[Static,Value] cpVect cpClosetPointOnSegment( [Deref] cpVect p, 
 							 [Deref] cpVect a, [Deref] cpVect b);
 
+	// cpRobust.h
+	[Static] cpBool cpCheckPointGreater([Const,Deref] cpVect a, [Const,Deref] cpVect b, [Const,Deref] cpVect c);
+
+	[Static] cpBool cpCheckAxis([Deref] cpVect v0, [Deref] cpVect v1, [Deref] cpVect p, [Deref] cpVect n);
 };

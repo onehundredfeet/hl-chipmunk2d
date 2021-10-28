@@ -15,12 +15,7 @@ THIS PROJECT IS IN PROGRESS - DO NOT CLONE, IT DOES NOT WORK
 haxelib git hl-idl https://github.com/onehundredfeet/hl-idl.git
 ```
 
-# ------------------------------------------------------------------------- TODO UPDATE ---------------------------------------------------------------------------------------
-
 ### 2. Build
-
-2.1. Clone this repo into a clean directory.
-
 Open new terminal in this directory.  
 ```sh
 haxelib dev hl-chipmunk2d hl-chipmunk2d
@@ -33,6 +28,13 @@ From the hl-chipmunk2d root, run
 
 ```sh
 git submodule update --init --recursive
+```
+
+Now, *.c files must be renamed to *.cpp, in order to avoid linkage errors.
+```sh
+cd ext/chipmunk2d/src
+ren *.c *.cpp
+ren chipmunk.cpp chipmunk_c.cpp
 ```
 
 2.3 Generate the binding cpp file.
@@ -103,9 +105,8 @@ Ninja is optional.  You can use make just by removing -GNinja.
     make install
 ```
 
-
-cmake .. -A x64 -G "Visual Studio 15 2017" 
--DCHIPMUNK2D_SRC_DIR="C:/Projects/chipmunk2dToHL/chipmunk2dnavigation_cpp/chipmunk2d" 
--DHL_INCLUDE_DIR="C:/HaxeToolkit/HashLink/hl-1.11.0-win/include" 
--DHL_LIB_DIR="C:/HaxeToolkit/HashLink/hl-1.11.0-win" 
--DHDLL_DESTINATION="C:/HaxeToolkit/HashLink/hl-1.11.0-win"
+### 3. Run samples
+```sh
+haxe compile.hxml
+hl bin/example.hl
+```
