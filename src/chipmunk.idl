@@ -306,7 +306,8 @@ interface cpSegmentQueryInfo {
 };
 
 interface cpShapeFilter {
-	attribute cpGroup group;
+	void cpShapeFilter();
+	attribute int64 group;
 	attribute cpBitmask categories;
 	attribute cpBitmask mask;
 };
@@ -498,7 +499,9 @@ interface cpSpace
 
 	// [CObject] void cpSpaceSegmentQuery(cpVect start, cpVect end, cpFloat radius, cpShapeFilter filter, cpSpaceSegmentQueryFunc func, void *data);
 
-	// [CObject] cpShape cpSpaceSegmentQueryFirst(cpVect start, cpVect end, cpFloat radius, cpShapeFilter filter, cpSegmentQueryInfo *out);
+	[CObject] cpShape cpSpaceSegmentQueryFirst([Deref] cpVect start, [Deref] cpVect end, cpFloat radius, [Deref] cpShapeFilter filter, cpSegmentQueryInfo out);
+	
+	[CObject] cpShape cpSpaceSegmentQueryFirstNoFilter([Deref] cpVect start, [Deref] cpVect end, cpFloat radius, cpSegmentQueryInfo out);
 
 	// [CObject] void cpSpaceBBQuery(cpBB bb, cpShapeFilter filter, cpSpaceBBQueryFunc func, void *data);
 
