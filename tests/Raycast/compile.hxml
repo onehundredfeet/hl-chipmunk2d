@@ -1,7 +1,7 @@
 -lib hl-idl
 -lib heaps
 -lib hlsdl
--cp tests
+-lib chipmunk
 -cp src
 -main Raycast
--hl bin/raycast.hl
+-hl application.hl

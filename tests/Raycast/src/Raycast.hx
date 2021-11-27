@@ -37,21 +37,18 @@ class Raycast {
 		trace('Init chipmunk space');
 		space = chipmunk.Native.CpSpace.cpSpaceNew();
 		space.cpSpaceSetIterations(1);
+		
+		var shape = makeBall(0, 0, 40);
 
-		for (i in 0...20){
-			for (j in 0...20){
-				var shape = makeBall(400 + i * 10, 250 + j * 10, circleRadius);
-				//var filter = shape.cpShapeGetFilter();
-			}
-		}	
+		space.cpSpaceStep(0.02);
 
 		var begin = new chipmunk.Native.CpVect();
-		begin.x = 20;
-		begin.y = 295;
+		begin.x = -100;
+		begin.y = -100;
 
 		var end = new chipmunk.Native.CpVect();
-		end.x = 1000;
-		end.y = 250; // Add some slope to make sure the ray does not pass between shapes grid
+		end.x = 100;
+		end.y = 100; // Add some slope to make sure the ray does not pass between shapes grid
 
 		var out = new chipmunk.Native.CpSegmentQueryInfo();
 		var queryResult = space.cpSpaceSegmentQueryFirstNoFilter(begin, end, 2000, out);
@@ -60,6 +57,10 @@ class Raycast {
 
 		trace('Query intersection point : ${queryRePoint.x} ${queryRePoint.y} ');
 		trace('Query intersection normal : ${queryReNormal.x} ${queryReNormal.y} ');
+
+		var queryResultBody = queryResult.cpShapeGetBody();
+		var queryResultPos = queryResultBody.cpBodyGetPosition();
+		trace('Query intersection shape pos : ${queryResultPos.x} ${queryResultPos.y} ');
 		trace('Done');
 	}
 	

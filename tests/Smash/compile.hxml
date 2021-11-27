@@ -1,0 +1,7 @@
+-lib hl-idl
+-lib heaps
+-lib hlsdl
+-lib chipmunk
+-cp src
+-main Smash
+-hl application.hl
