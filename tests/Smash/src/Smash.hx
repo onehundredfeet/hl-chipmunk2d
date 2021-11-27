@@ -1,5 +1,5 @@
 
-class LogoSmash extends hxd.App{
+class Smash extends hxd.App{
 
 	public var space:chipmunk.Native.CpSpace;
 
@@ -47,8 +47,8 @@ class LogoSmash extends hxd.App{
 		space = chipmunk.Native.CpSpace.cpSpaceNew();
 		space.cpSpaceSetIterations(1);
 
-		var redTile = h2d.Tile.fromColor(0xFF0000, 5, 5);
-		var greenTile = h2d.Tile.fromColor(0x00FF00, 5, 5);
+		var redTile = h2d.Tile.fromColor(0xFF0000, circleRadius*2, circleRadius*2);
+		var greenTile = h2d.Tile.fromColor(0x00FF00, circleRadius*2, circleRadius*2);
 
 		for (i in 0...20){
 			for (j in 0...20){
@@ -83,7 +83,6 @@ class LogoSmash extends hxd.App{
 			// README
 			// If I move this to init(), then space.cpSpaceStep(dt); will crash in the first 10 frames. 
 			// As I checked, cpSpace get's garbage collected in the first frames.
-			//s2d.addChild(memberbmp);
 			for (i in 0...heapsObjects.length){
 				s2d.addChild( heapsObjects[i]);
 			}
@@ -97,6 +96,6 @@ class LogoSmash extends hxd.App{
 	}
 
 	static function main() {
-		new LogoSmash();
+		new Smash();
     }
 }

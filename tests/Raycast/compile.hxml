@@ -1,0 +1,7 @@
+-lib hl-idl
+-lib heaps
+-lib hlsdl
+-lib chipmunk
+-cp src
+-main Raycast
+-hl application.hl

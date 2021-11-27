@@ -1,7 +1,0 @@
--lib hl-idl
--lib heaps
--lib hlsdl
--cp tests
--cp src
--main LogoSmash
--hl bin/example.hl
