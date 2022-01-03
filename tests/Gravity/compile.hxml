@@ -1,7 +1,7 @@
 -lib hl-idl
 -lib heaps
 -lib hlsdl
--lib chipmunk
+-lib hl-chipmunk2d
 -cp src
 -main Gravity
 -hl application.hl

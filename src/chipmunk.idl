@@ -214,9 +214,9 @@ interface Body {
 
 	[CObject, Internal="cpBodySetMoment"] void BodySetMoment(cpFloat i);
 
-	[CObject,Value, Internal="cpBodyGetPosition"] Vect BodyGetPosition();
+	[CObject,Value, Internal="cpBodyGetPosition"] Vect getPosition();
 
-	[CObject, Internal="cpBodySetPosition"] void BodySetPosition([Deref] Vect pos);
+	[CObject, Internal="cpBodySetPosition"] void setPosition([Deref] Vect pos);
 
 	[CObject,Value, Internal="cpBodyGetCenterOfGravity"] Vect BodyGetCenterOfGravity();
 	
@@ -331,7 +331,7 @@ interface Shape
 
 	[Static,Value] cpContactPointSet cpShapesCollide([Const] Shape a, [Const] Shape b);
 
-	[CObject] cpSpace cpShapeGetSpace();
+	[CObject] Space cpShapeGetSpace();
 
 	[CObject] Body cpShapeGetBody();
 
@@ -417,11 +417,12 @@ interface cpSegmentShape
 // cpSpace.h
 //----------------------------------------------------------------------------------------------------------
 
-interface cpSpace
+[Internal="cpSpace"]
+interface Space
 {
-	[Static] cpSpace cpSpaceInit(cpSpace space);
+	[Static] Space cpSpaceInit(Space space);
 
-	[Static] cpSpace cpSpaceNew();
+	[Static] Space cpSpaceNew();
 
 	[CObject] void cpSpaceDestroy();
 
@@ -463,7 +464,7 @@ interface cpSpace
 
 	[CObject] void cpSpaceSetUserData(cpDataPointer userData);
 
-	[CObject] Body cpSpaceGetStaticBody();
+	[CObject, Internal="cpSpaceGetStaticBody"] Body getStaticBody();
 
 	[CObject] cpFloat cpSpaceGetCurrentTimeStep();
 
@@ -581,21 +582,21 @@ interface cpArbiter
 
 	[CObject] cpFloat cpArbiterGetDepth(int i);
 
-	[CObject] cpBool cpArbiterCallWildcardBeginA(cpSpace space);
+	[CObject] cpBool cpArbiterCallWildcardBeginA(Space space);
 
-	[CObject] cpBool cpArbiterCallWildcardBeginB(cpSpace space);
+	[CObject] cpBool cpArbiterCallWildcardBeginB(Space space);
 
-	[CObject] cpBool cpArbiterCallWildcardPreSolveA(cpSpace space);
+	[CObject] cpBool cpArbiterCallWildcardPreSolveA(Space space);
 
-	[CObject] cpBool cpArbiterCallWildcardPreSolveB(cpSpace space);
+	[CObject] cpBool cpArbiterCallWildcardPreSolveB(Space space);
 
-	[CObject] void cpArbiterCallWildcardPostSolveA(cpSpace space);
+	[CObject] void cpArbiterCallWildcardPostSolveA(Space space);
 
-	[CObject] void cpArbiterCallWildcardPostSolveB(cpSpace space);
+	[CObject] void cpArbiterCallWildcardPostSolveB(Space space);
 
-	[CObject] void cpArbiterCallWildcardSeparateA(cpSpace space);
+	[CObject] void cpArbiterCallWildcardSeparateA(Space space);
 
-	[CObject] void cpArbiterCallWildcardSeparateB(cpSpace space);
+	[CObject] void cpArbiterCallWildcardSeparateB(Space space);
 };
 
 
@@ -609,7 +610,7 @@ interface cpConstraint
 
 	[CObject] void cpConstraintFree();
 
-	[CObject] cpSpace cpConstraintGetSpace();
+	[CObject] Space cpConstraintGetSpace();
 
 	[CObject] Body cpConstraintGetBodyA();
 
@@ -803,11 +804,11 @@ interface cpGrooveJoint
 
 interface cpHastySpace
 {
-	[Static] cpSpace cpHastySpaceNew();
-	[Static] void cpHastySpaceFree(cpSpace space);
-	[Static] void cpHastySpaceSetThreads(cpSpace space, uint threads);
-	[Static] uint cpHastySpaceGetThreads(cpSpace space);
-	[Static] void cpHastySpaceStep(cpSpace space, cpFloat dt);
+	[Static] Space cpHastySpaceNew();
+	[Static] void cpHastySpaceFree(Space space);
+	[Static] void cpHastySpaceSetThreads(Space space, uint threads);
+	[Static] uint cpHastySpaceGetThreads(Space space);
+	[Static] void cpHastySpaceStep(Space space, cpFloat dt);
 };
 
 
@@ -1109,18 +1110,18 @@ interface SpatialIndex
 [NoDelete]
 interface Math 
 {
-	[Static] cpFloat cpMomentForCircle(cpFloat m, cpFloat r1, cpFloat r2, [Deref] Vect offset);
+	[Static, Internal="cpMomentForCircle"] cpFloat momentForCircle(cpFloat m, cpFloat r1, cpFloat r2, [Deref] Vect offset);
 
-	[Static] cpFloat cpAreaForCircle(cpFloat r1, cpFloat r2);
+	[Static, Internal="cpAreaForCircle"] cpFloat areaForCircle(cpFloat r1, cpFloat r2);
 	
-	[Static] cpFloat cpMomentForSegment(cpFloat m, [Deref,Cast="cpVect*"] Vect a, [Deref] Vect b, cpFloat radius);
+	[Static, Internal="cpMomentForSegment"] cpFloat momentForSegment(cpFloat m, [Deref,Cast="cpVect*"] Vect a, [Deref] Vect b, cpFloat radius);
 	
-	[Static] cpFloat cpMomentForPoly( cpFloat m, int count, [Const,Cast="cpVect*"] double[] verts, 
+	[Static, Internal="cpMomentForPoly"] cpFloat momentForPoly( cpFloat m, int count, [Const,Cast="cpVect*"] double[] verts, 
 							[Deref] Vect offset, cpFloat radius);
 
-	[Static] cpFloat cpAreaForSegment([Deref] Vect a, [Deref] Vect b, cpFloat radius);
+	[Static, Internal="cpAreaForSegment"] cpFloat areaForSegment([Deref] Vect a, [Deref] Vect b, cpFloat radius);
 
-	[Static] cpFloat cpAreaForPoly([Const] int count, [Const,Cast="cpVect*"] double[] verts, cpFloat radius);
+	[Static, Internal="cpAreaForPoly"] cpFloat areaForPoly([Const] int count, [Const,Cast="cpVect*"] double[] verts, cpFloat radius);
 
 	[Static,Value] Vect cpCentroidForPoly([Const] int count, [Cast="cpVect*"] double[] verts);
 

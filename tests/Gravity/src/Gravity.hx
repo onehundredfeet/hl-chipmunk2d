@@ -3,38 +3,38 @@ import hxd.Event;
 
 class Gravity extends hxd.App{
 
-	public var space:chipmunk.Native.CpSpace;
+	public var space:chipmunk.Native.Space;
 
-	var cpStaticShapesList : Array<chipmunk.Native.CpShape> = [];
-	var cpStaticBodyList : Array<chipmunk.Native.CpBody> = [];
+	var cpStaticShapesList : Array<chipmunk.Native.Shape> = [];
+	var cpStaticBodyList : Array<chipmunk.Native.Body> = [];
 
-	var cpShapesList : Array<chipmunk.Native.CpShape> = [];
-	var cpBodyList : Array<chipmunk.Native.CpBody> = [];
+	var cpShapesList : Array<chipmunk.Native.Shape> = [];
+	var cpBodyList : Array<chipmunk.Native.Body> = [];
 	var heapsObjects : Array<h2d.Bitmap> = [];
 
 	var circleRadius : Int = 5;
 
 	var mouseDown : Bool = false;
 
-	public function makeBall(x : Float, y : Float, radius : Float) : chipmunk.Native.CpShape{
-		var body = chipmunk.Native.CpBody.cpBodyNew(10.0, Math.POSITIVE_INFINITY);
+	public function makeBall(x : Float, y : Float, radius : Float) : chipmunk.Native.Shape{
+		var body = chipmunk.Native.Body.makeNew(10.0, Math.POSITIVE_INFINITY);
 
-		var pos = new chipmunk.Native.CpVect();
+		var pos = new chipmunk.Native.Vect();
 		pos.x = x;
 		pos.y = y;
-		body.cpBodySetPosition(pos);
+		body.setPosition(pos);
 		
 		cpBodyList.push(body);
 
-		var cpvzero = new chipmunk.Native.CpVect();
+		var cpvzero = new chipmunk.Native.Vect();
 		cpvzero.x = 0;
 		cpvzero.y = 0;
 		var shape = chipmunk.Native.CpCircleShape.cpCircleShapeNew(body, radius, cpvzero);
 		shape.cpShapeSetElasticity(0.0);
 		shape.cpShapeSetFriction(0.0);
 		
-		space.cpSpaceAddBodyVoid(body);
-		space.cpSpaceAddShapeVoid(shape);
+		space.addBody(body);
+		space.addShape(shape);
 
 		cpShapesList.push(shape);
 
@@ -59,42 +59,42 @@ class Gravity extends hxd.App{
 			if (event.kind == hxd.EventKind.EMove){
 				if (mouseDown == false) return;
 
-				var pos = new chipmunk.Native.CpVect();
+				var pos = new chipmunk.Native.Vect();
 				pos.x = event.relX;
 				pos.y = event.relY;
-				cpBodyList[cpBodyList.length - 1].cpBodySetPosition(pos);
+				cpBodyList[cpBodyList.length - 1].setPosition(pos);
 			}
 		}
 		hxd.Window.getInstance().addEventTarget(onEvent);
 
-		space = chipmunk.Native.CpSpace.cpSpaceNew();
+		space = chipmunk.Native.Space.cpSpaceNew();
 		space.cpSpaceSetIterations(1);
-		var gravity = new chipmunk.Native.CpVect();
+		var gravity = new chipmunk.Native.Vect();
 		gravity.x = 0;
 		gravity.y = 10;
 		space.cpSpaceSetGravity(gravity);
 
 		// Create segments around the edge of the screen.
-		//var staticBody = space.cpSpaceGetStaticBody();
-		var staticBody = chipmunk.Native.CpBody.cpBodyNew(0.0, 0.0);
+		var staticBody = space.getStaticBody();
+		//var staticBody = chipmunk.Native.Body.makeNew(0.0, 0.0);
 		
-		var floorPos = new chipmunk.Native.CpVect();
+		var floorPos = new chipmunk.Native.Vect();
 		// floorPos.x = 200;
 		// floorPos.y = 400;
 		// staticBody.cpBodySetPosition(floorPos);
 
-		var floorBegin = new chipmunk.Native.CpVect();
+		var floorBegin = new chipmunk.Native.Vect();
 		floorBegin.x = 1;
 		floorBegin.y = 400;
-		var floorEnd = new chipmunk.Native.CpVect();
+		var floorEnd = new chipmunk.Native.Vect();
 		floorEnd.x = 1000;
 		floorEnd.y = 400;
 		var floorSegment = chipmunk.Native.CpSegmentShape.cpSegmentShapeNew(staticBody, floorBegin, floorEnd, 1.0);
 		floorSegment.cpShapeSetElasticity(1.0);
 		floorSegment.cpShapeSetFriction(1.0);
 	
-		space.cpSpaceAddBodyVoid(staticBody);
-		space.cpSpaceAddShapeVoid(floorSegment);
+		//space.addBody(staticBody);
+		space.addShape(floorSegment);
 
 		cpStaticBodyList.push(staticBody);
 		cpStaticShapesList.push(floorSegment);
@@ -131,7 +131,7 @@ class Gravity extends hxd.App{
 	function syncHeapsAndPhysics() {
 		// Sync chipmunk physical objects with heaps GUI
 		for (i in 0...cpShapesList.length){
-			var pos = cpBodyList[i].cpBodyGetPosition();
+			var pos = cpBodyList[i].getPosition();
 			heapsObjects[i].x = pos.x;
 			heapsObjects[i].y = pos.y;
 		}
