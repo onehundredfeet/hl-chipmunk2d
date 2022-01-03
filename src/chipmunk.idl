@@ -10,66 +10,67 @@ typedef cpBitmask uint;
 
 
 // ---------------------------------------------------------------------------------------------------------
-// cpVect.h
+// Vect.h
 //----------------------------------------------------------------------------------------------------------
-interface cpVect
+[Internal="cpVect"]
+interface Vect
 {
 	attribute cpFloat x;
     attribute cpFloat y;
 	
-	void cpVect();
+	void Vect();
 
-	[Static,Value] cpVect cpv([Const] cpFloat x, [Const] cpFloat y);
+	[Static,Value] Vect cpv([Const] cpFloat x, [Const] cpFloat y);
 
-	[Static] cpBool cpveql([Const,Deref] cpVect v1, [Const,Deref] cpVect v2);
+	[Static] cpBool cpveql([Const,Deref] Vect v1, [Const,Deref] Vect v2);
 
-	[Static,Value] cpVect cpvadd([Const,Deref] cpVect v1, [Const,Deref] cpVect v2);
+	[Static,Value] Vect cpvadd([Const,Deref] Vect v1, [Const,Deref] Vect v2);
 
-	[Static,Value] cpVect cpvsub([Const,Deref] cpVect v1, [Const,Deref] cpVect v2);
+	[Static,Value] Vect cpvsub([Const,Deref] Vect v1, [Const,Deref] Vect v2);
 
-	[Static,Value] cpVect cpvneg([Const,Deref] cpVect v);
+	[Static,Value] Vect cpvneg([Const,Deref] Vect v);
 
-	[Static,Value] cpVect cpvmult([Const,Deref] cpVect v, [Const] cpFloat s);
+	[Static,Value] Vect cpvmult([Const,Deref] Vect v, [Const] cpFloat s);
 
-	[Static] cpFloat cpvdot([Const,Deref] cpVect v1, [Const,Deref] cpVect v2);
+	[Static] cpFloat cpvdot([Const,Deref] Vect v1, [Const,Deref] Vect v2);
 
-	[Static] cpFloat cpvcross([Const,Deref] cpVect v1, [Const,Deref] cpVect v2);
+	[Static] cpFloat cpvcross([Const,Deref] Vect v1, [Const,Deref] Vect v2);
 
-	[Static,Value] cpVect cpvperp([Const,Deref] cpVect v);
+	[Static,Value] Vect cpvperp([Const,Deref] Vect v);
 
-	[Static,Value] cpVect cpvrperp([Const,Deref] cpVect v);
+	[Static,Value] Vect cpvrperp([Const,Deref] Vect v);
 
-	[Static,Value] cpVect cpvproject([Const,Deref] cpVect v1, [Const,Deref] cpVect v2);
+	[Static,Value] Vect cpvproject([Const,Deref] Vect v1, [Const,Deref] Vect v2);
 
-	[Static,Value] cpVect cpvforangle([Const] cpFloat a);
+	[Static,Value] Vect cpvforangle([Const] cpFloat a);
 
-	[Static] cpFloat cpvtoangle([Const,Deref] cpVect v);
+	[Static] cpFloat cpvtoangle([Const,Deref] Vect v);
 
-	[Static,Value] cpVect cpvrotate([Const,Deref] cpVect v1, [Const,Deref] cpVect v2);
+	[Static,Value] Vect cpvrotate([Const,Deref] Vect v1, [Const,Deref] Vect v2);
 
-	[Static,Value] cpVect cpvunrotate([Const,Deref] cpVect v1, [Const,Deref] cpVect v2);
+	[Static,Value] Vect cpvunrotate([Const,Deref] Vect v1, [Const,Deref] Vect v2);
 
-	[Static] cpFloat cpvlengthsq([Const,Deref] cpVect v);
+	[Static] cpFloat cpvlengthsq([Const,Deref] Vect v);
 
-	[Static] cpFloat cpvlength([Const,Deref] cpVect v);
+	[Static] cpFloat cpvlength([Const,Deref] Vect v);
 
-	[Static,Value] cpVect cpvlerp([Const,Deref] cpVect v1, [Const,Deref] cpVect v2, [Const] cpFloat t);
+	[Static,Value] Vect cpvlerp([Const,Deref] Vect v1, [Const,Deref] Vect v2, [Const] cpFloat t);
 
-	[Static,Value] cpVect cpvnormalize([Const,Deref] cpVect v);
+	[Static,Value] Vect cpvnormalize([Const,Deref] Vect v);
 
-	[Static,Value] cpVect cpvslerp([Const,Deref] cpVect v1, [Const,Deref] cpVect v2, [Const] cpFloat t);
+	[Static,Value] Vect cpvslerp([Const,Deref] Vect v1, [Const,Deref] Vect v2, [Const] cpFloat t);
 	
-	[Static,Value] cpVect cpvslerpconst([Const,Deref] cpVect v1, [Const,Deref] cpVect v2, [Const] cpFloat a);
+	[Static,Value] Vect cpvslerpconst([Const,Deref] Vect v1, [Const,Deref] Vect v2, [Const] cpFloat a);
 	
-	[Static,Value] cpVect cpvclamp([Const,Deref] cpVect v, [Const] cpFloat len);
+	[Static,Value] Vect cpvclamp([Const,Deref] Vect v, [Const] cpFloat len);
 	
-	[Static,Value] cpVect cpvlerpconst([Deref] cpVect v1, [Deref] cpVect v2, cpFloat d);
+	[Static,Value] Vect cpvlerpconst([Deref] Vect v1, [Deref] Vect v2, cpFloat d);
 	
-	[Static] cpFloat cpvdist([Const,Deref] cpVect v1, [Const,Deref] cpVect v2);
+	[Static] cpFloat cpvdist([Const,Deref] Vect v1, [Const,Deref] Vect v2);
 	
-	[Static] cpFloat cpvdistsq([Const,Deref] cpVect v1, [Const,Deref] cpVect v2);
+	[Static] cpFloat cpvdistsq([Const,Deref] Vect v1, [Const,Deref] Vect v2);
 	
-	[Static] cpBool cpvnear([Const,Deref] cpVect v1, [Const,Deref] cpVect v2, [Const] cpFloat dist);
+	[Static] cpBool cpvnear([Const,Deref] Vect v1, [Const,Deref] Vect v2, [Const] cpFloat dist);
 };
 
 
@@ -95,19 +96,19 @@ interface cpTransform
 
 	[Static,Value] cpTransform cpTransformMult([Deref] cpTransform t1, [Deref] cpTransform t2);
 
-	[Static,Value] cpVect cpTransformPoint([Deref] cpTransform t, [Deref] cpVect p);
+	[Static,Value] Vect cpTransformPoint([Deref] cpTransform t, [Deref] Vect p);
 
-	[Static,Value] cpVect cpTransformVect([Deref] cpTransform t, [Deref] cpVect v);
+	[Static,Value] Vect cpTransformVect([Deref] cpTransform t, [Deref] Vect v);
 
 	[Static,Value] cpBB cpTransformbBB([Deref] cpTransform t, [Deref] cpBB bb);
 
-	[Static,Value] cpTransform cpTransformTranslate([Deref] cpVect translate);
+	[Static,Value] cpTransform cpTransformTranslate([Deref] Vect translate);
 
 	[Static,Value] cpTransform cpTransformScale(cpFloat scaleX, cpFloat scaleY);
 
 	[Static,Value] cpTransform cpTransformRotate(cpFloat radians);
 
-	[Static,Value] cpTransform cpTransformRigid([Deref] cpVect translate, cpFloat radians);
+	[Static,Value] cpTransform cpTransformRigid([Deref] Vect translate, cpFloat radians);
 
 	[Static,Value] cpTransform cpTransformRigidInverse([Deref] cpTransform t);
 
@@ -117,9 +118,9 @@ interface cpTransform
 
 	[Static,Value] cpTransform cpTransformOrtho([Deref] cpBB bb);
 
-	[Static,Value] cpTransform cpTransformBoneScale([Deref] cpVect v0, [Deref] cpVect v1);
+	[Static,Value] cpTransform cpTransformBoneScale([Deref] Vect v0, [Deref] Vect v1);
 
-	[Static,Value] cpTransform cpTransformAxialScale([Deref] cpVect axis, [Deref] cpVect pivot, cpFloat scale);
+	[Static,Value] cpTransform cpTransformAxialScale([Deref] Vect axis, [Deref] Vect pivot, cpFloat scale);
 };
 
 
@@ -145,142 +146,140 @@ interface cpBB
     attribute cpFloat t;
 	
 	[Static,Value] cpBB cpBBNew([Const] cpFloat l, [Const] cpFloat b, [Const] cpFloat r, [Const] cpFloat t);
-	[Static,Value] cpBB cpBBNewForExtents([Const,Deref] cpVect c, [Const] cpFloat hw, [Const] cpFloat hh);
-	[Static,Value] cpBB cpBBNewForCircle([Const,Deref] cpVect p, [Const] cpFloat r);
+	[Static,Value] cpBB cpBBNewForExtents([Const,Deref] Vect c, [Const] cpFloat hw, [Const] cpFloat hh);
+	[Static,Value] cpBB cpBBNewForCircle([Const,Deref] Vect p, [Const] cpFloat r);
 	[Static] cpBool cpBBIntersects([Const,Deref] cpBB a, [Const,Deref] cpBB b);
 	[Static] cpBool cpBBContainsBB([Const,Deref] cpBB bb, [Const,Deref] cpBB other);
-	[Static] cpBool cpBBContainsVect([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
+	[Static] cpBool cpBBContainsVect([Const,Deref] cpBB bb, [Const,Deref] Vect v);
 	[Static,Value] cpBB cpBBMerge([Const,Deref] cpBB a, [Const,Deref] cpBB b);
-	[Static,Value] cpBB cpBBExpand([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
-	[Static,Value] cpVect cpBBCenter([Deref] cpBB bb);
+	[Static,Value] cpBB cpBBExpand([Const,Deref] cpBB bb, [Const,Deref] Vect v);
+	[Static,Value] Vect cpBBCenter([Deref] cpBB bb);
 	[Static] cpFloat cpBBArea([Deref] cpBB bb);
 	[Static] cpFloat cpBBMergedArea([Deref] cpBB a, [Deref] cpBB b);
-	[Static] cpFloat cpBBSegmentQuery([Deref] cpBB bb, [Deref] cpVect a, [Deref] cpVect b);
-	[Static] cpBool cpBBIntersectsSegment([Deref] cpBB bb, [Deref] cpVect a, [Deref] cpVect b);
-	[Static,Value] cpVect cpBBClampVect([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
-	[Static,Value] cpVect cpBBWrapVect([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
-	[Static,Value] cpBB cpBBOffset([Const,Deref] cpBB bb, [Const,Deref] cpVect v);
+	[Static] cpFloat cpBBSegmentQuery([Deref] cpBB bb, [Deref] Vect a, [Deref] Vect b);
+	[Static] cpBool cpBBIntersectsSegment([Deref] cpBB bb, [Deref] Vect a, [Deref] Vect b);
+	[Static,Value] Vect cpBBClampVect([Const,Deref] cpBB bb, [Const,Deref] Vect v);
+	[Static,Value] Vect cpBBWrapVect([Const,Deref] cpBB bb, [Const,Deref] Vect v);
+	[Static,Value] cpBB cpBBOffset([Const,Deref] cpBB bb, [Const,Deref] Vect v);
 };
 
 
 // ---------------------------------------------------------------------------------------------------------
-// cpBody.h
+// Body.h
 //----------------------------------------------------------------------------------------------------------
-// enum cpBodyTypeHL {
+// enum BodyTypeHL {
 // 	"CP_BODY_TYPE_DYNAMIC",
 // 	"CP_BODY_TYPE_KINEMATIC",
 // 	"CP_BODY_TYPE_STATIC"
 // };
 
 [Internal="cpBody"]	
-interface cpBody {
+interface Body {
 	
-	void cpBody();
+	[Static, Internal="cpBodyAlloc"] Body alloc();
 
-	[Static] cpBody cpBodyAlloc();
+	[Static, Internal="cpBodyInit"] Body init(Body body, cpFloat mass, cpFloat moment);
 
-	[Static] cpBody cpBodyInit(cpBody body, cpFloat mass, cpFloat moment);
+	[Static, Internal="cpBodyNew"] Body makeNew(cpFloat mass, cpFloat moment);
 
-	[Static] cpBody cpBodyNew(cpFloat mass, cpFloat moment);
+	[Static, Internal="cpBodyNewKinematic"] Body newKinematic();
 
-	[Static] cpBody cpBodyNewKinematic();
+	[Static, Internal="cpBodyNewStatic"] Body newStatic();
 
-	[Static] cpBody cpBodyNewStatic();
-
-	[CObject] void cpBodyDestroy();
+	[CObject, Internal="cpBodyDestroy"] void destroy();
 	
-	[CObject] void cpBodyFree();
+	[CObject, Internal="cpBodyFree"] void free();
 
-	[CObject] void cpBodyActivate();
+	[CObject, Internal="cpBodyActivate"] void activate();
 
-	//[CObject] void cpBodyActivateStatic( cpShape filter);
+	//[CObject] void BodyActivateStatic( cpShape filter);
 
-	[CObject] void cpBodySleep();
+	[CObject, Internal="cpBodySleep"] void sleep();
 
-	[CObject] void cpBodySleepWithGroup(cpBody group);
+	[CObject, Internal="cpBodySleepWithGroup"] void sleepWithGroup(Body group);
 
-	[CObject] cpBool cpBodyIsSleeping();
+	[CObject, Internal="cpBodyIsSleeping"] cpBool isSleeping();
 
-	//[CObject] cpBodyType cpBodyGetType();
+	//[CObject] BodyType BodyGetType();
 
-	//[CObject] void cpBodySetType(cpBodyType type);
+	//[CObject] void BodySetType(BodyType type);
 
-	// [CObject] cpSpace cpBodyGetSpace();
+	// [CObject] cpSpace BodyGetSpace();
 
-	[CObject] cpFloat cpBodyGetMass();
+	[CObject, Internal="cpBodyGetMass"] cpFloat BodyGetMass();
 
-	[CObject] void cpBodySetMass(cpFloat m);
+	[CObject, Internal="cpBodySetMass"] void BodySetMass(cpFloat m);
 
-	[CObject] cpFloat cpBodyGetMoment();
+	[CObject, Internal="cpBodyGetMoment"] cpFloat BodyGetMoment();
 
-	[CObject] void cpBodySetMoment(cpFloat i);
+	[CObject, Internal="cpBodySetMoment"] void BodySetMoment(cpFloat i);
 
-	[CObject,Value] cpVect cpBodyGetPosition();
+	[CObject,Value, Internal="cpBodyGetPosition"] Vect BodyGetPosition();
 
-	[CObject] void cpBodySetPosition([Deref] cpVect pos);
+	[CObject, Internal="cpBodySetPosition"] void BodySetPosition([Deref] Vect pos);
 
-	[CObject,Value] cpVect cpBodyGetCenterOfGravity();
+	[CObject,Value, Internal="cpBodyGetCenterOfGravity"] Vect BodyGetCenterOfGravity();
 	
-	[CObject] void cpBodySetCenterOfGravity([Deref] cpVect cog);
+	[CObject, Internal="cpBodySetCenterOfGravity"] void BodySetCenterOfGravity([Deref] Vect cog);
 
-	[CObject,Value] cpVect cpBodyGetVelocity();
+	[CObject,Value, Internal="cpBodyGetVelocity"] Vect BodyGetVelocity();
 
-	[CObject] void cpBodySetVelocity([Deref] cpVect velocity);
+	[CObject, Internal="cpBodySetVelocity"] void BodySetVelocity([Deref] Vect velocity);
 
-	[CObject,Value] cpVect cpBodyGetForce();
+	[CObject,Value, Internal="cpBodyGetForce"] Vect BodyGetForce();
 
-	[CObject] void cpBodySetForce([Deref] cpVect force);
+	[CObject, Internal="cpBodySetForce"] void BodySetForce([Deref] Vect force);
 
-	[CObject] cpFloat cpBodyGetAngle();
+	[CObject, Internal="cpBodyGetAngle"] cpFloat BodyGetAngle();
 
-	[CObject] void cpBodySetAngle(cpFloat a);
+	[CObject, Internal="cpBodySetAngle"] void BodySetAngle(cpFloat a);
 
-	[CObject] cpFloat cpBodyGetAngularVelocity();
+	[CObject, Internal="cpBodyGetAngularVelocity"] cpFloat BodyGetAngularVelocity();
 
-	[CObject] void cpBodySetAngularVelocity(cpFloat angularVelocity);
+	[CObject, Internal="cpBodySetAngularVelocity"] void BodySetAngularVelocity(cpFloat angularVelocity);
 
-	[CObject] cpFloat cpBodyGetTorque();
+	[CObject, Internal="cpBodyGetTorque"] cpFloat BodyGetTorque();
 
-	[CObject] void cpBodySetTorque(cpFloat torque);
+	[CObject, Internal="cpBodySetTorque"] void BodySetTorque(cpFloat torque);
 
-	[CObject,Value] cpVect cpBodyGetRotation();
+	[CObject,Value, Internal="cpBodyGetRotation"] Vect BodyGetRotation();
 
-	//[CObject] cpDataPointer cpBodyGetUserData();
+	//[CObject] cpDataPointer BodyGetUserData();
 
-	//[CObject] void cpBodySetUserData(cpDataPointer userData);
+	//[CObject] void BodySetUserData(cpDataPointer userData);
 
-	// [CObject] void cpBodySetVelocityUpdateFunc(cpBodyVelocityFunc velocityFunc); // TODO
+	// [CObject] void BodySetVelocityUpdateFunc(BodyVelocityFunc velocityFunc); // TODO
 
-	// [CObject] void cpBodySetPositionUpdateFunc(cpBodyPositionFunc positionFunc); // TODO
+	// [CObject] void BodySetPositionUpdateFunc(BodyPositionFunc positionFunc); // TODO
 
-	[CObject] void cpBodyUpdateVelocity([Deref] cpVect gravity, cpFloat damping, cpFloat dt);
+	[CObject, Internal="cpBodyUpdateVelocity"] void BodyUpdateVelocity([Deref] Vect gravity, cpFloat damping, cpFloat dt);
 	
-	[CObject] void cpBodyUpdatePosition(cpFloat dt);
+	[CObject, Internal="cpBodyUpdatePosition"] void BodyUpdatePosition(cpFloat dt);
 
-	[CObject,Value] cpVect cpBodyLocalToWorld([Const,Deref] cpVect point);
+	[CObject,Value, Internal="cpBodyLocalToWorld"] Vect BodyLocalToWorld([Const,Deref] Vect point);
 
-	[CObject,Value] cpVect cpBodyWorldToLocal([Const,Deref] cpVect point);
+	[CObject,Value, Internal="cpBodyWorldToLocal"] Vect BodyWorldToLocal([Const,Deref] Vect point);
 
-	[CObject] void cpBodyApplyForceAtWorldPoint([Deref] cpVect force, [Deref] cpVect point);
+	[CObject, Internal="cpBodyApplyForceAtWorldPoint"] void BodyApplyForceAtWorldPoint([Deref] Vect force, [Deref] Vect point);
 
-	[CObject] void cpBodyApplyForceAtLocalPoint([Deref] cpVect force, [Deref] cpVect point);
+	[CObject, Internal="cpBodyApplyForceAtLocalPoint"] void BodyApplyForceAtLocalPoint([Deref] Vect force, [Deref] Vect point);
 
-	[CObject] void cpBodyApplyImpulseAtWorldPoint([Deref] cpVect impulse, [Deref] cpVect point);
+	[CObject, Internal="cpBodyApplyImpulseAtWorldPoint"] void BodyApplyImpulseAtWorldPoint([Deref] Vect impulse, [Deref] Vect point);
 	
-	[CObject] void cpBodyApplyImpulseAtLocalPoint([Deref] cpVect impulse, [Deref] cpVect point);
+	[CObject, Internal="cpBodyApplyImpulseAtLocalPoint"] void BodyApplyImpulseAtLocalPoint([Deref] Vect impulse, [Deref] Vect point);
 
-	[CObject,Value] cpVect cpBodyGetVelocityAtWorldPoint([Deref] cpVect point);
+	[CObject,Value, Internal="cpBodyGetVelocityAtWorldPoint"] Vect BodyGetVelocityAtWorldPoint([Deref] Vect point);
 	
-	[CObject,Value]  cpVect cpBodyGetVelocityAtLocalPoint([Deref] cpVect point);
+	[CObject,Value, Internal="cpBodyGetVelocityAtLocalPoint"]  Vect BodyGetVelocityAtLocalPoint([Deref] Vect point);
 
-	[CObject] cpFloat cpBodyKineticEnergy();
+	[CObject, Internal="cpBodyKineticEnergy"] cpFloat BodyKineticEnergy();
 
 	// TODO
-	// [CObject] void cpBodyEachShape(cpBodyShapeIteratorFunc func, void *data);
+	// [CObject] void BodyEachShape(BodyShapeIteratorFunc func, void *data);
 
-	// [CObject] void cpBodyEachConstraint(cpBodyConstraintIteratorFunc func, void *data);
+	// [CObject] void BodyEachConstraint(BodyConstraintIteratorFunc func, void *data);
 
-	// [CObject] void cpBodyEachArbiter(cpBodyArbiterIteratorFunc func, void *data);
+	// [CObject] void BodyEachArbiter(BodyArbiterIteratorFunc func, void *data);
 };
 
 
@@ -291,17 +290,17 @@ interface cpBody {
 interface cpPointQueryInfo 
 {
 	void cpPointQueryInfo();
-	[Const] attribute cpShape shape;
-	[Value] attribute cpVect point;
+	[Const] attribute Shape shape;
+	[Value] attribute Vect point;
 	attribute cpFloat distance;
-	[Value] attribute cpVect gradient;
+	[Value] attribute Vect gradient;
 };
 
 interface cpSegmentQueryInfo {
 	void cpSegmentQueryInfo();
-	[Const] attribute cpShape shape;
-	[Value] attribute cpVect point;
-	[Value] attribute cpVect normal;
+	[Const] attribute Shape shape;
+	[Value] attribute Vect point;
+	[Value] attribute Vect normal;
 	attribute cpFloat alpha;
 };
 
@@ -312,9 +311,9 @@ interface cpShapeFilter {
 	attribute cpBitmask mask;
 };
 
-interface cpShape
+[Internal="cpShape"]
+interface Shape
 {
-	void cpShape();
 
 	[Static,Value] cpShapeFilter cpShapeFilterNew(cpGroup group, cpBitmask categories, cpBitmask mask);
 
@@ -326,17 +325,17 @@ interface cpShape
 
 	[CObject,Value] cpBB cpShapeUpdate([Deref] cpTransform transform);
 
-	[CObject] cpFloat cpShapePointQuery([Deref] cpVect p, cpPointQueryInfo out);
+	[CObject] cpFloat cpShapePointQuery([Deref] Vect p, cpPointQueryInfo out);
 
-	[CObject] cpBool cpShapeSegmentQuery([Deref] cpVect a, [Deref] cpVect b, cpFloat radius, cpSegmentQueryInfo info);
+	[CObject] cpBool cpShapeSegmentQuery([Deref] Vect a, [Deref] Vect b, cpFloat radius, cpSegmentQueryInfo info);
 
-	[Static,Value] cpContactPointSet cpShapesCollide([Const] cpShape a, [Const] cpShape b);
+	[Static,Value] cpContactPointSet cpShapesCollide([Const] Shape a, [Const] Shape b);
 
 	[CObject] cpSpace cpShapeGetSpace();
 
-	[CObject] cpBody cpShapeGetBody();
+	[CObject] Body cpShapeGetBody();
 
-	[CObject] void cpShapeSetBody(cpBody body);
+	[CObject] void cpShapeSetBody(Body body);
 
 	[CObject] cpFloat cpShapeGetMass();
 
@@ -350,7 +349,7 @@ interface cpShape
 
 	[CObject] cpFloat cpShapeGetArea();
 
-	[CObject,Value] cpVect cpShapeGetCenterOfGravity();
+	[CObject,Value] Vect cpShapeGetCenterOfGravity();
 
 	[CObject,Value] cpBB cpShapeGetBB();
 
@@ -366,9 +365,9 @@ interface cpShape
 
 	[CObject] void cpShapeSetFriction(cpFloat friction);
 
-	[CObject,Value] cpVect cpShapeGetSurfaceVelocity();
+	[CObject,Value] Vect cpShapeGetSurfaceVelocity();
 
-	[CObject] void cpShapeSetSurfaceVelocity([Deref] cpVect surfaceVelocity);
+	[CObject] void cpShapeSetSurfaceVelocity([Deref] Vect surfaceVelocity);
 
 	[CObject] cpDataPointer cpShapeGetUserData();
 
@@ -383,38 +382,41 @@ interface cpShape
 	[CObject] void cpShapeSetFilter([Deref] cpShapeFilter filter);
 };
 
+
 interface cpCircleShape
 {
 	[Static] cpCircleShape cpCircleShapeAlloc();
-	[Static] cpCircleShape cpCircleShapeInit(cpCircleShape circle, cpBody body, cpFloat radius, [Deref] cpVect offset);
-	[Static] cpShape cpCircleShapeNew(cpBody body, cpFloat radius, [Deref] cpVect offset);
-	[Static,Value] cpVect cpCircleShapeGetOffset([Const] cpShape shape);
-	[Static] cpFloat cpCircleShapeGetRadius([Const] cpShape shape);
+	[Static] cpCircleShape cpCircleShapeInit(cpCircleShape circle, Body body, cpFloat radius, [Deref] Vect offset);
+	[Static] Shape cpCircleShapeNew(Body body, cpFloat radius, [Deref] Vect offset);
+	[Static,Value] Vect cpCircleShapeGetOffset([Const] Shape shape);
+	[Static] cpFloat cpCircleShapeGetRadius([Const] Shape shape);
 };
+
 
 interface cpSegmentShape
 {
 	[Static] cpSegmentShape cpSegmentShapeAlloc();
 
-	[Static] cpSegmentShape cpSegmentShapeInit(cpSegmentShape seg, cpBody body, 
-				[Deref] cpVect a, [Deref] cpVect b, cpFloat radius);
+	[Static] cpSegmentShape cpSegmentShapeInit(cpSegmentShape seg, Body body, 
+				[Deref] Vect a, [Deref] Vect b, cpFloat radius);
 
-	[Static] cpShape cpSegmentShapeNew(cpBody body, [Deref] cpVect a, [Deref] cpVect b, cpFloat radius);
+	[Static] Shape cpSegmentShapeNew(Body body, [Deref] Vect a, [Deref] Vect b, cpFloat radius);
 
-	[Static] void cpSegmentShapeSetNeighbors(cpShape shape, [Deref] cpVect prev, [Deref] cpVect next);
+	[Static] void cpSegmentShapeSetNeighbors(Shape shape, [Deref] Vect prev, [Deref] Vect next);
 
-	[Static,Value] cpVect cpSegmentShapeGetA([Const] cpShape shape);
+	[Static,Value] Vect cpSegmentShapeGetA([Const] Shape shape);
 
-	[Static,Value] cpVect cpSegmentShapeGetB([Const] cpShape shape);
+	[Static,Value] Vect cpSegmentShapeGetB([Const] Shape shape);
 
-	[Static,Value] cpVect cpSegmentShapeGetNormal([Const] cpShape shape);
+	[Static,Value] Vect cpSegmentShapeGetNormal([Const] Shape shape);
 
-	[Static] cpFloat cpSegmentShapeGetRadius([Const] cpShape shape);
+	[Static] cpFloat cpSegmentShapeGetRadius([Const] Shape shape);
 };
 
 // ---------------------------------------------------------------------------------------------------------
 // cpSpace.h
 //----------------------------------------------------------------------------------------------------------
+
 interface cpSpace
 {
 	[Static] cpSpace cpSpaceInit(cpSpace space);
@@ -429,9 +431,9 @@ interface cpSpace
 
 	[CObject] void cpSpaceSetIterations(int iterations);
 
-	[CObject,Value] cpVect cpSpaceGetGravity();
+	[CObject,Value] Vect cpSpaceGetGravity();
 
-	[CObject] void cpSpaceSetGravity([Deref] cpVect gravity);
+	[CObject] void cpSpaceSetGravity([Deref] Vect gravity);
 
 	[CObject] cpFloat cpSpaceGetDamping();
 
@@ -461,7 +463,7 @@ interface cpSpace
 
 	[CObject] void cpSpaceSetUserData(cpDataPointer userData);
 
-	[CObject] cpBody cpSpaceGetStaticBody();
+	[CObject] Body cpSpaceGetStaticBody();
 
 	[CObject] cpFloat cpSpaceGetCurrentTimeStep();
 
@@ -473,35 +475,35 @@ interface cpSpace
 
 	// [CObject] cpCollisionHandler *cpSpaceAddWildcardHandler(cpCollisionType type);
 
-	[CObject] void cpSpaceAddShapeVoid(cpShape shape); // README. I had to replace the original functions because each call was duplicating the space.
+	[CObject, Internal="cpSpaceAddShape"] void addShape(Shape shape); // README. I had to replace the original functions because each call was duplicating the space.
 
-	[CObject] void cpSpaceAddBodyVoid(cpBody body); // README. I had to replace the original functions because each call was duplicating the space.
+	[CObject, Internal="cpSpaceAddBody"] void addBody(Body body); // README. I had to replace the original functions because each call was duplicating the space.
 
 	[CObject] cpConstraint cpSpaceAddConstraint(cpConstraint constraint);
 
-	[CObject] void cpSpaceRemoveShape(cpShape shape);
+	[CObject] void cpSpaceRemoveShape(Shape shape);
 
-	[CObject] void cpSpaceRemoveBody(cpBody body);
+	[CObject] void cpSpaceRemoveBody(Body body);
 
 	[CObject] void cpSpaceRemoveConstraint(cpConstraint constraint);
 
-	[CObject] cpBool cpSpaceContainsShape(cpShape shape);
+	[CObject] cpBool cpSpaceContainsShape(Shape shape);
 
-	[CObject] cpBool cpSpaceContainsBody(cpBody body);
+	[CObject] cpBool cpSpaceContainsBody(Body body);
 
 	[CObject] cpBool cpSpaceContainsConstraint(cpConstraint constraint);
 
 	// [CObject] cpBool cpSpaceAddPostStepCallback(cpPostStepFunc func, void *key, void *data);
 
-	// [CObject] void cpSpacePointQuery(cpVect point, cpFloat maxDistance, cpShapeFilter filter, cpSpacePointQueryFunc func, void *data);
+	// [CObject] void cpSpacePointQuery(Vect point, cpFloat maxDistance, cpShapeFilter filter, cpSpacePointQueryFunc func, void *data);
 
-	// [CObject] cpShape cpSpacePointQueryNearest(cpVect point, cpFloat maxDistance, cpShapeFilter filter, cpPointQueryInfo *out);
+	// [CObject] cpShape cpSpacePointQueryNearest(Vect point, cpFloat maxDistance, cpShapeFilter filter, cpPointQueryInfo *out);
 
-	// [CObject] void cpSpaceSegmentQuery(cpVect start, cpVect end, cpFloat radius, cpShapeFilter filter, cpSpaceSegmentQueryFunc func, void *data);
+	// [CObject] void cpSpaceSegmentQuery(Vect start, Vect end, cpFloat radius, cpShapeFilter filter, cpSpaceSegmentQueryFunc func, void *data);
 
-	[CObject] cpShape cpSpaceSegmentQueryFirst([Deref] cpVect start, [Deref] cpVect end, cpFloat radius, [Deref] cpShapeFilter filter, cpSegmentQueryInfo out);
+	[CObject] Shape cpSpaceSegmentQueryFirst([Deref] Vect start, [Deref] Vect end, cpFloat radius, [Deref] cpShapeFilter filter, cpSegmentQueryInfo out);
 	
-	[CObject] cpShape cpSpaceSegmentQueryFirstNoFilter([Deref] cpVect start, [Deref] cpVect end, cpFloat radius, cpSegmentQueryInfo out);
+	[CObject] Shape cpSpaceSegmentQueryFirstNoFilter([Deref] Vect start, [Deref] Vect end, cpFloat radius, cpSegmentQueryInfo out);
 
 	// [CObject] void cpSpaceBBQuery(cpBB bb, cpShapeFilter filter, cpSpaceBBQueryFunc func, void *data);
 
@@ -515,9 +517,9 @@ interface cpSpace
 
 	[CObject] void cpSpaceReindexStatic();
 
-	[CObject] void cpSpaceReindexShape(cpShape shape);
+	[CObject] void cpSpaceReindexShape(Shape shape);
 
-	[CObject] void cpSpaceReindexShapesForBody(cpBody body);
+	[CObject] void cpSpaceReindexShapesForBody(Body body);
 
 	[CObject] void cpSpaceUseSpatialHash(cpFloat dim, int count);
 
@@ -532,6 +534,7 @@ interface cpContactPointSet {
 	
 };
 
+
 interface cpArbiter
 {
 	[CObject] cpFloat cpArbiterGetRestitution();
@@ -542,15 +545,15 @@ interface cpArbiter
 
 	[CObject] void cpArbiterSetFriction(cpFloat friction);
 
-	[CObject,Value] cpVect cpArbiterGetSurfaceVelocity();
+	[CObject,Value] Vect cpArbiterGetSurfaceVelocity();
 
-	[CObject] void cpArbiterSetSurfaceVelocity([Deref] cpVect vr);
+	[CObject] void cpArbiterSetSurfaceVelocity([Deref] Vect vr);
 
 	[CObject] cpDataPointer cpArbiterGetUserData();
 
 	[CObject] void cpArbiterSetUserData(cpDataPointer userData);
 
-	[CObject,Value] cpVect cpArbiterTotalImpulse();
+	[CObject,Value] Vect cpArbiterTotalImpulse();
 
 	[CObject] cpFloat cpArbiterTotalKE();
 
@@ -558,7 +561,7 @@ interface cpArbiter
 
 	// CP_EXPORT void cpArbiterGetShapes(const cpArbiter *arb, cpShape **a, cpShape **b);
 
-	// CP_EXPORT void cpArbiterGetBodies(const cpArbiter *arb, cpBody **a, cpBody **b);
+	// CP_EXPORT void cpArbiterGetBodies(const cpArbiter *arb, Body **a, Body **b);
 
 	[CObject,Value] cpContactPointSet cpArbiterGetContactPointSet();
 
@@ -570,11 +573,11 @@ interface cpArbiter
 
 	[CObject] int cpArbiterGetCount();
 
-	[CObject,Value] cpVect cpArbiterGetNormal();
+	[CObject,Value] Vect cpArbiterGetNormal();
 
-	[CObject,Value] cpVect cpArbiterGetPointA(int i);
+	[CObject,Value] Vect cpArbiterGetPointA(int i);
 
-	[CObject,Value] cpVect cpArbiterGetPointB(int i);
+	[CObject,Value] Vect cpArbiterGetPointB(int i);
 
 	[CObject] cpFloat cpArbiterGetDepth(int i);
 
@@ -599,6 +602,7 @@ interface cpArbiter
 // ---------------------------------------------------------------------------------------------------------
 // cpConstraint.h
 //----------------------------------------------------------------------------------------------------------
+
 interface cpConstraint
 {
 	[CObject] void cpConstraintDestroy();
@@ -607,9 +611,9 @@ interface cpConstraint
 
 	[CObject] cpSpace cpConstraintGetSpace();
 
-	[CObject] cpBody cpConstraintGetBodyA();
+	[CObject] Body cpConstraintGetBodyA();
 
-	[CObject] cpBody cpConstraintGetBodyB();
+	[CObject] Body cpConstraintGetBodyB();
 
 	[CObject] cpFloat cpConstraintGetMaxForce();
 	
@@ -646,6 +650,7 @@ interface cpConstraint
 // ---------------------------------------------------------------------------------------------------------
 // cpDampedRotarySpring.h
 //----------------------------------------------------------------------------------------------------------
+
 interface cpDampedRotarySpring
 {
 	[Static] cpBool cpConstraintIsDampedRotarySpring([Const] cpConstraint constraint);
@@ -653,9 +658,9 @@ interface cpDampedRotarySpring
 	[Static] cpDampedRotarySpring cpDampedRotarySpringAlloc();
 
 	[Static] cpDampedRotarySpring cpDampedRotarySpringInit(cpDampedRotarySpring joint, 
-			cpBody a, cpBody b, cpFloat restAngle, cpFloat stiffness, cpFloat damping);
+			Body a, Body b, cpFloat restAngle, cpFloat stiffness, cpFloat damping);
 
-	[Static] cpConstraint cpDampedRotarySpringNew(cpBody a, cpBody b, cpFloat restAngle, 
+	[Static] cpConstraint cpDampedRotarySpringNew(Body a, Body b, cpFloat restAngle, 
 			cpFloat stiffness, cpFloat damping);
 
 	[Static] cpFloat cpDampedRotarySpringGetRestAngle([Const] cpConstraint constraint);
@@ -679,25 +684,26 @@ interface cpDampedRotarySpring
 // ---------------------------------------------------------------------------------------------------------
 // cpDampedSpring.h
 //----------------------------------------------------------------------------------------------------------
+
 interface cpDampedSpring
 {
 	[Static] cpBool cpConstraintIsDampedSpring([Const] cpConstraint constraint);
 
 	[Static] cpDampedSpring cpDampedSpringAlloc();
 
-	[Static] cpDampedSpring cpDampedSpringInit(cpDampedSpring joint, cpBody a, cpBody b, 
-			[Deref] cpVect anchorA, [Deref] cpVect anchorB, cpFloat restLength, cpFloat stiffness, cpFloat damping);
+	[Static] cpDampedSpring cpDampedSpringInit(cpDampedSpring joint, Body a, Body b, 
+			[Deref] Vect anchorA, [Deref] Vect anchorB, cpFloat restLength, cpFloat stiffness, cpFloat damping);
 
-	[Static] cpConstraint cpDampedSpringNew(cpBody a, cpBody b, [Deref] cpVect anchorA, [Deref] cpVect anchorB, 
+	[Static] cpConstraint cpDampedSpringNew(Body a, Body b, [Deref] Vect anchorA, [Deref] Vect anchorB, 
 			cpFloat restLength, cpFloat stiffness, cpFloat damping);
 
-	[Static,Value] cpVect cpDampedSpringGetAnchorA([Const] cpConstraint constraint);
+	[Static,Value] Vect cpDampedSpringGetAnchorA([Const] cpConstraint constraint);
 
-	[Static] void cpDampedSpringSetAnchorA(cpConstraint constraint, [Deref] cpVect anchorA);
+	[Static] void cpDampedSpringSetAnchorA(cpConstraint constraint, [Deref] Vect anchorA);
 
-	[Static,Value] cpVect cpDampedSpringGetAnchorB([Const] cpConstraint constraint);
+	[Static,Value] Vect cpDampedSpringGetAnchorB([Const] cpConstraint constraint);
 
-	[Static] void cpDampedSpringSetAnchorB(cpConstraint constraint, [Deref] cpVect anchorB);
+	[Static] void cpDampedSpringSetAnchorB(cpConstraint constraint, [Deref] Vect anchorB);
 
 	[Static] cpFloat cpDampedSpringGetRestLength([Const] cpConstraint constraint);
 
@@ -720,15 +726,16 @@ interface cpDampedSpring
 // ---------------------------------------------------------------------------------------------------------
 // cpGearJoint.h
 //----------------------------------------------------------------------------------------------------------
+
 interface cpGearJoint
 {
 	[Static] cpBool cpConstraintIsGearJoint([Const]  cpConstraint constraint);
 
 	[Static] cpGearJoint cpGearJointAlloc();
 
-	[Static] cpGearJoint cpGearJointInit(cpGearJoint joint, cpBody a, cpBody b, cpFloat phase, cpFloat ratio);
+	[Static] cpGearJoint cpGearJointInit(cpGearJoint joint, Body a, Body b, cpFloat phase, cpFloat ratio);
 
-	[Static] cpConstraint cpGearJointNew(cpBody a, cpBody b, cpFloat phase, cpFloat ratio);
+	[Static] cpConstraint cpGearJointNew(Body a, Body b, cpFloat phase, cpFloat ratio);
 
 	[Static] cpFloat cpGearJointGetPhase([Const] cpConstraint constraint);
 
@@ -743,15 +750,16 @@ interface cpGearJoint
 // ---------------------------------------------------------------------------------------------------------
 // cpSimpleMotor.h
 //----------------------------------------------------------------------------------------------------------
+
 interface cpSimpleMotor
 {
 	[Static] cpBool cpConstraintIsSimpleMotor([Const] cpConstraint constraint);
 
 	[Static] cpSimpleMotor cpSimpleMotorAlloc();
 
-	[Static] cpSimpleMotor cpSimpleMotorInit(cpSimpleMotor joint, cpBody a, cpBody b, cpFloat rate);
+	[Static] cpSimpleMotor cpSimpleMotorInit(cpSimpleMotor joint, Body a, Body b, cpFloat rate);
 
-	[Static] cpConstraint cpSimpleMotorNew(cpBody a, cpBody b, cpFloat rate);
+	[Static] cpConstraint cpSimpleMotorNew(Body a, Body b, cpFloat rate);
 
 	[Static] cpFloat cpSimpleMotorGetRate([Const] cpConstraint constraint);
 
@@ -762,35 +770,37 @@ interface cpSimpleMotor
 // ---------------------------------------------------------------------------------------------------------
 // cpGrooveJoint.h
 //----------------------------------------------------------------------------------------------------------
+
 interface cpGrooveJoint
 {
 	[Static] cpBool cpConstraintIsGrooveJoint([Const] cpConstraint constraint);
 
 	[Static] cpGrooveJoint cpGrooveJointAlloc();
 
-	[Static] cpGrooveJoint cpGrooveJointInit(cpGrooveJoint joint, cpBody a, cpBody b, [Deref] cpVect groove_a, 
-			[Deref] cpVect groove_b, [Deref] cpVect anchorB);
+	[Static] cpGrooveJoint cpGrooveJointInit(cpGrooveJoint joint, Body a, Body b, [Deref] Vect groove_a, 
+			[Deref] Vect groove_b, [Deref] Vect anchorB);
 
-	[Static] cpConstraint cpGrooveJointNew(cpBody a, cpBody b, [Deref] cpVect groove_a, [Deref] cpVect groove_b, 
-			[Deref] cpVect anchorB);
+	[Static] cpConstraint cpGrooveJointNew(Body a, Body b, [Deref] Vect groove_a, [Deref] Vect groove_b, 
+			[Deref] Vect anchorB);
 
-	[Static,Value] cpVect cpGrooveJointGetGrooveA([Const] cpConstraint constraint);
+	[Static,Value] Vect cpGrooveJointGetGrooveA([Const] cpConstraint constraint);
 
-	[Static] void cpGrooveJointSetGrooveA(cpConstraint constraint, [Deref] cpVect grooveA);
+	[Static] void cpGrooveJointSetGrooveA(cpConstraint constraint, [Deref] Vect grooveA);
 
-	[Static,Value] cpVect cpGrooveJointGetGrooveB([Const] cpConstraint constraint);
+	[Static,Value] Vect cpGrooveJointGetGrooveB([Const] cpConstraint constraint);
 
-	[Static] void cpGrooveJointSetGrooveB(cpConstraint constraint, [Deref] cpVect grooveB);
+	[Static] void cpGrooveJointSetGrooveB(cpConstraint constraint, [Deref] Vect grooveB);
 
-	[Static,Value] cpVect cpGrooveJointGetAnchorB([Const] cpConstraint constraint);
+	[Static,Value] Vect cpGrooveJointGetAnchorB([Const] cpConstraint constraint);
 
-	[Static] void cpGrooveJointSetAnchorB(cpConstraint constraint, [Deref] cpVect anchorB);
+	[Static] void cpGrooveJointSetAnchorB(cpConstraint constraint, [Deref] Vect anchorB);
 };
 
 
 // ---------------------------------------------------------------------------------------------------------
 // cpHastySpace.h
 //----------------------------------------------------------------------------------------------------------
+
 interface cpHastySpace
 {
 	[Static] cpSpace cpHastySpaceNew();
@@ -804,24 +814,25 @@ interface cpHastySpace
 // ---------------------------------------------------------------------------------------------------------
 // cpHastySpace.h
 //----------------------------------------------------------------------------------------------------------
+
 interface cpPinJoint
 {	
 	[Static] cpBool cpConstraintIsPinJoint([Const] cpConstraint constraint);
 
 	[Static] cpPinJoint cpPinJointAlloc();
 
-	[Static] cpPinJoint cpPinJointInit(cpPinJoint joint, cpBody a, cpBody b, 
-				[Deref] cpVect anchorA, [Deref] cpVect anchorB);
+	[Static] cpPinJoint cpPinJointInit(cpPinJoint joint, Body a, Body b, 
+				[Deref] Vect anchorA, [Deref] Vect anchorB);
 
-	[Static] cpConstraint cpPinJointNew(cpBody a, cpBody b, [Deref] cpVect anchorA, [Deref] cpVect anchorB);
+	[Static] cpConstraint cpPinJointNew(Body a, Body b, [Deref] Vect anchorA, [Deref] Vect anchorB);
 
-	[Static,Value] cpVect cpPinJointGetAnchorA([Const] cpConstraint constraint);
+	[Static,Value] Vect cpPinJointGetAnchorA([Const] cpConstraint constraint);
 
-	[Static] void cpPinJointSetAnchorA(cpConstraint constraint, [Deref] cpVect anchorA);
+	[Static] void cpPinJointSetAnchorA(cpConstraint constraint, [Deref] Vect anchorA);
 
-	[Static,Value] cpVect cpPinJointGetAnchorB([Const] cpConstraint constraint);
+	[Static,Value] Vect cpPinJointGetAnchorB([Const] cpConstraint constraint);
 
-	[Static] void cpPinJointSetAnchorB(cpConstraint constraint, [Deref] cpVect anchorB);
+	[Static] void cpPinJointSetAnchorB(cpConstraint constraint, [Deref] Vect anchorB);
 
 	[Static] cpFloat cpPinJointGetDist([Const] cpConstraint constraint);
 
@@ -832,31 +843,33 @@ interface cpPinJoint
 // ---------------------------------------------------------------------------------------------------------
 // cpPivotJoint.h
 //----------------------------------------------------------------------------------------------------------
+
 interface cpPivotJoint
 {
 	[Static] cpBool cpConstraintIsPivotJoint([Const] cpConstraint constraint);
 
 	[Static] cpPivotJoint cpPivotJointAlloc();
 
-	[Static] cpPivotJoint cpPivotJointInit(cpPivotJoint joint, cpBody a, cpBody b, [Deref] cpVect anchorA, [Deref] cpVect anchorB);
+	[Static] cpPivotJoint cpPivotJointInit(cpPivotJoint joint, Body a, Body b, [Deref] Vect anchorA, [Deref] Vect anchorB);
 
-	[Static] cpConstraint cpPivotJointNew(cpBody a, cpBody b, [Deref] cpVect pivot);
+	[Static] cpConstraint cpPivotJointNew(Body a, Body b, [Deref] Vect pivot);
 
-	[Static] cpConstraint cpPivotJointNew2(cpBody a, cpBody b, [Deref] cpVect anchorA, [Deref] cpVect anchorB);
+	[Static] cpConstraint cpPivotJointNew2(Body a, Body b, [Deref] Vect anchorA, [Deref] Vect anchorB);
 
-	[Static,Value] cpVect cpPivotJointGetAnchorA([Const] cpConstraint constraint);
+	[Static,Value] Vect cpPivotJointGetAnchorA([Const] cpConstraint constraint);
 
-	[Static] void cpPivotJointSetAnchorA(cpConstraint constraint, [Deref] cpVect anchorA);
+	[Static] void cpPivotJointSetAnchorA(cpConstraint constraint, [Deref] Vect anchorA);
 
-	[Static,Value] cpVect cpPivotJointGetAnchorB([Const] cpConstraint constraint);
+	[Static,Value] Vect cpPivotJointGetAnchorB([Const] cpConstraint constraint);
 
-	[Static] void cpPivotJointSetAnchorB(cpConstraint constraint, [Deref] cpVect anchorB);
+	[Static] void cpPivotJointSetAnchorB(cpConstraint constraint, [Deref] Vect anchorB);
 };
 
 
 // ---------------------------------------------------------------------------------------------------------
 // cpPolyline.h
 //----------------------------------------------------------------------------------------------------------
+
 interface cpPolyline
 {
 	[Static] void cpPolylineFree(cpPolyline line);
@@ -870,6 +883,7 @@ interface cpPolyline
 	[Static] cpPolyline cpPolylineToConvexHull(cpPolyline line, cpFloat tol);
 };
 
+
 interface cpPolylineSet
 {
 	[Static] cpPolylineSet cpPolylineSetAlloc();
@@ -882,7 +896,7 @@ interface cpPolylineSet
 
 	[Static] void cpPolylineSetFree(cpPolylineSet set, cpBool freePolylines);
 
-	[Static] void cpPolylineSetCollectSegment([Deref] cpVect v0, [Deref] cpVect v1, cpPolylineSet lines);
+	[Static] void cpPolylineSetCollectSegment([Deref] Vect v0, [Deref] Vect v1, cpPolylineSet lines);
 
 	[Static] cpPolylineSet cpPolylineConvexDecomposition(cpPolyline line, cpFloat tol);
 };
@@ -891,47 +905,52 @@ interface cpPolylineSet
 // ---------------------------------------------------------------------------------------------------------
 // cpPolyShape.h
 //----------------------------------------------------------------------------------------------------------
+
 interface cpPolyShape
 {
 	[Static] cpPolyShape cpPolyShapeAlloc();
 
-	[Static] cpPolyShape cpPolyShapeInit(cpPolyShape poly, cpBody body, int count, 
+	[Static] cpPolyShape cpPolyShapeInit(cpPolyShape poly, Body body, int count, 
 				[Const,Cast="cpVect*"] double[] verts, [Deref] cpTransform transform, cpFloat radius);
 
-	[Static] cpPolyShape cpPolyShapeInitRaw(cpPolyShape poly, cpBody body, int count, [Const,Cast="cpVect*"] double[] verts, cpFloat radius);
+	// TODO THIS IS GOING TO FAIL
+	[Static] cpPolyShape cpPolyShapeInitRaw(cpPolyShape poly, Body body, int count, [Const,Cast="cpVect*"] double[] verts, cpFloat radius);
 
-	[Static] cpShape cpPolyShapeNew(cpBody body, int count, [Const,Cast="cpVect*"] double[] verts, [Deref] cpTransform transform, cpFloat radius);
+	// TODO THIS IS GOING TO FAIL
+	[Static] Shape cpPolyShapeNew(Body body, int count, [Const,Cast="cpVect*"] double[] verts, [Deref] cpTransform transform, cpFloat radius);
 
-	[Static] cpShape cpPolyShapeNewRaw(cpBody body, int count, [Const,Cast="cpVect*"] double[] verts, cpFloat radius);
+	// TODO THIS IS GOING TO FAIL
+	[Static] Shape cpPolyShapeNewRaw(Body body, int count, [Const,Cast="cpVect*"] double[] verts, cpFloat radius);
 
-	[Static] cpPolyShape cpBoxShapeInit(cpPolyShape poly, cpBody body, cpFloat width, cpFloat height, cpFloat radius);
+	[Static] cpPolyShape cpBoxShapeInit(cpPolyShape poly, Body body, cpFloat width, cpFloat height, cpFloat radius);
 
-	[Static] cpPolyShape cpBoxShapeInit2(cpPolyShape poly, cpBody body, [Deref] cpBB box, cpFloat radius);
+	[Static] cpPolyShape cpBoxShapeInit2(cpPolyShape poly, Body body, [Deref] cpBB box, cpFloat radius);
 
-	[Static] cpShape cpBoxShapeNew(cpBody body, cpFloat width, cpFloat height, cpFloat radius);
+	[Static] Shape cpBoxShapeNew(Body body, cpFloat width, cpFloat height, cpFloat radius);
 
-	[Static] cpShape cpBoxShapeNew2(cpBody body, [Deref] cpBB box, cpFloat radius);
+	[Static] Shape cpBoxShapeNew2(Body body, [Deref] cpBB box, cpFloat radius);
 
-	[Static] int cpPolyShapeGetCount([Const] cpShape shape);
+	[Static] int cpPolyShapeGetCount([Const] Shape shape);
 
-	[Static,Value] cpVect cpPolyShapeGetVert([Const] cpShape shape, int index);
+	[Static,Value] Vect cpPolyShapeGetVert([Const] Shape shape, int index);
 
-	[Static] cpFloat cpPolyShapeGetRadius([Const] cpShape shape);
+	[Static] cpFloat cpPolyShapeGetRadius([Const] Shape shape);
 };
 
 
 // ---------------------------------------------------------------------------------------------------------
 // cpRatchetJoint.h
 //----------------------------------------------------------------------------------------------------------
+
 interface cpRatchetJoint
 {
 	[Static] cpBool cpConstraintIsRatchetJoint([Const] cpConstraint constraint);
 
 	[Static] cpRatchetJoint cpRatchetJointAlloc();
 
-	[Static] cpRatchetJoint cpRatchetJointInit(cpRatchetJoint joint, cpBody a, cpBody b, cpFloat phase, cpFloat ratchet);
+	[Static] cpRatchetJoint cpRatchetJointInit(cpRatchetJoint joint, Body a, Body b, cpFloat phase, cpFloat ratchet);
 
-	[Static] cpConstraint cpRatchetJointNew(cpBody a, cpBody b, cpFloat phase, cpFloat ratchet);
+	[Static] cpConstraint cpRatchetJointNew(Body a, Body b, cpFloat phase, cpFloat ratchet);
 
 	[Static] cpFloat cpRatchetJointGetAngle([Const] cpConstraint constraint);
 
@@ -950,15 +969,16 @@ interface cpRatchetJoint
 // ---------------------------------------------------------------------------------------------------------
 // cpRotaryLimitJoint
 //----------------------------------------------------------------------------------------------------------
+
 interface cpRotaryLimitJoint
 {
 	[Static] cpBool cpConstraintIsRotaryLimitJoint([Const] cpConstraint constraint);
 
 	[Static] cpRotaryLimitJoint cpRotaryLimitJointAlloc();
 
-	[Static] cpRotaryLimitJoint cpRotaryLimitJointInit(cpRotaryLimitJoint joint, cpBody a, cpBody b, cpFloat min, cpFloat max);
+	[Static] cpRotaryLimitJoint cpRotaryLimitJointInit(cpRotaryLimitJoint joint, Body a, Body b, cpFloat min, cpFloat max);
 	
-	[Static] cpConstraint cpRotaryLimitJointNew(cpBody a, cpBody b, cpFloat min, cpFloat max);
+	[Static] cpConstraint cpRotaryLimitJointNew(Body a, Body b, cpFloat min, cpFloat max);
 
 	[Static] cpFloat cpRotaryLimitJointGetMin([Const] cpConstraint constraint);
 
@@ -973,25 +993,26 @@ interface cpRotaryLimitJoint
 // ---------------------------------------------------------------------------------------------------------
 // cpSlideJoint
 //----------------------------------------------------------------------------------------------------------
+
 interface cpSlideJoint
 {
 	[Static] cpBool cpConstraintIsSlideJoint([Const] cpConstraint constraint);
 
 	[Static] cpSlideJoint cpSlideJointAlloc();
 
-	[Static] cpSlideJoint cpSlideJointInit(cpSlideJoint joint, cpBody a, cpBody b, 
-				[Deref] cpVect anchorA, [Deref] cpVect anchorB, cpFloat min, cpFloat max);
+	[Static] cpSlideJoint cpSlideJointInit(cpSlideJoint joint, Body a, Body b, 
+				[Deref] Vect anchorA, [Deref] Vect anchorB, cpFloat min, cpFloat max);
 
-	[Static] cpConstraint cpSlideJointNew(cpBody a, cpBody b, [Deref] cpVect anchorA, [Deref] cpVect anchorB, 
+	[Static] cpConstraint cpSlideJointNew(Body a, Body b, [Deref] Vect anchorA, [Deref] Vect anchorB, 
 				cpFloat min, cpFloat max);
 
-	[Static,Value] cpVect cpSlideJointGetAnchorA([Const] cpConstraint constraint);
+	[Static,Value] Vect cpSlideJointGetAnchorA([Const] cpConstraint constraint);
 
-	[Static] void cpSlideJointSetAnchorA(cpConstraint constraint, [Deref] cpVect anchorA);
+	[Static] void cpSlideJointSetAnchorA(cpConstraint constraint, [Deref] Vect anchorA);
 
-	[Static,Value] cpVect cpSlideJointGetAnchorB([Const] cpConstraint constraint);
+	[Static,Value] Vect cpSlideJointGetAnchorB([Const] cpConstraint constraint);
 
-	[Static] void cpSlideJointSetAnchorB(cpConstraint constraint, [Deref] cpVect anchorB);
+	[Static] void cpSlideJointSetAnchorB(cpConstraint constraint, [Deref] Vect anchorB);
 
 	[Static] cpFloat cpSlideJointGetMin([Const] cpConstraint constraint);
 
@@ -1006,12 +1027,14 @@ interface cpSlideJoint
 // ---------------------------------------------------------------------------------------------------------
 // cpSpaceHash.c
 //----------------------------------------------------------------------------------------------------------
+
 interface cpSpaceHash {};
 
 
 // ---------------------------------------------------------------------------------------------------------
 // cpBBTree.c
 //----------------------------------------------------------------------------------------------------------
+
 interface cpBBTree {};
 
 
@@ -1020,9 +1043,10 @@ interface cpBBTree {};
 //----------------------------------------------------------------------------------------------------------
 typedef cpHashValue uint;
 
-interface cpSpatialIndexClass {};
+//interface cpSpatialIndexClass {};
 
-interface cpSpatialIndex
+[Internal="cpSpatialIndex", NoDelete]
+interface SpatialIndex
 {
 	[Static] cpSpaceHash cpSpaceHashAlloc();
 
@@ -1072,7 +1096,7 @@ interface cpSpatialIndex
 // static inline void cpSpatialIndexQuery(cpSpatialIndex *index, void *obj, cpBB bb, 
 				// cpSpatialIndexQueryFunc func, void *data)
 
-// static inline void cpSpatialIndexSegmentQuery(cpSpatialIndex *index, void *obj, cpVect a, cpVect b, 
+// static inline void cpSpatialIndexSegmentQuery(cpSpatialIndex *index, void *obj, Vect a, Vect b, 
 				// cpFloat t_exit, cpSpatialIndexSegmentQueryFunc func, void *data)
 
 // static inline void cpSpatialIndexReindexQuery(cpSpatialIndex *index, cpSpatialIndexQueryFunc func, void *data)
@@ -1082,22 +1106,23 @@ interface cpSpatialIndex
 // ---------------------------------------------------------------------------------------------------------
 // chipmunk.h + cpRobust.h
 //----------------------------------------------------------------------------------------------------------
-interface Chipmunk2D 
+[NoDelete]
+interface Math 
 {
-	[Static] cpFloat cpMomentForCircle(cpFloat m, cpFloat r1, cpFloat r2, [Deref] cpVect offset);
+	[Static] cpFloat cpMomentForCircle(cpFloat m, cpFloat r1, cpFloat r2, [Deref] Vect offset);
 
 	[Static] cpFloat cpAreaForCircle(cpFloat r1, cpFloat r2);
 	
-	[Static] cpFloat cpMomentForSegment(cpFloat m, [Deref,Cast="cpVect*"] cpVect a, [Deref] cpVect b, cpFloat radius);
+	[Static] cpFloat cpMomentForSegment(cpFloat m, [Deref,Cast="cpVect*"] Vect a, [Deref] Vect b, cpFloat radius);
 	
 	[Static] cpFloat cpMomentForPoly( cpFloat m, int count, [Const,Cast="cpVect*"] double[] verts, 
-							[Deref] cpVect offset, cpFloat radius);
+							[Deref] Vect offset, cpFloat radius);
 
-	[Static] cpFloat cpAreaForSegment([Deref] cpVect a, [Deref] cpVect b, cpFloat radius);
+	[Static] cpFloat cpAreaForSegment([Deref] Vect a, [Deref] Vect b, cpFloat radius);
 
 	[Static] cpFloat cpAreaForPoly([Const] int count, [Const,Cast="cpVect*"] double[] verts, cpFloat radius);
 
-	[Static,Value] cpVect cpCentroidForPoly([Const] int count, [Cast="cpVect*"] double[] verts);
+	[Static,Value] Vect cpCentroidForPoly([Const] int count, [Cast="cpVect*"] double[] verts);
 
 	[Static] cpFloat cpMomentForBox(cpFloat m, cpFloat width, cpFloat height);
 
@@ -1106,11 +1131,11 @@ interface Chipmunk2D
 	[Static] int cpConvexHull(int count,  [Const,Cast="cpVect*"] double[] verts, 
 							[Cast="cpVect*"] double[] result, int[] first, cpFloat tol);
 
-	[Static,Value] cpVect cpClosetPointOnSegment( [Deref] cpVect p, 
-							 [Deref] cpVect a, [Deref] cpVect b);
+	[Static,Value] Vect cpClosetPointOnSegment( [Deref] Vect p, 
+							 [Deref] Vect a, [Deref] Vect b);
 
 	// cpRobust.h
-	[Static] cpBool cpCheckPointGreater([Const,Deref] cpVect a, [Const,Deref] cpVect b, [Const,Deref] cpVect c);
+	[Static] cpBool cpCheckPointGreater([Const,Deref] Vect a, [Const,Deref] Vect b, [Const,Deref] Vect c);
 
-	[Static] cpBool cpCheckAxis([Deref] cpVect v0, [Deref] cpVect v1, [Deref] cpVect p, [Deref] cpVect n);
+	[Static] cpBool cpCheckAxis([Deref] Vect v0, [Deref] Vect v1, [Deref] Vect p, [Deref] Vect n);
 };

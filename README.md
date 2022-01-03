@@ -30,13 +30,6 @@ From the hl-chipmunk2d root, run
 git submodule update --init --recursive
 ```
 
-Now, *.c files must be renamed to *.cpp, in order to avoid linkage errors.
-```sh
-cd ext/chipmunk2d/src
-ren *.c *.cpp
-ren chipmunk.cpp chipmunk_c.cpp
-```
-
 2.3 Generate the binding cpp file.
 
 Change directory into the hl-chipmunk2d root.
@@ -56,11 +49,11 @@ This will generate src/chipmunk2d.cpp from chipmunk2d/chipmunk2d.idl
 
 **For linux:**  
 ```sh
-    cmake ..
-      -DCHIPMUNK2D_SRC_DIR="ext/chipmunk2d" # This is the /src from step 2
-      -DHL_INCLUDE_DIR="<path-to-hashlink headers>" # Path to where hashlink headers (hl.h, ...) are located. Usually under ...hashlink-x.xx/src 
-      -DHL_LIB_DIR="<path-to-hashlink>" # Path to where hashlink binaries (libhl.so, ...) are located. Usually ...hashlink-x.xx
-      -HDLL_DESTINATION="final/install/destination" #The path of all *hdll binaries, usually this is 'usr/lib' or 'usr/local/lib'
+    cmake .. #Add -GNinja for ninja support
+      -DCHIPMUNK2D_SRC_DIR="ext/chipmunk2d" # DEFAULT "ext/chipmunk2d" This is the /src from step 2
+      -DHL_INCLUDE_DIR="<path-to-hashlink headers>" # DEFAULT "/usr/local/include" Path to where hashlink headers (hl.h, ...) are located.
+      -DHL_LIB_DIR="<path-to-hashlink>" # DEFAULT "/usr/local/lib" Path to where hashlink binaries (libhl.so, ...) are located. 
+      -HDLL_DESTINATION="<final-install-destination>" # DEFAULT "/usr/local/lib" The path of all *hdll binaries, 
 ```
 ```sh
     make
@@ -68,14 +61,6 @@ This will generate src/chipmunk2d.cpp from chipmunk2d/chipmunk2d.idl
 ```sh
     make install
 ```
-
-DEVELOPER NOTE: chipmunk2d WILL REQUIRE MULTIPLE SOURCE DIRS.
-They have submodules netcode.io reliable.io
-
-specific cmake command example on linux:  
-```sh
-    cmake .. -DCHIPMUNK2D_SRC_DIR="ext/chipmunk2d" -DHL_INCLUDE_DIR="/usr/local/include" -DHL_LIB_DIR="/usr/local/lib" -DHDLL_DESTINATION="/usr/local/lib"
-   ```
 
 **For windows:**  
 
