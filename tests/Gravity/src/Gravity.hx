@@ -29,9 +29,9 @@ class Gravity extends hxd.App{
 		var cpvzero = new chipmunk.Native.Vect();
 		cpvzero.x = 0;
 		cpvzero.y = 0;
-		var shape = chipmunk.Native.CpCircleShape.cpCircleShapeNew(body, radius, cpvzero);
-		shape.cpShapeSetElasticity(0.0);
-		shape.cpShapeSetFriction(0.0);
+		var shape = chipmunk.Native.CircleShape.makeNew(body, radius, cpvzero);
+		shape.setElasticity(0.0);
+		shape.setFriction(0.0);
 		
 		space.addBody(body);
 		space.addShape(shape);
@@ -67,12 +67,12 @@ class Gravity extends hxd.App{
 		}
 		hxd.Window.getInstance().addEventTarget(onEvent);
 
-		space = chipmunk.Native.Space.cpSpaceNew();
-		space.cpSpaceSetIterations(1);
+		space = chipmunk.Native.Space.makeNew();
+		space.setIterations(1);
 		var gravity = new chipmunk.Native.Vect();
 		gravity.x = 0;
 		gravity.y = 10;
-		space.cpSpaceSetGravity(gravity);
+		space.setGravity(gravity);
 
 		// Create segments around the edge of the screen.
 		var staticBody = space.getStaticBody();
@@ -89,9 +89,9 @@ class Gravity extends hxd.App{
 		var floorEnd = new chipmunk.Native.Vect();
 		floorEnd.x = 1000;
 		floorEnd.y = 400;
-		var floorSegment = chipmunk.Native.CpSegmentShape.cpSegmentShapeNew(staticBody, floorBegin, floorEnd, 1.0);
-		floorSegment.cpShapeSetElasticity(1.0);
-		floorSegment.cpShapeSetFriction(1.0);
+		var floorSegment = chipmunk.Native.SegmentShape.newSegmentShape(staticBody, floorBegin, floorEnd, 1.0);
+		floorSegment.setElasticity(1.0);
+		floorSegment.setFriction(1.0);
 	
 		//space.addBody(staticBody);
 		space.addShape(floorSegment);
@@ -141,7 +141,7 @@ class Gravity extends hxd.App{
 
 	override function update(dt:Float) {
 
-		space.cpSpaceStep(dt);
+		space.step(dt);
 
 		if (frameCount == 10){
 			// README

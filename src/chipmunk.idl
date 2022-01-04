@@ -137,9 +137,9 @@ interface cpMat2x2 {
 // ---------------------------------------------------------------------------------------------------------
 // cpBB.h
 //----------------------------------------------------------------------------------------------------------
+[Internal="cpBB"]
 interface cpBB
 {
-    void cpBB();
     attribute cpFloat l;
     attribute cpFloat b;
     attribute cpFloat r;
@@ -357,13 +357,13 @@ interface Shape
 
 	[CObject] void cpShapeSetSensor(cpBool sensor);
 
-	[CObject] cpFloat cpShapeGetElasticity();
+	[CObject, Internal="cpShapeGetElasticity"] cpFloat getElasticity();
 
-	[CObject] void cpShapeSetElasticity(cpFloat elasticity);
+	[CObject, Internal="cpShapeSetElasticity"] void setElasticity(cpFloat elasticity);
 
-	[CObject] cpFloat cpShapeGetFriction();
+	[CObject, Internal="cpShapeGetFriction"] cpFloat getFriction();
 
-	[CObject] void cpShapeSetFriction(cpFloat friction);
+	[CObject, Internal="cpShapeSetFriction"] void setFriction(cpFloat friction);
 
 	[CObject,Value] Vect cpShapeGetSurfaceVelocity();
 
@@ -383,92 +383,93 @@ interface Shape
 };
 
 
-interface cpCircleShape
+[Internal="cpCircleShape"]
+interface CircleShape
 {
-	[Static] cpCircleShape cpCircleShapeAlloc();
-	[Static] cpCircleShape cpCircleShapeInit(cpCircleShape circle, Body body, cpFloat radius, [Deref] Vect offset);
-	[Static] Shape cpCircleShapeNew(Body body, cpFloat radius, [Deref] Vect offset);
-	[Static,Value] Vect cpCircleShapeGetOffset([Const] Shape shape);
-	[Static] cpFloat cpCircleShapeGetRadius([Const] Shape shape);
+	[Static, Internal="cpCircleShapeAlloc"] CircleShape alloc();
+	[Static, Internal="cpCircleShapeInit"] CircleShape init(CircleShape circle, Body body, cpFloat radius, [Deref] Vect offset);
+	[Static, Internal="cpCircleShapeNew"] Shape makeNew(Body body, cpFloat radius, [Deref] Vect offset);
+	[Static,Value, Internal="cpCircleShapeGetOffset"] Vect getOffset([Const] Shape shape);
+	[Static, Internal="cpCircleShapeGetRadius"] cpFloat getRadius([Const] Shape shape);
 };
 
 
-interface cpSegmentShape
+[Internal="cpSegmentShape"]
+interface SegmentShape
 {
-	[Static] cpSegmentShape cpSegmentShapeAlloc();
+	[Static,Internal="cpSegmentShapeAlloc"] SegmentShape alloc();
 
-	[Static] cpSegmentShape cpSegmentShapeInit(cpSegmentShape seg, Body body, 
-				[Deref] Vect a, [Deref] Vect b, cpFloat radius);
+	[CObject,Internal="cpSegmentShapeInit"] SegmentShape init(Body body, [Deref] Vect a, [Deref] Vect b, cpFloat radius);
 
-	[Static] Shape cpSegmentShapeNew(Body body, [Deref] Vect a, [Deref] Vect b, cpFloat radius);
+	[Static,Internal="cpSegmentShapeNew"] Shape newSegmentShape(Body body, [Deref] Vect a, [Deref] Vect b, cpFloat radius);
 
-	[Static] void cpSegmentShapeSetNeighbors(Shape shape, [Deref] Vect prev, [Deref] Vect next);
+	[Static,Internal="cpSegmentShapeSetNeighbors"] void setNeighbors(Shape shape, [Deref] Vect prev, [Deref] Vect next);
 
-	[Static,Value] Vect cpSegmentShapeGetA([Const] Shape shape);
+	[Static,Value,Internal="cpSegmentShapeGetA"] Vect getA([Const] Shape shape);
 
-	[Static,Value] Vect cpSegmentShapeGetB([Const] Shape shape);
+	[Static,Value,Internal="cpSegmentShapeGetB"] Vect getB([Const] Shape shape);
 
-	[Static,Value] Vect cpSegmentShapeGetNormal([Const] Shape shape);
+	[Static,Value,Internal="cpSegmentShapeGetNormal"] Vect getNormal([Const] Shape shape);
 
-	[Static] cpFloat cpSegmentShapeGetRadius([Const] Shape shape);
+	[Static,Internal="cpSegmentShapeGetRadius"] cpFloat getRadius([Const] Shape shape);
 };
 
 // ---------------------------------------------------------------------------------------------------------
 // cpSpace.h
 //----------------------------------------------------------------------------------------------------------
 
-[Internal="cpSpace"]
+[Internal="cpSpace", Delete="cpSpaceFree"]
 interface Space
 {
-	[Static] Space cpSpaceInit(Space space);
+	[Static, Internal="cpSpaceInit"] Space init(Space space);
 
-	[Static] Space cpSpaceNew();
+	[Static, Internal="cpSpaceNew"] Space makeNew();
 
-	[CObject] void cpSpaceDestroy();
+	[CObject, Internal="cpSpaceDestroy"] void destroy();
 
-	[CObject] void cpSpaceFree();
+	[CObject, Internal="cpSpaceFree"] void free();
 
-	[CObject] int cpSpaceGetIterations();
+	[CObject, Internal="cpSpaceGetIterations"] int getIterations();
 
-	[CObject] void cpSpaceSetIterations(int iterations);
+	[CObject, Internal="cpSpaceSetIterations"] void setIterations(int iterations);
 
-	[CObject,Value] Vect cpSpaceGetGravity();
+	[CObject,Value, Internal="cpSpaceGetGravity"] Vect cpSpaceGetGravity();
 
-	[CObject] void cpSpaceSetGravity([Deref] Vect gravity);
+	[CObject, Internal="cpSpaceSetGravity"] void setGravity([Deref] Vect gravity);
 
-	[CObject] cpFloat cpSpaceGetDamping();
+	[CObject, Internal="cpSpaceGetDamping"] cpFloat getDamping();
 
-	[CObject] void cpSpaceSetDamping(cpFloat damping);
+	[CObject, Internal="cpSpaceSetDamping"] void setDamping(cpFloat damping);
 
-	[CObject] cpFloat cpSpaceGetIdleSpeedThreshold();
+	[CObject, Internal="cpSpaceGetIdleSpeedThreshold"] cpFloat getIdleSpeedThreshold();
 
-	[CObject] void cpSpaceSetIdleSpeedThreshold(cpFloat idleSpeedThreshold);
+	[CObject, Internal="cpSpaceSetIdleSpeedThreshold"] void setIdleSpeedThreshold(cpFloat idleSpeedThreshold);
 
-	[CObject] cpFloat cpSpaceGetSleepTimeThreshold();
+	[CObject, Internal="cpSpaceGetSleepTimeThreshold"] cpFloat getSleepTimeThreshold();
 
-	[CObject] void cpSpaceSetSleepTimeThreshold(cpFloat sleepTimeThreshold);
+	[CObject, Internal="cpSpaceSetSleepTimeThreshold"] void setSleepTimeThreshold(cpFloat sleepTimeThreshold);
 
-	[CObject] cpFloat cpSpaceGetCollisionSlop();
+	[CObject, Internal="cpSpaceGetCollisionSlop"] cpFloat getCollisionSlop();
 
-	[CObject] void cpSpaceSetCollisionSlop(cpFloat collisionSlop);
+	[CObject, Internal="cpSpaceSetCollisionSlop"] void setCollisionSlop(cpFloat collisionSlop);
 
-	[CObject] cpFloat cpSpaceGetCollisionBias();
+	[CObject, Internal="cpSpaceGetCollisionBias"] cpFloat getCollisionBias();
 
-	[CObject] void cpSpaceSetCollisionBias(cpFloat collisionBias);
+	[CObject, Internal="cpSpaceSetCollisionBias"] void setCollisionBias(cpFloat collisionBias);
 
 	// [CObject] cpTimestamp cpSpaceGetCollisionPersistence();
 
 	// [CObject] void cpSpaceSetCollisionPersistence(cpTimestamp collisionPersistence);
 
-	[CObject] cpDataPointer cpSpaceGetUserData();
+	[CObject, Internal="cpSpaceGetUserData"] cpDataPointer getUserData();
 
-	[CObject] void cpSpaceSetUserData(cpDataPointer userData);
+	[CObject, Internal="cpSpaceSetUserData"] void setUserData(cpDataPointer userData);
 
 	[CObject, Internal="cpSpaceGetStaticBody"] Body getStaticBody();
 
-	[CObject] cpFloat cpSpaceGetCurrentTimeStep();
+	[CObject, Internal="cpSpaceGetCurrentTimeStep"] cpFloat getCurrentTimeStep();
 
-	[CObject] cpBool cpSpaceIsLocked();
+	[CObject, Internal="cpSpaceIsLocked"] cpBool isLocked();
 
 	// [CObject] cpCollisionHandler *cpSpaceAddDefaultCollisionHandler();
 
@@ -480,19 +481,19 @@ interface Space
 
 	[CObject, Internal="cpSpaceAddBody"] void addBody(Body body); // README. I had to replace the original functions because each call was duplicating the space.
 
-	[CObject] cpConstraint cpSpaceAddConstraint(cpConstraint constraint);
+	[CObject] Constraint cpSpaceAddConstraint(Constraint constraint);
 
 	[CObject] void cpSpaceRemoveShape(Shape shape);
 
 	[CObject] void cpSpaceRemoveBody(Body body);
 
-	[CObject] void cpSpaceRemoveConstraint(cpConstraint constraint);
+	[CObject] void cpSpaceRemoveConstraint(Constraint constraint);
 
 	[CObject] cpBool cpSpaceContainsShape(Shape shape);
 
 	[CObject] cpBool cpSpaceContainsBody(Body body);
 
-	[CObject] cpBool cpSpaceContainsConstraint(cpConstraint constraint);
+	[CObject] cpBool cpSpaceContainsConstraint(Constraint constraint);
 
 	// [CObject] cpBool cpSpaceAddPostStepCallback(cpPostStepFunc func, void *key, void *data);
 
@@ -524,7 +525,7 @@ interface Space
 
 	[CObject] void cpSpaceUseSpatialHash(cpFloat dim, int count);
 
-	[CObject] void cpSpaceStep(cpFloat dt);
+	[CObject, Internal="cpSpaceStep"] void step(cpFloat dt);
 };
 
 
@@ -604,31 +605,32 @@ interface cpArbiter
 // cpConstraint.h
 //----------------------------------------------------------------------------------------------------------
 
-interface cpConstraint
+[Internal="cpConstraint", Delete="cpConstraintFree"]
+interface Constraint
 {
-	[CObject] void cpConstraintDestroy();
+	[CObject, Internal="cpConstraintDestroy"] void destroy();
 
-	[CObject] void cpConstraintFree();
+	[CObject, Internal="cpConstraintFree"] void free();
 
-	[CObject] Space cpConstraintGetSpace();
+	[CObject, Internal="cpConstraintGetSpace" ] Space getSpace();
 
-	[CObject] Body cpConstraintGetBodyA();
+	[CObject, Internal="cpConstraintGetBodyA"] Body getBodyA();
 
-	[CObject] Body cpConstraintGetBodyB();
+	[CObject, Internal="cpConstraintGetBodyB"] Body getBodyB();
 
-	[CObject] cpFloat cpConstraintGetMaxForce();
+	[CObject, Internal="cpConstraintGetMaxForce"] cpFloat getMaxForce();
 	
-	[CObject] void cpConstraintSetMaxForce(cpFloat maxForce);
+	[CObject, Internal="cpConstraintSetMaxForce"] void setMaxForce(cpFloat maxForce);
 
-	[CObject] cpFloat cpConstraintGetErrorBias();
+	[CObject, Internal="cpConstraintGetErrorBias"] cpFloat getErrorBias();
 
-	[CObject] void cpConstraintSetErrorBias(cpFloat errorBias);
+	[CObject, Internal="cpConstraintSetErrorBias"] void setErrorBias(cpFloat errorBias);
 
-	[CObject] cpFloat cpConstraintGetMaxBias();
+	[CObject, Internal="cpConstraintGetMaxBias"] cpFloat getMaxBias();
 
-	[CObject] void cpConstraintSetMaxBias(cpFloat maxBias);
+	[CObject, Internal="cpConstraintSetMaxBias"] void setMaxBias(cpFloat maxBias);
 
-	[CObject] cpBool cpConstraintGetCollideBodies();
+	[CObject, Internal="cpConstraintGetCollideBodies"] cpBool getCollideBodies();
 
 	[CObject] void cpConstraintSetCollideBodies(cpBool collideBodies);
 
@@ -654,31 +656,31 @@ interface cpConstraint
 
 interface cpDampedRotarySpring
 {
-	[Static] cpBool cpConstraintIsDampedRotarySpring([Const] cpConstraint constraint);
+	[Static] cpBool cpConstraintIsDampedRotarySpring([Const] Constraint constraint);
 
 	[Static] cpDampedRotarySpring cpDampedRotarySpringAlloc();
 
 	[Static] cpDampedRotarySpring cpDampedRotarySpringInit(cpDampedRotarySpring joint, 
 			Body a, Body b, cpFloat restAngle, cpFloat stiffness, cpFloat damping);
 
-	[Static] cpConstraint cpDampedRotarySpringNew(Body a, Body b, cpFloat restAngle, 
+	[Static] Constraint cpDampedRotarySpringNew(Body a, Body b, cpFloat restAngle, 
 			cpFloat stiffness, cpFloat damping);
 
-	[Static] cpFloat cpDampedRotarySpringGetRestAngle([Const] cpConstraint constraint);
+	[Static] cpFloat cpDampedRotarySpringGetRestAngle([Const] Constraint constraint);
 
-	[Static] void cpDampedRotarySpringSetRestAngle(cpConstraint constraint, cpFloat restAngle);
+	[Static] void cpDampedRotarySpringSetRestAngle(Constraint constraint, cpFloat restAngle);
 
-	[Static] cpFloat cpDampedRotarySpringGetStiffness([Const] cpConstraint constraint);
+	[Static] cpFloat cpDampedRotarySpringGetStiffness([Const] Constraint constraint);
 
-	[Static] void cpDampedRotarySpringSetStiffness([Const] cpConstraint constraint, cpFloat stiffness);
+	[Static] void cpDampedRotarySpringSetStiffness([Const] Constraint constraint, cpFloat stiffness);
 
-	[Static] cpFloat cpDampedRotarySpringGetDamping([Const] cpConstraint constraint);
+	[Static] cpFloat cpDampedRotarySpringGetDamping([Const] Constraint constraint);
 
-	[Static] void cpDampedRotarySpringSetDamping(cpConstraint constraint, cpFloat damping);
+	[Static] void cpDampedRotarySpringSetDamping(Constraint constraint, cpFloat damping);
 
-	// [Static] cpDampedRotarySpringTorqueFunc cpDampedRotarySpringGetSpringTorqueFunc(const cpConstraint *constraint);
+	// [Static] cpDampedRotarySpringTorqueFunc cpDampedRotarySpringGetSpringTorqueFunc(const Constraint *constraint);
 
-	//[Static] void cpDampedRotarySpringSetSpringTorqueFunc(cpConstraint *constraint, cpDampedRotarySpringTorqueFunc springTorqueFunc);
+	//[Static] void cpDampedRotarySpringSetSpringTorqueFunc(Constraint *constraint, cpDampedRotarySpringTorqueFunc springTorqueFunc);
 };
 
 
@@ -688,39 +690,39 @@ interface cpDampedRotarySpring
 
 interface cpDampedSpring
 {
-	[Static] cpBool cpConstraintIsDampedSpring([Const] cpConstraint constraint);
+	[Static] cpBool cpConstraintIsDampedSpring([Const] Constraint constraint);
 
 	[Static] cpDampedSpring cpDampedSpringAlloc();
 
 	[Static] cpDampedSpring cpDampedSpringInit(cpDampedSpring joint, Body a, Body b, 
 			[Deref] Vect anchorA, [Deref] Vect anchorB, cpFloat restLength, cpFloat stiffness, cpFloat damping);
 
-	[Static] cpConstraint cpDampedSpringNew(Body a, Body b, [Deref] Vect anchorA, [Deref] Vect anchorB, 
+	[Static] Constraint cpDampedSpringNew(Body a, Body b, [Deref] Vect anchorA, [Deref] Vect anchorB, 
 			cpFloat restLength, cpFloat stiffness, cpFloat damping);
 
-	[Static,Value] Vect cpDampedSpringGetAnchorA([Const] cpConstraint constraint);
+	[Static,Value] Vect cpDampedSpringGetAnchorA([Const] Constraint constraint);
 
-	[Static] void cpDampedSpringSetAnchorA(cpConstraint constraint, [Deref] Vect anchorA);
+	[Static] void cpDampedSpringSetAnchorA(Constraint constraint, [Deref] Vect anchorA);
 
-	[Static,Value] Vect cpDampedSpringGetAnchorB([Const] cpConstraint constraint);
+	[Static,Value] Vect cpDampedSpringGetAnchorB([Const] Constraint constraint);
 
-	[Static] void cpDampedSpringSetAnchorB(cpConstraint constraint, [Deref] Vect anchorB);
+	[Static] void cpDampedSpringSetAnchorB(Constraint constraint, [Deref] Vect anchorB);
 
-	[Static] cpFloat cpDampedSpringGetRestLength([Const] cpConstraint constraint);
+	[Static] cpFloat cpDampedSpringGetRestLength([Const] Constraint constraint);
 
-	[Static] void cpDampedSpringSetRestLength(cpConstraint constraint, cpFloat restLength);
+	[Static] void cpDampedSpringSetRestLength(Constraint constraint, cpFloat restLength);
 
-	[Static] cpFloat cpDampedSpringGetStiffness([Const] cpConstraint constraint);
+	[Static] cpFloat cpDampedSpringGetStiffness([Const] Constraint constraint);
 
-	[Static] void cpDampedSpringSetStiffness(cpConstraint constraint, cpFloat stiffness);
+	[Static] void cpDampedSpringSetStiffness(Constraint constraint, cpFloat stiffness);
 
-	[Static] cpFloat cpDampedSpringGetDamping([Const] cpConstraint constraint);
+	[Static] cpFloat cpDampedSpringGetDamping([Const] Constraint constraint);
 
-	[Static] void cpDampedSpringSetDamping(cpConstraint constraint, cpFloat damping);
+	[Static] void cpDampedSpringSetDamping(Constraint constraint, cpFloat damping);
 
-	// [Static] cpDampedSpringForceFunc cpDampedSpringGetSpringForceFunc(const cpConstraint *constraint);
+	// [Static] cpDampedSpringForceFunc cpDampedSpringGetSpringForceFunc(const Constraint *constraint);
 
-	// [Static] void cpDampedSpringSetSpringForceFunc(cpConstraint *constraint, cpDampedSpringForceFunc springForceFunc);
+	// [Static] void cpDampedSpringSetSpringForceFunc(Constraint *constraint, cpDampedSpringForceFunc springForceFunc);
 };
 
 
@@ -730,21 +732,21 @@ interface cpDampedSpring
 
 interface cpGearJoint
 {
-	[Static] cpBool cpConstraintIsGearJoint([Const]  cpConstraint constraint);
+	[Static] cpBool cpConstraintIsGearJoint([Const]  Constraint constraint);
 
 	[Static] cpGearJoint cpGearJointAlloc();
 
 	[Static] cpGearJoint cpGearJointInit(cpGearJoint joint, Body a, Body b, cpFloat phase, cpFloat ratio);
 
-	[Static] cpConstraint cpGearJointNew(Body a, Body b, cpFloat phase, cpFloat ratio);
+	[Static] Constraint cpGearJointNew(Body a, Body b, cpFloat phase, cpFloat ratio);
 
-	[Static] cpFloat cpGearJointGetPhase([Const] cpConstraint constraint);
+	[Static] cpFloat cpGearJointGetPhase([Const] Constraint constraint);
 
-	[Static] void cpGearJointSetPhase(cpConstraint constraint, cpFloat phase);
+	[Static] void cpGearJointSetPhase(Constraint constraint, cpFloat phase);
 
-	[Static] cpFloat cpGearJointGetRatio([Const] cpConstraint constraint);
+	[Static] cpFloat cpGearJointGetRatio([Const] Constraint constraint);
 
-	[Static] void cpGearJointSetRatio(cpConstraint constraint, cpFloat ratio);
+	[Static] void cpGearJointSetRatio(Constraint constraint, cpFloat ratio);
 };
 
 
@@ -754,17 +756,17 @@ interface cpGearJoint
 
 interface cpSimpleMotor
 {
-	[Static] cpBool cpConstraintIsSimpleMotor([Const] cpConstraint constraint);
+	[Static] cpBool cpConstraintIsSimpleMotor([Const] Constraint constraint);
 
 	[Static] cpSimpleMotor cpSimpleMotorAlloc();
 
 	[Static] cpSimpleMotor cpSimpleMotorInit(cpSimpleMotor joint, Body a, Body b, cpFloat rate);
 
-	[Static] cpConstraint cpSimpleMotorNew(Body a, Body b, cpFloat rate);
+	[Static] Constraint cpSimpleMotorNew(Body a, Body b, cpFloat rate);
 
-	[Static] cpFloat cpSimpleMotorGetRate([Const] cpConstraint constraint);
+	[Static] cpFloat cpSimpleMotorGetRate([Const] Constraint constraint);
 
-	[Static] void cpSimpleMotorSetRate(cpConstraint constraint, cpFloat rate);
+	[Static] void cpSimpleMotorSetRate(Constraint constraint, cpFloat rate);
 };
 
 
@@ -774,27 +776,27 @@ interface cpSimpleMotor
 
 interface cpGrooveJoint
 {
-	[Static] cpBool cpConstraintIsGrooveJoint([Const] cpConstraint constraint);
+	[Static] cpBool cpConstraintIsGrooveJoint([Const] Constraint constraint);
 
 	[Static] cpGrooveJoint cpGrooveJointAlloc();
 
 	[Static] cpGrooveJoint cpGrooveJointInit(cpGrooveJoint joint, Body a, Body b, [Deref] Vect groove_a, 
 			[Deref] Vect groove_b, [Deref] Vect anchorB);
 
-	[Static] cpConstraint cpGrooveJointNew(Body a, Body b, [Deref] Vect groove_a, [Deref] Vect groove_b, 
+	[Static] Constraint cpGrooveJointNew(Body a, Body b, [Deref] Vect groove_a, [Deref] Vect groove_b, 
 			[Deref] Vect anchorB);
 
-	[Static,Value] Vect cpGrooveJointGetGrooveA([Const] cpConstraint constraint);
+	[Static,Value] Vect cpGrooveJointGetGrooveA([Const] Constraint constraint);
 
-	[Static] void cpGrooveJointSetGrooveA(cpConstraint constraint, [Deref] Vect grooveA);
+	[Static] void cpGrooveJointSetGrooveA(Constraint constraint, [Deref] Vect grooveA);
 
-	[Static,Value] Vect cpGrooveJointGetGrooveB([Const] cpConstraint constraint);
+	[Static,Value] Vect cpGrooveJointGetGrooveB([Const] Constraint constraint);
 
-	[Static] void cpGrooveJointSetGrooveB(cpConstraint constraint, [Deref] Vect grooveB);
+	[Static] void cpGrooveJointSetGrooveB(Constraint constraint, [Deref] Vect grooveB);
 
-	[Static,Value] Vect cpGrooveJointGetAnchorB([Const] cpConstraint constraint);
+	[Static,Value] Vect cpGrooveJointGetAnchorB([Const] Constraint constraint);
 
-	[Static] void cpGrooveJointSetAnchorB(cpConstraint constraint, [Deref] Vect anchorB);
+	[Static] void cpGrooveJointSetAnchorB(Constraint constraint, [Deref] Vect anchorB);
 };
 
 
@@ -818,26 +820,26 @@ interface cpHastySpace
 
 interface cpPinJoint
 {	
-	[Static] cpBool cpConstraintIsPinJoint([Const] cpConstraint constraint);
+	[Static] cpBool cpConstraintIsPinJoint([Const] Constraint constraint);
 
 	[Static] cpPinJoint cpPinJointAlloc();
 
 	[Static] cpPinJoint cpPinJointInit(cpPinJoint joint, Body a, Body b, 
 				[Deref] Vect anchorA, [Deref] Vect anchorB);
 
-	[Static] cpConstraint cpPinJointNew(Body a, Body b, [Deref] Vect anchorA, [Deref] Vect anchorB);
+	[Static] Constraint cpPinJointNew(Body a, Body b, [Deref] Vect anchorA, [Deref] Vect anchorB);
 
-	[Static,Value] Vect cpPinJointGetAnchorA([Const] cpConstraint constraint);
+	[Static,Value] Vect cpPinJointGetAnchorA([Const] Constraint constraint);
 
-	[Static] void cpPinJointSetAnchorA(cpConstraint constraint, [Deref] Vect anchorA);
+	[Static] void cpPinJointSetAnchorA(Constraint constraint, [Deref] Vect anchorA);
 
-	[Static,Value] Vect cpPinJointGetAnchorB([Const] cpConstraint constraint);
+	[Static,Value] Vect cpPinJointGetAnchorB([Const] Constraint constraint);
 
-	[Static] void cpPinJointSetAnchorB(cpConstraint constraint, [Deref] Vect anchorB);
+	[Static] void cpPinJointSetAnchorB(Constraint constraint, [Deref] Vect anchorB);
 
-	[Static] cpFloat cpPinJointGetDist([Const] cpConstraint constraint);
+	[Static] cpFloat cpPinJointGetDist([Const] Constraint constraint);
 
-	[Static] void cpPinJointSetDist(cpConstraint constraint, cpFloat dist);
+	[Static] void cpPinJointSetDist(Constraint constraint, cpFloat dist);
 };
 
 
@@ -847,23 +849,23 @@ interface cpPinJoint
 
 interface cpPivotJoint
 {
-	[Static] cpBool cpConstraintIsPivotJoint([Const] cpConstraint constraint);
+	[Static] cpBool cpConstraintIsPivotJoint([Const] Constraint constraint);
 
 	[Static] cpPivotJoint cpPivotJointAlloc();
 
 	[Static] cpPivotJoint cpPivotJointInit(cpPivotJoint joint, Body a, Body b, [Deref] Vect anchorA, [Deref] Vect anchorB);
 
-	[Static] cpConstraint cpPivotJointNew(Body a, Body b, [Deref] Vect pivot);
+	[Static] Constraint cpPivotJointNew(Body a, Body b, [Deref] Vect pivot);
 
-	[Static] cpConstraint cpPivotJointNew2(Body a, Body b, [Deref] Vect anchorA, [Deref] Vect anchorB);
+	[Static] Constraint cpPivotJointNew2(Body a, Body b, [Deref] Vect anchorA, [Deref] Vect anchorB);
 
-	[Static,Value] Vect cpPivotJointGetAnchorA([Const] cpConstraint constraint);
+	[Static,Value] Vect cpPivotJointGetAnchorA([Const] Constraint constraint);
 
-	[Static] void cpPivotJointSetAnchorA(cpConstraint constraint, [Deref] Vect anchorA);
+	[Static] void cpPivotJointSetAnchorA(Constraint constraint, [Deref] Vect anchorA);
 
-	[Static,Value] Vect cpPivotJointGetAnchorB([Const] cpConstraint constraint);
+	[Static,Value] Vect cpPivotJointGetAnchorB([Const] Constraint constraint);
 
-	[Static] void cpPivotJointSetAnchorB(cpConstraint constraint, [Deref] Vect anchorB);
+	[Static] void cpPivotJointSetAnchorB(Constraint constraint, [Deref] Vect anchorB);
 };
 
 
@@ -945,25 +947,25 @@ interface cpPolyShape
 
 interface cpRatchetJoint
 {
-	[Static] cpBool cpConstraintIsRatchetJoint([Const] cpConstraint constraint);
+	[Static] cpBool cpConstraintIsRatchetJoint([Const] Constraint constraint);
 
 	[Static] cpRatchetJoint cpRatchetJointAlloc();
 
 	[Static] cpRatchetJoint cpRatchetJointInit(cpRatchetJoint joint, Body a, Body b, cpFloat phase, cpFloat ratchet);
 
-	[Static] cpConstraint cpRatchetJointNew(Body a, Body b, cpFloat phase, cpFloat ratchet);
+	[Static] Constraint cpRatchetJointNew(Body a, Body b, cpFloat phase, cpFloat ratchet);
 
-	[Static] cpFloat cpRatchetJointGetAngle([Const] cpConstraint constraint);
+	[Static] cpFloat cpRatchetJointGetAngle([Const] Constraint constraint);
 
-	[Static] void cpRatchetJointSetAngle(cpConstraint constraint, cpFloat angle);
+	[Static] void cpRatchetJointSetAngle(Constraint constraint, cpFloat angle);
 
-	[Static] cpFloat cpRatchetJointGetPhase([Const] cpConstraint constraint);
+	[Static] cpFloat cpRatchetJointGetPhase([Const] Constraint constraint);
 
-	[Static] void cpRatchetJointSetPhase(cpConstraint constraint, cpFloat phase);
+	[Static] void cpRatchetJointSetPhase(Constraint constraint, cpFloat phase);
 
-	[Static] cpFloat cpRatchetJointGetRatchet([Const] cpConstraint constraint);
+	[Static] cpFloat cpRatchetJointGetRatchet([Const] Constraint constraint);
 
-	[Static] void cpRatchetJointSetRatchet(cpConstraint constraint, cpFloat ratchet);
+	[Static] void cpRatchetJointSetRatchet(Constraint constraint, cpFloat ratchet);
 };
 
 
@@ -973,21 +975,21 @@ interface cpRatchetJoint
 
 interface cpRotaryLimitJoint
 {
-	[Static] cpBool cpConstraintIsRotaryLimitJoint([Const] cpConstraint constraint);
+	[Static] cpBool cpConstraintIsRotaryLimitJoint([Const] Constraint constraint);
 
 	[Static] cpRotaryLimitJoint cpRotaryLimitJointAlloc();
 
 	[Static] cpRotaryLimitJoint cpRotaryLimitJointInit(cpRotaryLimitJoint joint, Body a, Body b, cpFloat min, cpFloat max);
 	
-	[Static] cpConstraint cpRotaryLimitJointNew(Body a, Body b, cpFloat min, cpFloat max);
+	[Static] Constraint cpRotaryLimitJointNew(Body a, Body b, cpFloat min, cpFloat max);
 
-	[Static] cpFloat cpRotaryLimitJointGetMin([Const] cpConstraint constraint);
+	[Static] cpFloat cpRotaryLimitJointGetMin([Const] Constraint constraint);
 
-	[Static] void cpRotaryLimitJointSetMin(cpConstraint constraint, cpFloat min);
+	[Static] void cpRotaryLimitJointSetMin(Constraint constraint, cpFloat min);
 
-	[Static] cpFloat cpRotaryLimitJointGetMax([Const] cpConstraint constraint);
+	[Static] cpFloat cpRotaryLimitJointGetMax([Const] Constraint constraint);
 
-	[Static] void cpRotaryLimitJointSetMax(cpConstraint constraint, cpFloat max);
+	[Static] void cpRotaryLimitJointSetMax(Constraint constraint, cpFloat max);
 };
 
 
@@ -995,33 +997,34 @@ interface cpRotaryLimitJoint
 // cpSlideJoint
 //----------------------------------------------------------------------------------------------------------
 
-interface cpSlideJoint
+[Internal="cpSlideJoint"]
+interface SlideJoint
 {
-	[Static] cpBool cpConstraintIsSlideJoint([Const] cpConstraint constraint);
+	[Static] cpBool cpConstraintIsSlideJoint([Const] Constraint constraint);
 
-	[Static] cpSlideJoint cpSlideJointAlloc();
+	[Static] SlideJoint cpSlideJointAlloc();
 
-	[Static] cpSlideJoint cpSlideJointInit(cpSlideJoint joint, Body a, Body b, 
+	[Static] SlideJoint cpSlideJointInit(SlideJoint joint, Body a, Body b, 
 				[Deref] Vect anchorA, [Deref] Vect anchorB, cpFloat min, cpFloat max);
 
-	[Static] cpConstraint cpSlideJointNew(Body a, Body b, [Deref] Vect anchorA, [Deref] Vect anchorB, 
+	[Static] Constraint cpSlideJointNew(Body a, Body b, [Deref] Vect anchorA, [Deref] Vect anchorB, 
 				cpFloat min, cpFloat max);
 
-	[Static,Value] Vect cpSlideJointGetAnchorA([Const] cpConstraint constraint);
+	[Static,Value] Vect cpSlideJointGetAnchorA([Const] Constraint constraint);
 
-	[Static] void cpSlideJointSetAnchorA(cpConstraint constraint, [Deref] Vect anchorA);
+	[Static] void cpSlideJointSetAnchorA(Constraint constraint, [Deref] Vect anchorA);
 
-	[Static,Value] Vect cpSlideJointGetAnchorB([Const] cpConstraint constraint);
+	[Static,Value] Vect cpSlideJointGetAnchorB([Const] Constraint constraint);
 
-	[Static] void cpSlideJointSetAnchorB(cpConstraint constraint, [Deref] Vect anchorB);
+	[Static] void cpSlideJointSetAnchorB(Constraint constraint, [Deref] Vect anchorB);
 
-	[Static] cpFloat cpSlideJointGetMin([Const] cpConstraint constraint);
+	[Static] cpFloat cpSlideJointGetMin([Const] Constraint constraint);
 
-	[Static] void cpSlideJointSetMin(cpConstraint constraint, cpFloat min);
+	[Static] void cpSlideJointSetMin(Constraint constraint, cpFloat min);
 
-	[Static] cpFloat cpSlideJointGetMax([Const] cpConstraint constraint);
+	[Static] cpFloat cpSlideJointGetMax([Const] Constraint constraint);
 
-	[Static] void cpSlideJointSetMax(cpConstraint constraint, cpFloat max);
+	[Static] void cpSlideJointSetMax(Constraint constraint, cpFloat max);
 };
 
 
@@ -1046,7 +1049,7 @@ typedef cpHashValue uint;
 
 //interface cpSpatialIndexClass {};
 
-[Internal="cpSpatialIndex", NoDelete]
+[Internal="cpSpatialIndex", Delete="cpSpatialIndexFree"]
 interface SpatialIndex
 {
 	[Static] cpSpaceHash cpSpaceHashAlloc();
@@ -1073,7 +1076,7 @@ interface SpatialIndex
 
 // CP_EXPORT cpSpatialIndex* cpSweep1DNew(cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
 
-	[CObject] void cpSpatialIndexFree();
+	[CObject, Internal="cpSpatialIndexFree"] void free();
 
 	// [Static] void cpSpatialIndexCollideStatic(cpSpatialIndex dynamicIndex, cpSpatialIndex staticIndex, 
 	// 		cpSpatialIndexQueryFunc func, VoidPtr data);
@@ -1123,9 +1126,9 @@ interface Math
 
 	[Static, Internal="cpAreaForPoly"] cpFloat areaForPoly([Const] int count, [Const,Cast="cpVect*"] double[] verts, cpFloat radius);
 
-	[Static,Value] Vect cpCentroidForPoly([Const] int count, [Cast="cpVect*"] double[] verts);
+	[Static,Value, Internal="cpCentroidForPoly"] Vect centroidForPoly([Const] int count, [Cast="cpVect*"] double[] verts);
 
-	[Static] cpFloat cpMomentForBox(cpFloat m, cpFloat width, cpFloat height);
+	[Static, Internal="cpMomentForBox"] cpFloat momentForBox(cpFloat m, cpFloat width, cpFloat height);
 
 	[Static] cpFloat cpMomentForBox2(cpFloat m, [Deref] cpBB box);
 

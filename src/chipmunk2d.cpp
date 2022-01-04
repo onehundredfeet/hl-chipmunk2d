@@ -43,6 +43,13 @@ template<typename T> void free_ref( pref<T> *r ) {
 	r->finalize = NULL;
 }
 
+template<typename T> void free_ref( pref<T> *r, void (*deleteFunc)(T*) ) {
+	if( !r->finalize ) hl_error("delete() is not allowed on const value.");
+	deleteFunc( r->value );
+	r->value = NULL;
+	r->finalize = NULL;
+}
+
 // Float vector
 struct _hl_float2 {
 	float x;
@@ -448,161 +455,166 @@ private:
 
 extern "C" {
 
-static void finalize_Vect( _ref(cpVect)* _this ) { free_ref(_this); }
+static void finalize_Vect( _ref(cpVect)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(Vect_delete)( _ref(cpVect)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, Vect_delete, _IDL);
-static void finalize_cpTransform( _ref(cpTransform)* _this ) { free_ref(_this); }
+static void finalize_cpTransform( _ref(cpTransform)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpTransform_delete)( _ref(cpTransform)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpTransform_delete, _IDL);
-static void finalize_cpMat2x2( _ref(cpMat2x2)* _this ) { free_ref(_this); }
+static void finalize_cpMat2x2( _ref(cpMat2x2)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpMat2x2_delete)( _ref(cpMat2x2)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpMat2x2_delete, _IDL);
-static void finalize_cpBB( _ref(cpBB)* _this ) { free_ref(_this); }
+static void finalize_cpBB( _ref(cpBB)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpBB_delete)( _ref(cpBB)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpBB_delete, _IDL);
-static void finalize_Body( _ref(cpBody)* _this ) { free_ref(_this); }
+static void finalize_Body( _ref(cpBody)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(Body_delete)( _ref(cpBody)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, Body_delete, _IDL);
-static void finalize_cpPointQueryInfo( _ref(cpPointQueryInfo)* _this ) { free_ref(_this); }
+static void finalize_cpPointQueryInfo( _ref(cpPointQueryInfo)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpPointQueryInfo_delete)( _ref(cpPointQueryInfo)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpPointQueryInfo_delete, _IDL);
-static void finalize_cpSegmentQueryInfo( _ref(cpSegmentQueryInfo)* _this ) { free_ref(_this); }
+static void finalize_cpSegmentQueryInfo( _ref(cpSegmentQueryInfo)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpSegmentQueryInfo_delete)( _ref(cpSegmentQueryInfo)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpSegmentQueryInfo_delete, _IDL);
-static void finalize_cpShapeFilter( _ref(cpShapeFilter)* _this ) { free_ref(_this); }
+static void finalize_cpShapeFilter( _ref(cpShapeFilter)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpShapeFilter_delete)( _ref(cpShapeFilter)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpShapeFilter_delete, _IDL);
-static void finalize_Shape( _ref(cpShape)* _this ) { free_ref(_this); }
+static void finalize_Shape( _ref(cpShape)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(Shape_delete)( _ref(cpShape)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, Shape_delete, _IDL);
-static void finalize_cpCircleShape( _ref(cpCircleShape)* _this ) { free_ref(_this); }
-HL_PRIM void HL_NAME(cpCircleShape_delete)( _ref(cpCircleShape)* _this ) {
-	free_ref(_this);
+static void finalize_CircleShape( _ref(cpCircleShape)* _this ) { free_ref(_this ); }
+HL_PRIM void HL_NAME(CircleShape_delete)( _ref(cpCircleShape)* _this ) {
+	free_ref(_this );
 }
-DEFINE_PRIM(_VOID, cpCircleShape_delete, _IDL);
-static void finalize_cpSegmentShape( _ref(cpSegmentShape)* _this ) { free_ref(_this); }
-HL_PRIM void HL_NAME(cpSegmentShape_delete)( _ref(cpSegmentShape)* _this ) {
-	free_ref(_this);
+DEFINE_PRIM(_VOID, CircleShape_delete, _IDL);
+static void finalize_SegmentShape( _ref(cpSegmentShape)* _this ) { free_ref(_this ); }
+HL_PRIM void HL_NAME(SegmentShape_delete)( _ref(cpSegmentShape)* _this ) {
+	free_ref(_this );
 }
-DEFINE_PRIM(_VOID, cpSegmentShape_delete, _IDL);
-static void finalize_Space( _ref(cpSpace)* _this ) { free_ref(_this); }
+DEFINE_PRIM(_VOID, SegmentShape_delete, _IDL);
+static void finalize_Space( _ref(cpSpace)* _this ) { free_ref(_this ,cpSpaceFree); }
 HL_PRIM void HL_NAME(Space_delete)( _ref(cpSpace)* _this ) {
-	free_ref(_this);
+	free_ref(_this ,cpSpaceFree);
 }
 DEFINE_PRIM(_VOID, Space_delete, _IDL);
-static void finalize_cpContactPointSet( _ref(cpContactPointSet)* _this ) { free_ref(_this); }
+static void finalize_cpContactPointSet( _ref(cpContactPointSet)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpContactPointSet_delete)( _ref(cpContactPointSet)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpContactPointSet_delete, _IDL);
-static void finalize_cpArbiter( _ref(cpArbiter)* _this ) { free_ref(_this); }
+static void finalize_cpArbiter( _ref(cpArbiter)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpArbiter_delete)( _ref(cpArbiter)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpArbiter_delete, _IDL);
-static void finalize_cpConstraint( _ref(cpConstraint)* _this ) { free_ref(_this); }
-HL_PRIM void HL_NAME(cpConstraint_delete)( _ref(cpConstraint)* _this ) {
-	free_ref(_this);
+static void finalize_Constraint( _ref(cpConstraint)* _this ) { free_ref(_this ,cpConstraintFree); }
+HL_PRIM void HL_NAME(Constraint_delete)( _ref(cpConstraint)* _this ) {
+	free_ref(_this ,cpConstraintFree);
 }
-DEFINE_PRIM(_VOID, cpConstraint_delete, _IDL);
-static void finalize_cpDampedRotarySpring( _ref(cpDampedRotarySpring)* _this ) { free_ref(_this); }
+DEFINE_PRIM(_VOID, Constraint_delete, _IDL);
+static void finalize_cpDampedRotarySpring( _ref(cpDampedRotarySpring)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpDampedRotarySpring_delete)( _ref(cpDampedRotarySpring)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpDampedRotarySpring_delete, _IDL);
-static void finalize_cpDampedSpring( _ref(cpDampedSpring)* _this ) { free_ref(_this); }
+static void finalize_cpDampedSpring( _ref(cpDampedSpring)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpDampedSpring_delete)( _ref(cpDampedSpring)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpDampedSpring_delete, _IDL);
-static void finalize_cpGearJoint( _ref(cpGearJoint)* _this ) { free_ref(_this); }
+static void finalize_cpGearJoint( _ref(cpGearJoint)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpGearJoint_delete)( _ref(cpGearJoint)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpGearJoint_delete, _IDL);
-static void finalize_cpSimpleMotor( _ref(cpSimpleMotor)* _this ) { free_ref(_this); }
+static void finalize_cpSimpleMotor( _ref(cpSimpleMotor)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpSimpleMotor_delete)( _ref(cpSimpleMotor)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpSimpleMotor_delete, _IDL);
-static void finalize_cpGrooveJoint( _ref(cpGrooveJoint)* _this ) { free_ref(_this); }
+static void finalize_cpGrooveJoint( _ref(cpGrooveJoint)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpGrooveJoint_delete)( _ref(cpGrooveJoint)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpGrooveJoint_delete, _IDL);
-static void finalize_cpHastySpace( _ref(cpHastySpace)* _this ) { free_ref(_this); }
+static void finalize_cpHastySpace( _ref(cpHastySpace)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpHastySpace_delete)( _ref(cpHastySpace)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpHastySpace_delete, _IDL);
-static void finalize_cpPinJoint( _ref(cpPinJoint)* _this ) { free_ref(_this); }
+static void finalize_cpPinJoint( _ref(cpPinJoint)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpPinJoint_delete)( _ref(cpPinJoint)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpPinJoint_delete, _IDL);
-static void finalize_cpPivotJoint( _ref(cpPivotJoint)* _this ) { free_ref(_this); }
+static void finalize_cpPivotJoint( _ref(cpPivotJoint)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpPivotJoint_delete)( _ref(cpPivotJoint)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpPivotJoint_delete, _IDL);
-static void finalize_cpPolyline( _ref(cpPolyline)* _this ) { free_ref(_this); }
+static void finalize_cpPolyline( _ref(cpPolyline)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpPolyline_delete)( _ref(cpPolyline)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpPolyline_delete, _IDL);
-static void finalize_cpPolylineSet( _ref(cpPolylineSet)* _this ) { free_ref(_this); }
+static void finalize_cpPolylineSet( _ref(cpPolylineSet)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpPolylineSet_delete)( _ref(cpPolylineSet)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpPolylineSet_delete, _IDL);
-static void finalize_cpPolyShape( _ref(cpPolyShape)* _this ) { free_ref(_this); }
+static void finalize_cpPolyShape( _ref(cpPolyShape)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpPolyShape_delete)( _ref(cpPolyShape)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpPolyShape_delete, _IDL);
-static void finalize_cpRatchetJoint( _ref(cpRatchetJoint)* _this ) { free_ref(_this); }
+static void finalize_cpRatchetJoint( _ref(cpRatchetJoint)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpRatchetJoint_delete)( _ref(cpRatchetJoint)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpRatchetJoint_delete, _IDL);
-static void finalize_cpRotaryLimitJoint( _ref(cpRotaryLimitJoint)* _this ) { free_ref(_this); }
+static void finalize_cpRotaryLimitJoint( _ref(cpRotaryLimitJoint)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpRotaryLimitJoint_delete)( _ref(cpRotaryLimitJoint)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpRotaryLimitJoint_delete, _IDL);
-static void finalize_cpSlideJoint( _ref(cpSlideJoint)* _this ) { free_ref(_this); }
-HL_PRIM void HL_NAME(cpSlideJoint_delete)( _ref(cpSlideJoint)* _this ) {
-	free_ref(_this);
+static void finalize_SlideJoint( _ref(cpSlideJoint)* _this ) { free_ref(_this ); }
+HL_PRIM void HL_NAME(SlideJoint_delete)( _ref(cpSlideJoint)* _this ) {
+	free_ref(_this );
 }
-DEFINE_PRIM(_VOID, cpSlideJoint_delete, _IDL);
-static void finalize_cpSpaceHash( _ref(cpSpaceHash)* _this ) { free_ref(_this); }
+DEFINE_PRIM(_VOID, SlideJoint_delete, _IDL);
+static void finalize_cpSpaceHash( _ref(cpSpaceHash)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpSpaceHash_delete)( _ref(cpSpaceHash)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpSpaceHash_delete, _IDL);
-static void finalize_cpBBTree( _ref(cpBBTree)* _this ) { free_ref(_this); }
+static void finalize_cpBBTree( _ref(cpBBTree)* _this ) { free_ref(_this ); }
 HL_PRIM void HL_NAME(cpBBTree_delete)( _ref(cpBBTree)* _this ) {
-	free_ref(_this);
+	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpBBTree_delete, _IDL);
+static void finalize_SpatialIndex( _ref(cpSpatialIndex)* _this ) { free_ref(_this ,cpSpatialIndexFree); }
+HL_PRIM void HL_NAME(SpatialIndex_delete)( _ref(cpSpatialIndex)* _this ) {
+	free_ref(_this ,cpSpatialIndexFree);
+}
+DEFINE_PRIM(_VOID, SpatialIndex_delete, _IDL);
 HL_PRIM double HL_NAME(Vect_get_x)( _ref(cpVect)* _this ) {
 	return _unref(_this)->x;
 }
@@ -952,11 +964,6 @@ HL_PRIM double HL_NAME(cpMat2x2_set_d)( _ref(cpMat2x2)* _this, double value ) {
 	return value;
 }
 DEFINE_PRIM(_F64,cpMat2x2_set_d,_IDL _F64);
-
-HL_PRIM _ref(cpBB)* HL_NAME(cpBB_new0)() {
-	return alloc_ref((new cpBB()),cpBB);
-}
-DEFINE_PRIM(_IDL, cpBB_new0,);
 
 HL_PRIM double HL_NAME(cpBB_get_l)( _ref(cpBB)* _this ) {
 	return _unref(_this)->l;
@@ -1513,25 +1520,25 @@ HL_PRIM void HL_NAME(Shape_cpShapeSetSensor1)(_ref(cpShape)* _this, unsigned cha
 }
 DEFINE_PRIM(_VOID, Shape_cpShapeSetSensor1, _IDL _I8);
 
-HL_PRIM double HL_NAME(Shape_cpShapeGetElasticity0)(_ref(cpShape)* _this) {
+HL_PRIM double HL_NAME(Shape_getElasticity0)(_ref(cpShape)* _this) {
 	return (cpShapeGetElasticity( _unref(_this) ));
 }
-DEFINE_PRIM(_F64, Shape_cpShapeGetElasticity0, _IDL);
+DEFINE_PRIM(_F64, Shape_getElasticity0, _IDL);
 
-HL_PRIM void HL_NAME(Shape_cpShapeSetElasticity1)(_ref(cpShape)* _this, double elasticity) {
+HL_PRIM void HL_NAME(Shape_setElasticity1)(_ref(cpShape)* _this, double elasticity) {
 	(cpShapeSetElasticity( _unref(_this) , elasticity));
 }
-DEFINE_PRIM(_VOID, Shape_cpShapeSetElasticity1, _IDL _F64);
+DEFINE_PRIM(_VOID, Shape_setElasticity1, _IDL _F64);
 
-HL_PRIM double HL_NAME(Shape_cpShapeGetFriction0)(_ref(cpShape)* _this) {
+HL_PRIM double HL_NAME(Shape_getFriction0)(_ref(cpShape)* _this) {
 	return (cpShapeGetFriction( _unref(_this) ));
 }
-DEFINE_PRIM(_F64, Shape_cpShapeGetFriction0, _IDL);
+DEFINE_PRIM(_F64, Shape_getFriction0, _IDL);
 
-HL_PRIM void HL_NAME(Shape_cpShapeSetFriction1)(_ref(cpShape)* _this, double friction) {
+HL_PRIM void HL_NAME(Shape_setFriction1)(_ref(cpShape)* _this, double friction) {
 	(cpShapeSetFriction( _unref(_this) , friction));
 }
-DEFINE_PRIM(_VOID, Shape_cpShapeSetFriction1, _IDL _F64);
+DEFINE_PRIM(_VOID, Shape_setFriction1, _IDL _F64);
 
 HL_PRIM _ref(cpVect)* HL_NAME(Shape_cpShapeGetSurfaceVelocity0)(_ref(cpShape)* _this) {
 	return alloc_ref(new cpVect((cpShapeGetSurfaceVelocity( _unref(_this) ))),Vect);
@@ -1563,185 +1570,185 @@ HL_PRIM void HL_NAME(Shape_cpShapeSetFilter1)(_ref(cpShape)* _this, _ref(cpShape
 }
 DEFINE_PRIM(_VOID, Shape_cpShapeSetFilter1, _IDL _IDL);
 
-HL_PRIM _ref(cpCircleShape)* HL_NAME(cpCircleShape_cpCircleShapeAlloc0)() {
-	return alloc_ref((cpCircleShapeAlloc()),cpCircleShape);
+HL_PRIM _ref(cpCircleShape)* HL_NAME(CircleShape_alloc0)() {
+	return alloc_ref((cpCircleShapeAlloc()),CircleShape);
 }
-DEFINE_PRIM(_IDL, cpCircleShape_cpCircleShapeAlloc0,);
+DEFINE_PRIM(_IDL, CircleShape_alloc0,);
 
-HL_PRIM _ref(cpCircleShape)* HL_NAME(cpCircleShape_cpCircleShapeInit4)(_ref(cpCircleShape)* circle, _ref(cpBody)* body, double radius, _ref(cpVect)* offset) {
-	return alloc_ref((cpCircleShapeInit(_unref(circle), _unref(body), radius, *_unref(offset))),cpCircleShape);
+HL_PRIM _ref(cpCircleShape)* HL_NAME(CircleShape_init4)(_ref(cpCircleShape)* circle, _ref(cpBody)* body, double radius, _ref(cpVect)* offset) {
+	return alloc_ref((cpCircleShapeInit(_unref(circle), _unref(body), radius, *_unref(offset))),CircleShape);
 }
-DEFINE_PRIM(_IDL, cpCircleShape_cpCircleShapeInit4, _IDL _IDL _F64 _IDL);
+DEFINE_PRIM(_IDL, CircleShape_init4, _IDL _IDL _F64 _IDL);
 
-HL_PRIM _ref(cpShape)* HL_NAME(cpCircleShape_cpCircleShapeNew3)(_ref(cpBody)* body, double radius, _ref(cpVect)* offset) {
+HL_PRIM _ref(cpShape)* HL_NAME(CircleShape_makeNew3)(_ref(cpBody)* body, double radius, _ref(cpVect)* offset) {
 	return alloc_ref((cpCircleShapeNew(_unref(body), radius, *_unref(offset))),Shape);
 }
-DEFINE_PRIM(_IDL, cpCircleShape_cpCircleShapeNew3, _IDL _F64 _IDL);
+DEFINE_PRIM(_IDL, CircleShape_makeNew3, _IDL _F64 _IDL);
 
-HL_PRIM _ref(cpVect)* HL_NAME(cpCircleShape_cpCircleShapeGetOffset1)(_ref(cpShape)* shape) {
+HL_PRIM _ref(cpVect)* HL_NAME(CircleShape_getOffset1)(_ref(cpShape)* shape) {
 	return alloc_ref(new cpVect((cpCircleShapeGetOffset(_unref(shape)))),Vect);
 }
-DEFINE_PRIM(_IDL, cpCircleShape_cpCircleShapeGetOffset1, _IDL);
+DEFINE_PRIM(_IDL, CircleShape_getOffset1, _IDL);
 
-HL_PRIM double HL_NAME(cpCircleShape_cpCircleShapeGetRadius1)(_ref(cpShape)* shape) {
+HL_PRIM double HL_NAME(CircleShape_getRadius1)(_ref(cpShape)* shape) {
 	return (cpCircleShapeGetRadius(_unref(shape)));
 }
-DEFINE_PRIM(_F64, cpCircleShape_cpCircleShapeGetRadius1, _IDL);
+DEFINE_PRIM(_F64, CircleShape_getRadius1, _IDL);
 
-HL_PRIM _ref(cpSegmentShape)* HL_NAME(cpSegmentShape_cpSegmentShapeAlloc0)() {
-	return alloc_ref((cpSegmentShapeAlloc()),cpSegmentShape);
+HL_PRIM _ref(cpSegmentShape)* HL_NAME(SegmentShape_alloc0)() {
+	return alloc_ref((cpSegmentShapeAlloc()),SegmentShape);
 }
-DEFINE_PRIM(_IDL, cpSegmentShape_cpSegmentShapeAlloc0,);
+DEFINE_PRIM(_IDL, SegmentShape_alloc0,);
 
-HL_PRIM _ref(cpSegmentShape)* HL_NAME(cpSegmentShape_cpSegmentShapeInit5)(_ref(cpSegmentShape)* seg, _ref(cpBody)* body, _ref(cpVect)* a, _ref(cpVect)* b, double radius) {
-	return alloc_ref((cpSegmentShapeInit(_unref(seg), _unref(body), *_unref(a), *_unref(b), radius)),cpSegmentShape);
+HL_PRIM _ref(cpSegmentShape)* HL_NAME(SegmentShape_init4)(_ref(cpSegmentShape)* _this, _ref(cpBody)* body, _ref(cpVect)* a, _ref(cpVect)* b, double radius) {
+	return alloc_ref((cpSegmentShapeInit( _unref(_this) , _unref(body), *_unref(a), *_unref(b), radius)),SegmentShape);
 }
-DEFINE_PRIM(_IDL, cpSegmentShape_cpSegmentShapeInit5, _IDL _IDL _IDL _IDL _F64);
+DEFINE_PRIM(_IDL, SegmentShape_init4, _IDL _IDL _IDL _IDL _F64);
 
-HL_PRIM _ref(cpShape)* HL_NAME(cpSegmentShape_cpSegmentShapeNew4)(_ref(cpBody)* body, _ref(cpVect)* a, _ref(cpVect)* b, double radius) {
+HL_PRIM _ref(cpShape)* HL_NAME(SegmentShape_newSegmentShape4)(_ref(cpBody)* body, _ref(cpVect)* a, _ref(cpVect)* b, double radius) {
 	return alloc_ref((cpSegmentShapeNew(_unref(body), *_unref(a), *_unref(b), radius)),Shape);
 }
-DEFINE_PRIM(_IDL, cpSegmentShape_cpSegmentShapeNew4, _IDL _IDL _IDL _F64);
+DEFINE_PRIM(_IDL, SegmentShape_newSegmentShape4, _IDL _IDL _IDL _F64);
 
-HL_PRIM void HL_NAME(cpSegmentShape_cpSegmentShapeSetNeighbors3)(_ref(cpShape)* shape, _ref(cpVect)* prev, _ref(cpVect)* next) {
+HL_PRIM void HL_NAME(SegmentShape_setNeighbors3)(_ref(cpShape)* shape, _ref(cpVect)* prev, _ref(cpVect)* next) {
 	(cpSegmentShapeSetNeighbors(_unref(shape), *_unref(prev), *_unref(next)));
 }
-DEFINE_PRIM(_VOID, cpSegmentShape_cpSegmentShapeSetNeighbors3, _IDL _IDL _IDL);
+DEFINE_PRIM(_VOID, SegmentShape_setNeighbors3, _IDL _IDL _IDL);
 
-HL_PRIM _ref(cpVect)* HL_NAME(cpSegmentShape_cpSegmentShapeGetA1)(_ref(cpShape)* shape) {
+HL_PRIM _ref(cpVect)* HL_NAME(SegmentShape_getA1)(_ref(cpShape)* shape) {
 	return alloc_ref(new cpVect((cpSegmentShapeGetA(_unref(shape)))),Vect);
 }
-DEFINE_PRIM(_IDL, cpSegmentShape_cpSegmentShapeGetA1, _IDL);
+DEFINE_PRIM(_IDL, SegmentShape_getA1, _IDL);
 
-HL_PRIM _ref(cpVect)* HL_NAME(cpSegmentShape_cpSegmentShapeGetB1)(_ref(cpShape)* shape) {
+HL_PRIM _ref(cpVect)* HL_NAME(SegmentShape_getB1)(_ref(cpShape)* shape) {
 	return alloc_ref(new cpVect((cpSegmentShapeGetB(_unref(shape)))),Vect);
 }
-DEFINE_PRIM(_IDL, cpSegmentShape_cpSegmentShapeGetB1, _IDL);
+DEFINE_PRIM(_IDL, SegmentShape_getB1, _IDL);
 
-HL_PRIM _ref(cpVect)* HL_NAME(cpSegmentShape_cpSegmentShapeGetNormal1)(_ref(cpShape)* shape) {
+HL_PRIM _ref(cpVect)* HL_NAME(SegmentShape_getNormal1)(_ref(cpShape)* shape) {
 	return alloc_ref(new cpVect((cpSegmentShapeGetNormal(_unref(shape)))),Vect);
 }
-DEFINE_PRIM(_IDL, cpSegmentShape_cpSegmentShapeGetNormal1, _IDL);
+DEFINE_PRIM(_IDL, SegmentShape_getNormal1, _IDL);
 
-HL_PRIM double HL_NAME(cpSegmentShape_cpSegmentShapeGetRadius1)(_ref(cpShape)* shape) {
+HL_PRIM double HL_NAME(SegmentShape_getRadius1)(_ref(cpShape)* shape) {
 	return (cpSegmentShapeGetRadius(_unref(shape)));
 }
-DEFINE_PRIM(_F64, cpSegmentShape_cpSegmentShapeGetRadius1, _IDL);
+DEFINE_PRIM(_F64, SegmentShape_getRadius1, _IDL);
 
-HL_PRIM _ref(cpSpace)* HL_NAME(Space_cpSpaceInit1)(_ref(cpSpace)* space) {
+HL_PRIM _ref(cpSpace)* HL_NAME(Space_init1)(_ref(cpSpace)* space) {
 	return alloc_ref((cpSpaceInit(_unref(space))),Space);
 }
-DEFINE_PRIM(_IDL, Space_cpSpaceInit1, _IDL);
+DEFINE_PRIM(_IDL, Space_init1, _IDL);
 
-HL_PRIM _ref(cpSpace)* HL_NAME(Space_cpSpaceNew0)() {
+HL_PRIM _ref(cpSpace)* HL_NAME(Space_makeNew0)() {
 	return alloc_ref((cpSpaceNew()),Space);
 }
-DEFINE_PRIM(_IDL, Space_cpSpaceNew0,);
+DEFINE_PRIM(_IDL, Space_makeNew0,);
 
-HL_PRIM void HL_NAME(Space_cpSpaceDestroy0)(_ref(cpSpace)* _this) {
+HL_PRIM void HL_NAME(Space_destroy0)(_ref(cpSpace)* _this) {
 	(cpSpaceDestroy( _unref(_this) ));
 }
-DEFINE_PRIM(_VOID, Space_cpSpaceDestroy0, _IDL);
+DEFINE_PRIM(_VOID, Space_destroy0, _IDL);
 
-HL_PRIM void HL_NAME(Space_cpSpaceFree0)(_ref(cpSpace)* _this) {
+HL_PRIM void HL_NAME(Space_free0)(_ref(cpSpace)* _this) {
 	(cpSpaceFree( _unref(_this) ));
 }
-DEFINE_PRIM(_VOID, Space_cpSpaceFree0, _IDL);
+DEFINE_PRIM(_VOID, Space_free0, _IDL);
 
-HL_PRIM int HL_NAME(Space_cpSpaceGetIterations0)(_ref(cpSpace)* _this) {
+HL_PRIM int HL_NAME(Space_getIterations0)(_ref(cpSpace)* _this) {
 	return (cpSpaceGetIterations( _unref(_this) ));
 }
-DEFINE_PRIM(_I32, Space_cpSpaceGetIterations0, _IDL);
+DEFINE_PRIM(_I32, Space_getIterations0, _IDL);
 
-HL_PRIM void HL_NAME(Space_cpSpaceSetIterations1)(_ref(cpSpace)* _this, int iterations) {
+HL_PRIM void HL_NAME(Space_setIterations1)(_ref(cpSpace)* _this, int iterations) {
 	(cpSpaceSetIterations( _unref(_this) , iterations));
 }
-DEFINE_PRIM(_VOID, Space_cpSpaceSetIterations1, _IDL _I32);
+DEFINE_PRIM(_VOID, Space_setIterations1, _IDL _I32);
 
 HL_PRIM _ref(cpVect)* HL_NAME(Space_cpSpaceGetGravity0)(_ref(cpSpace)* _this) {
 	return alloc_ref(new cpVect((cpSpaceGetGravity( _unref(_this) ))),Vect);
 }
 DEFINE_PRIM(_IDL, Space_cpSpaceGetGravity0, _IDL);
 
-HL_PRIM void HL_NAME(Space_cpSpaceSetGravity1)(_ref(cpSpace)* _this, _ref(cpVect)* gravity) {
+HL_PRIM void HL_NAME(Space_setGravity1)(_ref(cpSpace)* _this, _ref(cpVect)* gravity) {
 	(cpSpaceSetGravity( _unref(_this) , *_unref(gravity)));
 }
-DEFINE_PRIM(_VOID, Space_cpSpaceSetGravity1, _IDL _IDL);
+DEFINE_PRIM(_VOID, Space_setGravity1, _IDL _IDL);
 
-HL_PRIM double HL_NAME(Space_cpSpaceGetDamping0)(_ref(cpSpace)* _this) {
+HL_PRIM double HL_NAME(Space_getDamping0)(_ref(cpSpace)* _this) {
 	return (cpSpaceGetDamping( _unref(_this) ));
 }
-DEFINE_PRIM(_F64, Space_cpSpaceGetDamping0, _IDL);
+DEFINE_PRIM(_F64, Space_getDamping0, _IDL);
 
-HL_PRIM void HL_NAME(Space_cpSpaceSetDamping1)(_ref(cpSpace)* _this, double damping) {
+HL_PRIM void HL_NAME(Space_setDamping1)(_ref(cpSpace)* _this, double damping) {
 	(cpSpaceSetDamping( _unref(_this) , damping));
 }
-DEFINE_PRIM(_VOID, Space_cpSpaceSetDamping1, _IDL _F64);
+DEFINE_PRIM(_VOID, Space_setDamping1, _IDL _F64);
 
-HL_PRIM double HL_NAME(Space_cpSpaceGetIdleSpeedThreshold0)(_ref(cpSpace)* _this) {
+HL_PRIM double HL_NAME(Space_getIdleSpeedThreshold0)(_ref(cpSpace)* _this) {
 	return (cpSpaceGetIdleSpeedThreshold( _unref(_this) ));
 }
-DEFINE_PRIM(_F64, Space_cpSpaceGetIdleSpeedThreshold0, _IDL);
+DEFINE_PRIM(_F64, Space_getIdleSpeedThreshold0, _IDL);
 
-HL_PRIM void HL_NAME(Space_cpSpaceSetIdleSpeedThreshold1)(_ref(cpSpace)* _this, double idleSpeedThreshold) {
+HL_PRIM void HL_NAME(Space_setIdleSpeedThreshold1)(_ref(cpSpace)* _this, double idleSpeedThreshold) {
 	(cpSpaceSetIdleSpeedThreshold( _unref(_this) , idleSpeedThreshold));
 }
-DEFINE_PRIM(_VOID, Space_cpSpaceSetIdleSpeedThreshold1, _IDL _F64);
+DEFINE_PRIM(_VOID, Space_setIdleSpeedThreshold1, _IDL _F64);
 
-HL_PRIM double HL_NAME(Space_cpSpaceGetSleepTimeThreshold0)(_ref(cpSpace)* _this) {
+HL_PRIM double HL_NAME(Space_getSleepTimeThreshold0)(_ref(cpSpace)* _this) {
 	return (cpSpaceGetSleepTimeThreshold( _unref(_this) ));
 }
-DEFINE_PRIM(_F64, Space_cpSpaceGetSleepTimeThreshold0, _IDL);
+DEFINE_PRIM(_F64, Space_getSleepTimeThreshold0, _IDL);
 
-HL_PRIM void HL_NAME(Space_cpSpaceSetSleepTimeThreshold1)(_ref(cpSpace)* _this, double sleepTimeThreshold) {
+HL_PRIM void HL_NAME(Space_setSleepTimeThreshold1)(_ref(cpSpace)* _this, double sleepTimeThreshold) {
 	(cpSpaceSetSleepTimeThreshold( _unref(_this) , sleepTimeThreshold));
 }
-DEFINE_PRIM(_VOID, Space_cpSpaceSetSleepTimeThreshold1, _IDL _F64);
+DEFINE_PRIM(_VOID, Space_setSleepTimeThreshold1, _IDL _F64);
 
-HL_PRIM double HL_NAME(Space_cpSpaceGetCollisionSlop0)(_ref(cpSpace)* _this) {
+HL_PRIM double HL_NAME(Space_getCollisionSlop0)(_ref(cpSpace)* _this) {
 	return (cpSpaceGetCollisionSlop( _unref(_this) ));
 }
-DEFINE_PRIM(_F64, Space_cpSpaceGetCollisionSlop0, _IDL);
+DEFINE_PRIM(_F64, Space_getCollisionSlop0, _IDL);
 
-HL_PRIM void HL_NAME(Space_cpSpaceSetCollisionSlop1)(_ref(cpSpace)* _this, double collisionSlop) {
+HL_PRIM void HL_NAME(Space_setCollisionSlop1)(_ref(cpSpace)* _this, double collisionSlop) {
 	(cpSpaceSetCollisionSlop( _unref(_this) , collisionSlop));
 }
-DEFINE_PRIM(_VOID, Space_cpSpaceSetCollisionSlop1, _IDL _F64);
+DEFINE_PRIM(_VOID, Space_setCollisionSlop1, _IDL _F64);
 
-HL_PRIM double HL_NAME(Space_cpSpaceGetCollisionBias0)(_ref(cpSpace)* _this) {
+HL_PRIM double HL_NAME(Space_getCollisionBias0)(_ref(cpSpace)* _this) {
 	return (cpSpaceGetCollisionBias( _unref(_this) ));
 }
-DEFINE_PRIM(_F64, Space_cpSpaceGetCollisionBias0, _IDL);
+DEFINE_PRIM(_F64, Space_getCollisionBias0, _IDL);
 
-HL_PRIM void HL_NAME(Space_cpSpaceSetCollisionBias1)(_ref(cpSpace)* _this, double collisionBias) {
+HL_PRIM void HL_NAME(Space_setCollisionBias1)(_ref(cpSpace)* _this, double collisionBias) {
 	(cpSpaceSetCollisionBias( _unref(_this) , collisionBias));
 }
-DEFINE_PRIM(_VOID, Space_cpSpaceSetCollisionBias1, _IDL _F64);
+DEFINE_PRIM(_VOID, Space_setCollisionBias1, _IDL _F64);
 
-HL_PRIM void* HL_NAME(Space_cpSpaceGetUserData0)(_ref(cpSpace)* _this) {
+HL_PRIM void* HL_NAME(Space_getUserData0)(_ref(cpSpace)* _this) {
 	return (cpSpaceGetUserData( _unref(_this) ));
 }
-DEFINE_PRIM(_BYTES, Space_cpSpaceGetUserData0, _IDL);
+DEFINE_PRIM(_BYTES, Space_getUserData0, _IDL);
 
-HL_PRIM void HL_NAME(Space_cpSpaceSetUserData1)(_ref(cpSpace)* _this, void* userData) {
+HL_PRIM void HL_NAME(Space_setUserData1)(_ref(cpSpace)* _this, void* userData) {
 	(cpSpaceSetUserData( _unref(_this) , userData));
 }
-DEFINE_PRIM(_VOID, Space_cpSpaceSetUserData1, _IDL _BYTES);
+DEFINE_PRIM(_VOID, Space_setUserData1, _IDL _BYTES);
 
 HL_PRIM _ref(cpBody)* HL_NAME(Space_getStaticBody0)(_ref(cpSpace)* _this) {
 	return alloc_ref((cpSpaceGetStaticBody( _unref(_this) )),Body);
 }
 DEFINE_PRIM(_IDL, Space_getStaticBody0, _IDL);
 
-HL_PRIM double HL_NAME(Space_cpSpaceGetCurrentTimeStep0)(_ref(cpSpace)* _this) {
+HL_PRIM double HL_NAME(Space_getCurrentTimeStep0)(_ref(cpSpace)* _this) {
 	return (cpSpaceGetCurrentTimeStep( _unref(_this) ));
 }
-DEFINE_PRIM(_F64, Space_cpSpaceGetCurrentTimeStep0, _IDL);
+DEFINE_PRIM(_F64, Space_getCurrentTimeStep0, _IDL);
 
-HL_PRIM unsigned char HL_NAME(Space_cpSpaceIsLocked0)(_ref(cpSpace)* _this) {
+HL_PRIM unsigned char HL_NAME(Space_isLocked0)(_ref(cpSpace)* _this) {
 	return (cpSpaceIsLocked( _unref(_this) ));
 }
-DEFINE_PRIM(_I8, Space_cpSpaceIsLocked0, _IDL);
+DEFINE_PRIM(_I8, Space_isLocked0, _IDL);
 
 HL_PRIM void HL_NAME(Space_addShape1)(_ref(cpSpace)* _this, _ref(cpShape)* shape) {
 	(cpSpaceAddShape( _unref(_this) , _unref(shape)));
@@ -1754,7 +1761,7 @@ HL_PRIM void HL_NAME(Space_addBody1)(_ref(cpSpace)* _this, _ref(cpBody)* body) {
 DEFINE_PRIM(_VOID, Space_addBody1, _IDL _IDL);
 
 HL_PRIM _ref(cpConstraint)* HL_NAME(Space_cpSpaceAddConstraint1)(_ref(cpSpace)* _this, _ref(cpConstraint)* constraint) {
-	return alloc_ref((cpSpaceAddConstraint( _unref(_this) , _unref(constraint))),cpConstraint);
+	return alloc_ref((cpSpaceAddConstraint( _unref(_this) , _unref(constraint))),Constraint);
 }
 DEFINE_PRIM(_IDL, Space_cpSpaceAddConstraint1, _IDL _IDL);
 
@@ -1818,10 +1825,10 @@ HL_PRIM void HL_NAME(Space_cpSpaceUseSpatialHash2)(_ref(cpSpace)* _this, double 
 }
 DEFINE_PRIM(_VOID, Space_cpSpaceUseSpatialHash2, _IDL _F64 _I32);
 
-HL_PRIM void HL_NAME(Space_cpSpaceStep1)(_ref(cpSpace)* _this, double dt) {
+HL_PRIM void HL_NAME(Space_step1)(_ref(cpSpace)* _this, double dt) {
 	(cpSpaceStep( _unref(_this) , dt));
 }
-DEFINE_PRIM(_VOID, Space_cpSpaceStep1, _IDL _F64);
+DEFINE_PRIM(_VOID, Space_step1, _IDL _F64);
 
 HL_PRIM double HL_NAME(cpArbiter_cpArbiterGetRestitution0)(_ref(cpArbiter)* _this) {
 	return (cpArbiterGetRestitution( _unref(_this) ));
@@ -1963,85 +1970,85 @@ HL_PRIM void HL_NAME(cpArbiter_cpArbiterCallWildcardSeparateB1)(_ref(cpArbiter)*
 }
 DEFINE_PRIM(_VOID, cpArbiter_cpArbiterCallWildcardSeparateB1, _IDL _IDL);
 
-HL_PRIM void HL_NAME(cpConstraint_cpConstraintDestroy0)(_ref(cpConstraint)* _this) {
+HL_PRIM void HL_NAME(Constraint_destroy0)(_ref(cpConstraint)* _this) {
 	(cpConstraintDestroy( _unref(_this) ));
 }
-DEFINE_PRIM(_VOID, cpConstraint_cpConstraintDestroy0, _IDL);
+DEFINE_PRIM(_VOID, Constraint_destroy0, _IDL);
 
-HL_PRIM void HL_NAME(cpConstraint_cpConstraintFree0)(_ref(cpConstraint)* _this) {
+HL_PRIM void HL_NAME(Constraint_free0)(_ref(cpConstraint)* _this) {
 	(cpConstraintFree( _unref(_this) ));
 }
-DEFINE_PRIM(_VOID, cpConstraint_cpConstraintFree0, _IDL);
+DEFINE_PRIM(_VOID, Constraint_free0, _IDL);
 
-HL_PRIM _ref(cpSpace)* HL_NAME(cpConstraint_cpConstraintGetSpace0)(_ref(cpConstraint)* _this) {
+HL_PRIM _ref(cpSpace)* HL_NAME(Constraint_getSpace0)(_ref(cpConstraint)* _this) {
 	return alloc_ref((cpConstraintGetSpace( _unref(_this) )),Space);
 }
-DEFINE_PRIM(_IDL, cpConstraint_cpConstraintGetSpace0, _IDL);
+DEFINE_PRIM(_IDL, Constraint_getSpace0, _IDL);
 
-HL_PRIM _ref(cpBody)* HL_NAME(cpConstraint_cpConstraintGetBodyA0)(_ref(cpConstraint)* _this) {
+HL_PRIM _ref(cpBody)* HL_NAME(Constraint_getBodyA0)(_ref(cpConstraint)* _this) {
 	return alloc_ref((cpConstraintGetBodyA( _unref(_this) )),Body);
 }
-DEFINE_PRIM(_IDL, cpConstraint_cpConstraintGetBodyA0, _IDL);
+DEFINE_PRIM(_IDL, Constraint_getBodyA0, _IDL);
 
-HL_PRIM _ref(cpBody)* HL_NAME(cpConstraint_cpConstraintGetBodyB0)(_ref(cpConstraint)* _this) {
+HL_PRIM _ref(cpBody)* HL_NAME(Constraint_getBodyB0)(_ref(cpConstraint)* _this) {
 	return alloc_ref((cpConstraintGetBodyB( _unref(_this) )),Body);
 }
-DEFINE_PRIM(_IDL, cpConstraint_cpConstraintGetBodyB0, _IDL);
+DEFINE_PRIM(_IDL, Constraint_getBodyB0, _IDL);
 
-HL_PRIM double HL_NAME(cpConstraint_cpConstraintGetMaxForce0)(_ref(cpConstraint)* _this) {
+HL_PRIM double HL_NAME(Constraint_getMaxForce0)(_ref(cpConstraint)* _this) {
 	return (cpConstraintGetMaxForce( _unref(_this) ));
 }
-DEFINE_PRIM(_F64, cpConstraint_cpConstraintGetMaxForce0, _IDL);
+DEFINE_PRIM(_F64, Constraint_getMaxForce0, _IDL);
 
-HL_PRIM void HL_NAME(cpConstraint_cpConstraintSetMaxForce1)(_ref(cpConstraint)* _this, double maxForce) {
+HL_PRIM void HL_NAME(Constraint_setMaxForce1)(_ref(cpConstraint)* _this, double maxForce) {
 	(cpConstraintSetMaxForce( _unref(_this) , maxForce));
 }
-DEFINE_PRIM(_VOID, cpConstraint_cpConstraintSetMaxForce1, _IDL _F64);
+DEFINE_PRIM(_VOID, Constraint_setMaxForce1, _IDL _F64);
 
-HL_PRIM double HL_NAME(cpConstraint_cpConstraintGetErrorBias0)(_ref(cpConstraint)* _this) {
+HL_PRIM double HL_NAME(Constraint_getErrorBias0)(_ref(cpConstraint)* _this) {
 	return (cpConstraintGetErrorBias( _unref(_this) ));
 }
-DEFINE_PRIM(_F64, cpConstraint_cpConstraintGetErrorBias0, _IDL);
+DEFINE_PRIM(_F64, Constraint_getErrorBias0, _IDL);
 
-HL_PRIM void HL_NAME(cpConstraint_cpConstraintSetErrorBias1)(_ref(cpConstraint)* _this, double errorBias) {
+HL_PRIM void HL_NAME(Constraint_setErrorBias1)(_ref(cpConstraint)* _this, double errorBias) {
 	(cpConstraintSetErrorBias( _unref(_this) , errorBias));
 }
-DEFINE_PRIM(_VOID, cpConstraint_cpConstraintSetErrorBias1, _IDL _F64);
+DEFINE_PRIM(_VOID, Constraint_setErrorBias1, _IDL _F64);
 
-HL_PRIM double HL_NAME(cpConstraint_cpConstraintGetMaxBias0)(_ref(cpConstraint)* _this) {
+HL_PRIM double HL_NAME(Constraint_getMaxBias0)(_ref(cpConstraint)* _this) {
 	return (cpConstraintGetMaxBias( _unref(_this) ));
 }
-DEFINE_PRIM(_F64, cpConstraint_cpConstraintGetMaxBias0, _IDL);
+DEFINE_PRIM(_F64, Constraint_getMaxBias0, _IDL);
 
-HL_PRIM void HL_NAME(cpConstraint_cpConstraintSetMaxBias1)(_ref(cpConstraint)* _this, double maxBias) {
+HL_PRIM void HL_NAME(Constraint_setMaxBias1)(_ref(cpConstraint)* _this, double maxBias) {
 	(cpConstraintSetMaxBias( _unref(_this) , maxBias));
 }
-DEFINE_PRIM(_VOID, cpConstraint_cpConstraintSetMaxBias1, _IDL _F64);
+DEFINE_PRIM(_VOID, Constraint_setMaxBias1, _IDL _F64);
 
-HL_PRIM unsigned char HL_NAME(cpConstraint_cpConstraintGetCollideBodies0)(_ref(cpConstraint)* _this) {
+HL_PRIM unsigned char HL_NAME(Constraint_getCollideBodies0)(_ref(cpConstraint)* _this) {
 	return (cpConstraintGetCollideBodies( _unref(_this) ));
 }
-DEFINE_PRIM(_I8, cpConstraint_cpConstraintGetCollideBodies0, _IDL);
+DEFINE_PRIM(_I8, Constraint_getCollideBodies0, _IDL);
 
-HL_PRIM void HL_NAME(cpConstraint_cpConstraintSetCollideBodies1)(_ref(cpConstraint)* _this, unsigned char collideBodies) {
+HL_PRIM void HL_NAME(Constraint_cpConstraintSetCollideBodies1)(_ref(cpConstraint)* _this, unsigned char collideBodies) {
 	(cpConstraintSetCollideBodies( _unref(_this) , collideBodies));
 }
-DEFINE_PRIM(_VOID, cpConstraint_cpConstraintSetCollideBodies1, _IDL _I8);
+DEFINE_PRIM(_VOID, Constraint_cpConstraintSetCollideBodies1, _IDL _I8);
 
-HL_PRIM void* HL_NAME(cpConstraint_cpConstraintGetUserData0)(_ref(cpConstraint)* _this) {
+HL_PRIM void* HL_NAME(Constraint_cpConstraintGetUserData0)(_ref(cpConstraint)* _this) {
 	return (cpConstraintGetUserData( _unref(_this) ));
 }
-DEFINE_PRIM(_BYTES, cpConstraint_cpConstraintGetUserData0, _IDL);
+DEFINE_PRIM(_BYTES, Constraint_cpConstraintGetUserData0, _IDL);
 
-HL_PRIM void HL_NAME(cpConstraint_cpConstraintSetUserData1)(_ref(cpConstraint)* _this, void* userData) {
+HL_PRIM void HL_NAME(Constraint_cpConstraintSetUserData1)(_ref(cpConstraint)* _this, void* userData) {
 	(cpConstraintSetUserData( _unref(_this) , userData));
 }
-DEFINE_PRIM(_VOID, cpConstraint_cpConstraintSetUserData1, _IDL _BYTES);
+DEFINE_PRIM(_VOID, Constraint_cpConstraintSetUserData1, _IDL _BYTES);
 
-HL_PRIM double HL_NAME(cpConstraint_cpConstraintGetImpulse0)(_ref(cpConstraint)* _this) {
+HL_PRIM double HL_NAME(Constraint_cpConstraintGetImpulse0)(_ref(cpConstraint)* _this) {
 	return (cpConstraintGetImpulse( _unref(_this) ));
 }
-DEFINE_PRIM(_F64, cpConstraint_cpConstraintGetImpulse0, _IDL);
+DEFINE_PRIM(_F64, Constraint_cpConstraintGetImpulse0, _IDL);
 
 HL_PRIM unsigned char HL_NAME(cpDampedRotarySpring_cpConstraintIsDampedRotarySpring1)(_ref(cpConstraint)* constraint) {
 	return (cpConstraintIsDampedRotarySpring(_unref(constraint)));
@@ -2059,7 +2066,7 @@ HL_PRIM _ref(cpDampedRotarySpring)* HL_NAME(cpDampedRotarySpring_cpDampedRotaryS
 DEFINE_PRIM(_IDL, cpDampedRotarySpring_cpDampedRotarySpringInit6, _IDL _IDL _IDL _F64 _F64 _F64);
 
 HL_PRIM _ref(cpConstraint)* HL_NAME(cpDampedRotarySpring_cpDampedRotarySpringNew5)(_ref(cpBody)* a, _ref(cpBody)* b, double restAngle, double stiffness, double damping) {
-	return alloc_ref((cpDampedRotarySpringNew(_unref(a), _unref(b), restAngle, stiffness, damping)),cpConstraint);
+	return alloc_ref((cpDampedRotarySpringNew(_unref(a), _unref(b), restAngle, stiffness, damping)),Constraint);
 }
 DEFINE_PRIM(_IDL, cpDampedRotarySpring_cpDampedRotarySpringNew5, _IDL _IDL _F64 _F64 _F64);
 
@@ -2109,7 +2116,7 @@ HL_PRIM _ref(cpDampedSpring)* HL_NAME(cpDampedSpring_cpDampedSpringInit8)(_ref(c
 DEFINE_PRIM(_IDL, cpDampedSpring_cpDampedSpringInit8, _IDL _IDL _IDL _IDL _IDL _F64 _F64 _F64);
 
 HL_PRIM _ref(cpConstraint)* HL_NAME(cpDampedSpring_cpDampedSpringNew7)(_ref(cpBody)* a, _ref(cpBody)* b, _ref(cpVect)* anchorA, _ref(cpVect)* anchorB, double restLength, double stiffness, double damping) {
-	return alloc_ref((cpDampedSpringNew(_unref(a), _unref(b), *_unref(anchorA), *_unref(anchorB), restLength, stiffness, damping)),cpConstraint);
+	return alloc_ref((cpDampedSpringNew(_unref(a), _unref(b), *_unref(anchorA), *_unref(anchorB), restLength, stiffness, damping)),Constraint);
 }
 DEFINE_PRIM(_IDL, cpDampedSpring_cpDampedSpringNew7, _IDL _IDL _IDL _IDL _F64 _F64 _F64);
 
@@ -2179,7 +2186,7 @@ HL_PRIM _ref(cpGearJoint)* HL_NAME(cpGearJoint_cpGearJointInit5)(_ref(cpGearJoin
 DEFINE_PRIM(_IDL, cpGearJoint_cpGearJointInit5, _IDL _IDL _IDL _F64 _F64);
 
 HL_PRIM _ref(cpConstraint)* HL_NAME(cpGearJoint_cpGearJointNew4)(_ref(cpBody)* a, _ref(cpBody)* b, double phase, double ratio) {
-	return alloc_ref((cpGearJointNew(_unref(a), _unref(b), phase, ratio)),cpConstraint);
+	return alloc_ref((cpGearJointNew(_unref(a), _unref(b), phase, ratio)),Constraint);
 }
 DEFINE_PRIM(_IDL, cpGearJoint_cpGearJointNew4, _IDL _IDL _F64 _F64);
 
@@ -2219,7 +2226,7 @@ HL_PRIM _ref(cpSimpleMotor)* HL_NAME(cpSimpleMotor_cpSimpleMotorInit4)(_ref(cpSi
 DEFINE_PRIM(_IDL, cpSimpleMotor_cpSimpleMotorInit4, _IDL _IDL _IDL _F64);
 
 HL_PRIM _ref(cpConstraint)* HL_NAME(cpSimpleMotor_cpSimpleMotorNew3)(_ref(cpBody)* a, _ref(cpBody)* b, double rate) {
-	return alloc_ref((cpSimpleMotorNew(_unref(a), _unref(b), rate)),cpConstraint);
+	return alloc_ref((cpSimpleMotorNew(_unref(a), _unref(b), rate)),Constraint);
 }
 DEFINE_PRIM(_IDL, cpSimpleMotor_cpSimpleMotorNew3, _IDL _IDL _F64);
 
@@ -2249,7 +2256,7 @@ HL_PRIM _ref(cpGrooveJoint)* HL_NAME(cpGrooveJoint_cpGrooveJointInit6)(_ref(cpGr
 DEFINE_PRIM(_IDL, cpGrooveJoint_cpGrooveJointInit6, _IDL _IDL _IDL _IDL _IDL _IDL);
 
 HL_PRIM _ref(cpConstraint)* HL_NAME(cpGrooveJoint_cpGrooveJointNew5)(_ref(cpBody)* a, _ref(cpBody)* b, _ref(cpVect)* groove_a, _ref(cpVect)* groove_b, _ref(cpVect)* anchorB) {
-	return alloc_ref((cpGrooveJointNew(_unref(a), _unref(b), *_unref(groove_a), *_unref(groove_b), *_unref(anchorB))),cpConstraint);
+	return alloc_ref((cpGrooveJointNew(_unref(a), _unref(b), *_unref(groove_a), *_unref(groove_b), *_unref(anchorB))),Constraint);
 }
 DEFINE_PRIM(_IDL, cpGrooveJoint_cpGrooveJointNew5, _IDL _IDL _IDL _IDL _IDL);
 
@@ -2324,7 +2331,7 @@ HL_PRIM _ref(cpPinJoint)* HL_NAME(cpPinJoint_cpPinJointInit5)(_ref(cpPinJoint)* 
 DEFINE_PRIM(_IDL, cpPinJoint_cpPinJointInit5, _IDL _IDL _IDL _IDL _IDL);
 
 HL_PRIM _ref(cpConstraint)* HL_NAME(cpPinJoint_cpPinJointNew4)(_ref(cpBody)* a, _ref(cpBody)* b, _ref(cpVect)* anchorA, _ref(cpVect)* anchorB) {
-	return alloc_ref((cpPinJointNew(_unref(a), _unref(b), *_unref(anchorA), *_unref(anchorB))),cpConstraint);
+	return alloc_ref((cpPinJointNew(_unref(a), _unref(b), *_unref(anchorA), *_unref(anchorB))),Constraint);
 }
 DEFINE_PRIM(_IDL, cpPinJoint_cpPinJointNew4, _IDL _IDL _IDL _IDL);
 
@@ -2374,12 +2381,12 @@ HL_PRIM _ref(cpPivotJoint)* HL_NAME(cpPivotJoint_cpPivotJointInit5)(_ref(cpPivot
 DEFINE_PRIM(_IDL, cpPivotJoint_cpPivotJointInit5, _IDL _IDL _IDL _IDL _IDL);
 
 HL_PRIM _ref(cpConstraint)* HL_NAME(cpPivotJoint_cpPivotJointNew3)(_ref(cpBody)* a, _ref(cpBody)* b, _ref(cpVect)* pivot) {
-	return alloc_ref((cpPivotJointNew(_unref(a), _unref(b), *_unref(pivot))),cpConstraint);
+	return alloc_ref((cpPivotJointNew(_unref(a), _unref(b), *_unref(pivot))),Constraint);
 }
 DEFINE_PRIM(_IDL, cpPivotJoint_cpPivotJointNew3, _IDL _IDL _IDL);
 
 HL_PRIM _ref(cpConstraint)* HL_NAME(cpPivotJoint_cpPivotJointNew24)(_ref(cpBody)* a, _ref(cpBody)* b, _ref(cpVect)* anchorA, _ref(cpVect)* anchorB) {
-	return alloc_ref((cpPivotJointNew2(_unref(a), _unref(b), *_unref(anchorA), *_unref(anchorB))),cpConstraint);
+	return alloc_ref((cpPivotJointNew2(_unref(a), _unref(b), *_unref(anchorA), *_unref(anchorB))),Constraint);
 }
 DEFINE_PRIM(_IDL, cpPivotJoint_cpPivotJointNew24, _IDL _IDL _IDL _IDL);
 
@@ -2539,7 +2546,7 @@ HL_PRIM _ref(cpRatchetJoint)* HL_NAME(cpRatchetJoint_cpRatchetJointInit5)(_ref(c
 DEFINE_PRIM(_IDL, cpRatchetJoint_cpRatchetJointInit5, _IDL _IDL _IDL _F64 _F64);
 
 HL_PRIM _ref(cpConstraint)* HL_NAME(cpRatchetJoint_cpRatchetJointNew4)(_ref(cpBody)* a, _ref(cpBody)* b, double phase, double ratchet) {
-	return alloc_ref((cpRatchetJointNew(_unref(a), _unref(b), phase, ratchet)),cpConstraint);
+	return alloc_ref((cpRatchetJointNew(_unref(a), _unref(b), phase, ratchet)),Constraint);
 }
 DEFINE_PRIM(_IDL, cpRatchetJoint_cpRatchetJointNew4, _IDL _IDL _F64 _F64);
 
@@ -2589,7 +2596,7 @@ HL_PRIM _ref(cpRotaryLimitJoint)* HL_NAME(cpRotaryLimitJoint_cpRotaryLimitJointI
 DEFINE_PRIM(_IDL, cpRotaryLimitJoint_cpRotaryLimitJointInit5, _IDL _IDL _IDL _F64 _F64);
 
 HL_PRIM _ref(cpConstraint)* HL_NAME(cpRotaryLimitJoint_cpRotaryLimitJointNew4)(_ref(cpBody)* a, _ref(cpBody)* b, double min, double max) {
-	return alloc_ref((cpRotaryLimitJointNew(_unref(a), _unref(b), min, max)),cpConstraint);
+	return alloc_ref((cpRotaryLimitJointNew(_unref(a), _unref(b), min, max)),Constraint);
 }
 DEFINE_PRIM(_IDL, cpRotaryLimitJoint_cpRotaryLimitJointNew4, _IDL _IDL _F64 _F64);
 
@@ -2613,65 +2620,65 @@ HL_PRIM void HL_NAME(cpRotaryLimitJoint_cpRotaryLimitJointSetMax2)(_ref(cpConstr
 }
 DEFINE_PRIM(_VOID, cpRotaryLimitJoint_cpRotaryLimitJointSetMax2, _IDL _F64);
 
-HL_PRIM unsigned char HL_NAME(cpSlideJoint_cpConstraintIsSlideJoint1)(_ref(cpConstraint)* constraint) {
+HL_PRIM unsigned char HL_NAME(SlideJoint_cpConstraintIsSlideJoint1)(_ref(cpConstraint)* constraint) {
 	return (cpConstraintIsSlideJoint(_unref(constraint)));
 }
-DEFINE_PRIM(_I8, cpSlideJoint_cpConstraintIsSlideJoint1, _IDL);
+DEFINE_PRIM(_I8, SlideJoint_cpConstraintIsSlideJoint1, _IDL);
 
-HL_PRIM _ref(cpSlideJoint)* HL_NAME(cpSlideJoint_cpSlideJointAlloc0)() {
-	return alloc_ref((cpSlideJointAlloc()),cpSlideJoint);
+HL_PRIM _ref(cpSlideJoint)* HL_NAME(SlideJoint_cpSlideJointAlloc0)() {
+	return alloc_ref((cpSlideJointAlloc()),SlideJoint);
 }
-DEFINE_PRIM(_IDL, cpSlideJoint_cpSlideJointAlloc0,);
+DEFINE_PRIM(_IDL, SlideJoint_cpSlideJointAlloc0,);
 
-HL_PRIM _ref(cpSlideJoint)* HL_NAME(cpSlideJoint_cpSlideJointInit7)(_ref(cpSlideJoint)* joint, _ref(cpBody)* a, _ref(cpBody)* b, _ref(cpVect)* anchorA, _ref(cpVect)* anchorB, double min, double max) {
-	return alloc_ref((cpSlideJointInit(_unref(joint), _unref(a), _unref(b), *_unref(anchorA), *_unref(anchorB), min, max)),cpSlideJoint);
+HL_PRIM _ref(cpSlideJoint)* HL_NAME(SlideJoint_cpSlideJointInit7)(_ref(cpSlideJoint)* joint, _ref(cpBody)* a, _ref(cpBody)* b, _ref(cpVect)* anchorA, _ref(cpVect)* anchorB, double min, double max) {
+	return alloc_ref((cpSlideJointInit(_unref(joint), _unref(a), _unref(b), *_unref(anchorA), *_unref(anchorB), min, max)),SlideJoint);
 }
-DEFINE_PRIM(_IDL, cpSlideJoint_cpSlideJointInit7, _IDL _IDL _IDL _IDL _IDL _F64 _F64);
+DEFINE_PRIM(_IDL, SlideJoint_cpSlideJointInit7, _IDL _IDL _IDL _IDL _IDL _F64 _F64);
 
-HL_PRIM _ref(cpConstraint)* HL_NAME(cpSlideJoint_cpSlideJointNew6)(_ref(cpBody)* a, _ref(cpBody)* b, _ref(cpVect)* anchorA, _ref(cpVect)* anchorB, double min, double max) {
-	return alloc_ref((cpSlideJointNew(_unref(a), _unref(b), *_unref(anchorA), *_unref(anchorB), min, max)),cpConstraint);
+HL_PRIM _ref(cpConstraint)* HL_NAME(SlideJoint_cpSlideJointNew6)(_ref(cpBody)* a, _ref(cpBody)* b, _ref(cpVect)* anchorA, _ref(cpVect)* anchorB, double min, double max) {
+	return alloc_ref((cpSlideJointNew(_unref(a), _unref(b), *_unref(anchorA), *_unref(anchorB), min, max)),Constraint);
 }
-DEFINE_PRIM(_IDL, cpSlideJoint_cpSlideJointNew6, _IDL _IDL _IDL _IDL _F64 _F64);
+DEFINE_PRIM(_IDL, SlideJoint_cpSlideJointNew6, _IDL _IDL _IDL _IDL _F64 _F64);
 
-HL_PRIM _ref(cpVect)* HL_NAME(cpSlideJoint_cpSlideJointGetAnchorA1)(_ref(cpConstraint)* constraint) {
+HL_PRIM _ref(cpVect)* HL_NAME(SlideJoint_cpSlideJointGetAnchorA1)(_ref(cpConstraint)* constraint) {
 	return alloc_ref(new cpVect((cpSlideJointGetAnchorA(_unref(constraint)))),Vect);
 }
-DEFINE_PRIM(_IDL, cpSlideJoint_cpSlideJointGetAnchorA1, _IDL);
+DEFINE_PRIM(_IDL, SlideJoint_cpSlideJointGetAnchorA1, _IDL);
 
-HL_PRIM void HL_NAME(cpSlideJoint_cpSlideJointSetAnchorA2)(_ref(cpConstraint)* constraint, _ref(cpVect)* anchorA) {
+HL_PRIM void HL_NAME(SlideJoint_cpSlideJointSetAnchorA2)(_ref(cpConstraint)* constraint, _ref(cpVect)* anchorA) {
 	(cpSlideJointSetAnchorA(_unref(constraint), *_unref(anchorA)));
 }
-DEFINE_PRIM(_VOID, cpSlideJoint_cpSlideJointSetAnchorA2, _IDL _IDL);
+DEFINE_PRIM(_VOID, SlideJoint_cpSlideJointSetAnchorA2, _IDL _IDL);
 
-HL_PRIM _ref(cpVect)* HL_NAME(cpSlideJoint_cpSlideJointGetAnchorB1)(_ref(cpConstraint)* constraint) {
+HL_PRIM _ref(cpVect)* HL_NAME(SlideJoint_cpSlideJointGetAnchorB1)(_ref(cpConstraint)* constraint) {
 	return alloc_ref(new cpVect((cpSlideJointGetAnchorB(_unref(constraint)))),Vect);
 }
-DEFINE_PRIM(_IDL, cpSlideJoint_cpSlideJointGetAnchorB1, _IDL);
+DEFINE_PRIM(_IDL, SlideJoint_cpSlideJointGetAnchorB1, _IDL);
 
-HL_PRIM void HL_NAME(cpSlideJoint_cpSlideJointSetAnchorB2)(_ref(cpConstraint)* constraint, _ref(cpVect)* anchorB) {
+HL_PRIM void HL_NAME(SlideJoint_cpSlideJointSetAnchorB2)(_ref(cpConstraint)* constraint, _ref(cpVect)* anchorB) {
 	(cpSlideJointSetAnchorB(_unref(constraint), *_unref(anchorB)));
 }
-DEFINE_PRIM(_VOID, cpSlideJoint_cpSlideJointSetAnchorB2, _IDL _IDL);
+DEFINE_PRIM(_VOID, SlideJoint_cpSlideJointSetAnchorB2, _IDL _IDL);
 
-HL_PRIM double HL_NAME(cpSlideJoint_cpSlideJointGetMin1)(_ref(cpConstraint)* constraint) {
+HL_PRIM double HL_NAME(SlideJoint_cpSlideJointGetMin1)(_ref(cpConstraint)* constraint) {
 	return (cpSlideJointGetMin(_unref(constraint)));
 }
-DEFINE_PRIM(_F64, cpSlideJoint_cpSlideJointGetMin1, _IDL);
+DEFINE_PRIM(_F64, SlideJoint_cpSlideJointGetMin1, _IDL);
 
-HL_PRIM void HL_NAME(cpSlideJoint_cpSlideJointSetMin2)(_ref(cpConstraint)* constraint, double min) {
+HL_PRIM void HL_NAME(SlideJoint_cpSlideJointSetMin2)(_ref(cpConstraint)* constraint, double min) {
 	(cpSlideJointSetMin(_unref(constraint), min));
 }
-DEFINE_PRIM(_VOID, cpSlideJoint_cpSlideJointSetMin2, _IDL _F64);
+DEFINE_PRIM(_VOID, SlideJoint_cpSlideJointSetMin2, _IDL _F64);
 
-HL_PRIM double HL_NAME(cpSlideJoint_cpSlideJointGetMax1)(_ref(cpConstraint)* constraint) {
+HL_PRIM double HL_NAME(SlideJoint_cpSlideJointGetMax1)(_ref(cpConstraint)* constraint) {
 	return (cpSlideJointGetMax(_unref(constraint)));
 }
-DEFINE_PRIM(_F64, cpSlideJoint_cpSlideJointGetMax1, _IDL);
+DEFINE_PRIM(_F64, SlideJoint_cpSlideJointGetMax1, _IDL);
 
-HL_PRIM void HL_NAME(cpSlideJoint_cpSlideJointSetMax2)(_ref(cpConstraint)* constraint, double max) {
+HL_PRIM void HL_NAME(SlideJoint_cpSlideJointSetMax2)(_ref(cpConstraint)* constraint, double max) {
 	(cpSlideJointSetMax(_unref(constraint), max));
 }
-DEFINE_PRIM(_VOID, cpSlideJoint_cpSlideJointSetMax2, _IDL _F64);
+DEFINE_PRIM(_VOID, SlideJoint_cpSlideJointSetMax2, _IDL _F64);
 
 HL_PRIM _ref(cpSpaceHash)* HL_NAME(SpatialIndex_cpSpaceHashAlloc0)() {
 	return alloc_ref((cpSpaceHashAlloc()),cpSpaceHash);
@@ -2693,10 +2700,10 @@ HL_PRIM void HL_NAME(SpatialIndex_cpBBTreeOptimize0)(_ref(cpSpatialIndex)* _this
 }
 DEFINE_PRIM(_VOID, SpatialIndex_cpBBTreeOptimize0, _IDL);
 
-HL_PRIM void HL_NAME(SpatialIndex_cpSpatialIndexFree0)(_ref(cpSpatialIndex)* _this) {
+HL_PRIM void HL_NAME(SpatialIndex_free0)(_ref(cpSpatialIndex)* _this) {
 	(cpSpatialIndexFree( _unref(_this) ));
 }
-DEFINE_PRIM(_VOID, SpatialIndex_cpSpatialIndexFree0, _IDL);
+DEFINE_PRIM(_VOID, SpatialIndex_free0, _IDL);
 
 HL_PRIM void HL_NAME(SpatialIndex_cpSpatialIndexDestroy0)(_ref(cpSpatialIndex)* _this) {
 	(cpSpatialIndexDestroy( _unref(_this) ));
@@ -2763,15 +2770,15 @@ HL_PRIM double HL_NAME(Math_areaForPoly3)(int count, varray* verts, double radiu
 }
 DEFINE_PRIM(_F64, Math_areaForPoly3, _I32 _ARR _F64);
 
-HL_PRIM _ref(cpVect)* HL_NAME(Math_cpCentroidForPoly2)(int count, varray* verts) {
+HL_PRIM _ref(cpVect)* HL_NAME(Math_centroidForPoly2)(int count, varray* verts) {
 	return alloc_ref(new cpVect((cpCentroidForPoly(count, (cpVect*)hl_aptr(verts,double)))),Vect);
 }
-DEFINE_PRIM(_IDL, Math_cpCentroidForPoly2, _I32 _ARR);
+DEFINE_PRIM(_IDL, Math_centroidForPoly2, _I32 _ARR);
 
-HL_PRIM double HL_NAME(Math_cpMomentForBox3)(double m, double width, double height) {
+HL_PRIM double HL_NAME(Math_momentForBox3)(double m, double width, double height) {
 	return (cpMomentForBox(m, width, height));
 }
-DEFINE_PRIM(_F64, Math_cpMomentForBox3, _F64 _F64 _F64);
+DEFINE_PRIM(_F64, Math_momentForBox3, _F64 _F64 _F64);
 
 HL_PRIM double HL_NAME(Math_cpMomentForBox22)(double m, _ref(cpBB)* box) {
 	return (cpMomentForBox2(m, *_unref(box)));
