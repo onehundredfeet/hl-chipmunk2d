@@ -173,7 +173,7 @@ interface cpBB
 // 	"CP_BODY_TYPE_STATIC"
 // };
 
-[Internal="cpBody"]	
+[Internal="cpBody", Delete="cpBodyFree"]	
 interface Body {
 	
 	[Static, Internal="cpBodyAlloc"] Body alloc();
@@ -311,7 +311,7 @@ interface cpShapeFilter {
 	attribute cpBitmask mask;
 };
 
-[Internal="cpShape"]
+[Internal="cpShape", Delete="cpShapeFree"]
 interface Shape
 {
 
@@ -319,7 +319,7 @@ interface Shape
 
 	[CObject] void cpShapeDestroy();
 
-	[CObject] void cpShapeFree();
+	[CObject, Internal="cpShapeFree"] void free();
 
 	[CObject,Value] cpBB cpShapeCacheBB();
 
@@ -383,7 +383,7 @@ interface Shape
 };
 
 
-[Internal="cpCircleShape"]
+[Internal="cpCircleShape", Delete="cpShapeFreeT<cpCircleShape>"]
 interface CircleShape
 {
 	[Static, Internal="cpCircleShapeAlloc"] CircleShape alloc();
@@ -394,7 +394,7 @@ interface CircleShape
 };
 
 
-[Internal="cpSegmentShape"]
+[Internal="cpSegmentShape", Delete="cpShapeFreeT<cpSegmentShape>"]
 interface SegmentShape
 {
 	[Static,Internal="cpSegmentShapeAlloc"] SegmentShape alloc();
@@ -537,6 +537,7 @@ interface cpContactPointSet {
 };
 
 
+[NoDelete]
 interface cpArbiter
 {
 	[CObject] cpFloat cpArbiterGetRestitution();
@@ -653,14 +654,14 @@ interface Constraint
 // ---------------------------------------------------------------------------------------------------------
 // cpDampedRotarySpring.h
 //----------------------------------------------------------------------------------------------------------
-
+[NoDelete]
 interface cpDampedRotarySpring
 {
 	[Static] cpBool cpConstraintIsDampedRotarySpring([Const] Constraint constraint);
 
-	[Static] cpDampedRotarySpring cpDampedRotarySpringAlloc();
+	[Const,Static] cpDampedRotarySpring cpDampedRotarySpringAlloc();
 
-	[Static] cpDampedRotarySpring cpDampedRotarySpringInit(cpDampedRotarySpring joint, 
+	[Const,Static] cpDampedRotarySpring cpDampedRotarySpringInit(cpDampedRotarySpring joint, 
 			Body a, Body b, cpFloat restAngle, cpFloat stiffness, cpFloat damping);
 
 	[Static] Constraint cpDampedRotarySpringNew(Body a, Body b, cpFloat restAngle, 
@@ -687,11 +688,12 @@ interface cpDampedRotarySpring
 // ---------------------------------------------------------------------------------------------------------
 // cpDampedSpring.h
 //----------------------------------------------------------------------------------------------------------
-
+[Delete="cpConstraintFreeT<cpDampedSpring>"]
 interface cpDampedSpring
 {
 	[Static] cpBool cpConstraintIsDampedSpring([Const] Constraint constraint);
 
+	// The constraint owns these allocations
 	[Static] cpDampedSpring cpDampedSpringAlloc();
 
 	[Static] cpDampedSpring cpDampedSpringInit(cpDampedSpring joint, Body a, Body b, 
@@ -729,7 +731,7 @@ interface cpDampedSpring
 // ---------------------------------------------------------------------------------------------------------
 // cpGearJoint.h
 //----------------------------------------------------------------------------------------------------------
-
+[Delete="cpConstraintFreeT<cpGearJoint>"]
 interface cpGearJoint
 {
 	[Static] cpBool cpConstraintIsGearJoint([Const]  Constraint constraint);
@@ -754,6 +756,7 @@ interface cpGearJoint
 // cpSimpleMotor.h
 //----------------------------------------------------------------------------------------------------------
 
+[Delete="cpConstraintFreeT<cpSimpleMotor>"]
 interface cpSimpleMotor
 {
 	[Static] cpBool cpConstraintIsSimpleMotor([Const] Constraint constraint);
@@ -773,7 +776,7 @@ interface cpSimpleMotor
 // ---------------------------------------------------------------------------------------------------------
 // cpGrooveJoint.h
 //----------------------------------------------------------------------------------------------------------
-
+[Delete="cpConstraintFreeT<cpGrooveJoint>"]
 interface cpGrooveJoint
 {
 	[Static] cpBool cpConstraintIsGrooveJoint([Const] Constraint constraint);
@@ -804,20 +807,21 @@ interface cpGrooveJoint
 // cpHastySpace.h
 //----------------------------------------------------------------------------------------------------------
 
+[Internal="cpSpace", Delete="cpHastySpaceFree"]
 interface cpHastySpace
 {
-	[Static] Space cpHastySpaceNew();
-	[Static] void cpHastySpaceFree(Space space);
-	[Static] void cpHastySpaceSetThreads(Space space, uint threads);
-	[Static] uint cpHastySpaceGetThreads(Space space);
-	[Static] void cpHastySpaceStep(Space space, cpFloat dt);
+	[Static,Internal="cpHastySpaceNew"] Space makeNew();
+	[Static,Internal="cpHastySpaceFree"] void free(Space space);
+	[Static,Internal="cpHastySpaceSetThreads"] void setThreads(Space space, uint threads);
+	[Static,Internal="cpHastySpaceGetThreads"] uint getThreads(Space space);
+	[Static,Internal="cpHastySpaceStep"] void step(Space space, cpFloat dt);
 };
 
 
 // ---------------------------------------------------------------------------------------------------------
 // cpHastySpace.h
 //----------------------------------------------------------------------------------------------------------
-
+[Delete="cpConstraintFreeT<cpPinJoint>"]
 interface cpPinJoint
 {	
 	[Static] cpBool cpConstraintIsPinJoint([Const] Constraint constraint);
@@ -846,7 +850,7 @@ interface cpPinJoint
 // ---------------------------------------------------------------------------------------------------------
 // cpPivotJoint.h
 //----------------------------------------------------------------------------------------------------------
-
+[Delete="cpConstraintFreeT<cpPivotJoint>"]
 interface cpPivotJoint
 {
 	[Static] cpBool cpConstraintIsPivotJoint([Const] Constraint constraint);
@@ -872,10 +876,10 @@ interface cpPivotJoint
 // ---------------------------------------------------------------------------------------------------------
 // cpPolyline.h
 //----------------------------------------------------------------------------------------------------------
-
+[Delete="cpPolylineFree"]
 interface cpPolyline
 {
-	[Static] void cpPolylineFree(cpPolyline line);
+	[Static,Internal="cpPolylineFree"] void free(cpPolyline line);
 
 	[Static] cpBool cpPolylineIsClosed(cpPolyline line);
 
@@ -908,7 +912,7 @@ interface cpPolylineSet
 // ---------------------------------------------------------------------------------------------------------
 // cpPolyShape.h
 //----------------------------------------------------------------------------------------------------------
-
+[Delete="cpShapeFreeT<cpPolyShape>"]
 interface cpPolyShape
 {
 	[Static] cpPolyShape cpPolyShapeAlloc();
@@ -944,7 +948,7 @@ interface cpPolyShape
 // ---------------------------------------------------------------------------------------------------------
 // cpRatchetJoint.h
 //----------------------------------------------------------------------------------------------------------
-
+[Delete="cpShapeFreeT<cpRatchetJoint>"]
 interface cpRatchetJoint
 {
 	[Static] cpBool cpConstraintIsRatchetJoint([Const] Constraint constraint);
@@ -972,7 +976,7 @@ interface cpRatchetJoint
 // ---------------------------------------------------------------------------------------------------------
 // cpRotaryLimitJoint
 //----------------------------------------------------------------------------------------------------------
-
+[Delete="cpShapeFreeT<cpRotaryLimitJoint>"]
 interface cpRotaryLimitJoint
 {
 	[Static] cpBool cpConstraintIsRotaryLimitJoint([Const] Constraint constraint);
@@ -996,8 +1000,7 @@ interface cpRotaryLimitJoint
 // ---------------------------------------------------------------------------------------------------------
 // cpSlideJoint
 //----------------------------------------------------------------------------------------------------------
-
-[Internal="cpSlideJoint"]
+[Internal="cpSlideJoint", Delete="cpShapeFreeT<cpSlideJoint>"]
 interface SlideJoint
 {
 	[Static] cpBool cpConstraintIsSlideJoint([Const] Constraint constraint);
@@ -1032,14 +1035,19 @@ interface SlideJoint
 // cpSpaceHash.c
 //----------------------------------------------------------------------------------------------------------
 
-interface cpSpaceHash {};
+[Delete="cpSpatialIndexFreeT<cpSpaceHash>"]
+interface cpSpaceHash {
+	[Static, Internal="cpSpaceHashAlloc"] cpSpaceHash alloc();
+};
 
 
 // ---------------------------------------------------------------------------------------------------------
 // cpBBTree.c
 //----------------------------------------------------------------------------------------------------------
-
-interface cpBBTree {};
+[Delete="cpSpatialIndexFreeT<cpBBTree>"]
+interface cpBBTree {
+	[Static,Internal="cpBBTreeAlloc"] cpBBTree alloc();
+};
 
 
 // ---------------------------------------------------------------------------------------------------------
@@ -1052,7 +1060,7 @@ typedef cpHashValue uint;
 [Internal="cpSpatialIndex", Delete="cpSpatialIndexFree"]
 interface SpatialIndex
 {
-	[Static] cpSpaceHash cpSpaceHashAlloc();
+	
 
 // CP_EXPORT cpSpatialIndex* cpSpaceHashInit(cpSpaceHash *hash, cpFloat celldim, int numcells, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
 
@@ -1060,7 +1068,7 @@ interface SpatialIndex
 
 	[Static] void cpSpaceHashResize(cpSpaceHash hash, cpFloat celldim, int numcells);
 
-	[Static] cpBBTree cpBBTreeAlloc();
+
 
 // CP_EXPORT cpSpatialIndex* cpBBTreeInit(cpBBTree *tree, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex);
 

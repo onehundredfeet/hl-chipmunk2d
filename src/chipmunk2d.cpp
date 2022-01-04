@@ -338,6 +338,19 @@ cpShape *cpSpaceSegmentQueryFirstNoFilter(cpSpace *space, cpVect start, cpVect e
 	cpShapeFilter filter = cpShapeFilterNew(0, 0, 0);
 	return cpSpaceSegmentQueryFirst(space, start, end, radius, filter, out);
 };
+template <typename T>
+inline void cpConstraintFreeT( T*ptr ) {
+	cpConstraintFree((cpConstraint *)ptr);
+}
+template <typename T>
+inline void cpShapeFreeT( T*ptr ) {
+	cpShapeFree((cpShape*)ptr);
+}
+
+template <typename T>
+inline void cpSpatialIndexFreeT( T*ptr ) {
+	cpSpatialIndexFree((cpSpatialIndex*)ptr);
+}
 
 
 class FloatArray
@@ -475,9 +488,9 @@ HL_PRIM void HL_NAME(cpBB_delete)( _ref(cpBB)* _this ) {
 	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpBB_delete, _IDL);
-static void finalize_Body( _ref(cpBody)* _this ) { free_ref(_this ); }
+static void finalize_Body( _ref(cpBody)* _this ) { free_ref(_this ,cpBodyFree); }
 HL_PRIM void HL_NAME(Body_delete)( _ref(cpBody)* _this ) {
-	free_ref(_this );
+	free_ref(_this ,cpBodyFree);
 }
 DEFINE_PRIM(_VOID, Body_delete, _IDL);
 static void finalize_cpPointQueryInfo( _ref(cpPointQueryInfo)* _this ) { free_ref(_this ); }
@@ -495,19 +508,19 @@ HL_PRIM void HL_NAME(cpShapeFilter_delete)( _ref(cpShapeFilter)* _this ) {
 	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpShapeFilter_delete, _IDL);
-static void finalize_Shape( _ref(cpShape)* _this ) { free_ref(_this ); }
+static void finalize_Shape( _ref(cpShape)* _this ) { free_ref(_this ,cpShapeFree); }
 HL_PRIM void HL_NAME(Shape_delete)( _ref(cpShape)* _this ) {
-	free_ref(_this );
+	free_ref(_this ,cpShapeFree);
 }
 DEFINE_PRIM(_VOID, Shape_delete, _IDL);
-static void finalize_CircleShape( _ref(cpCircleShape)* _this ) { free_ref(_this ); }
+static void finalize_CircleShape( _ref(cpCircleShape)* _this ) { free_ref(_this ,cpShapeFreeT<cpCircleShape>); }
 HL_PRIM void HL_NAME(CircleShape_delete)( _ref(cpCircleShape)* _this ) {
-	free_ref(_this );
+	free_ref(_this ,cpShapeFreeT<cpCircleShape>);
 }
 DEFINE_PRIM(_VOID, CircleShape_delete, _IDL);
-static void finalize_SegmentShape( _ref(cpSegmentShape)* _this ) { free_ref(_this ); }
+static void finalize_SegmentShape( _ref(cpSegmentShape)* _this ) { free_ref(_this ,cpShapeFreeT<cpSegmentShape>); }
 HL_PRIM void HL_NAME(SegmentShape_delete)( _ref(cpSegmentShape)* _this ) {
-	free_ref(_this );
+	free_ref(_this ,cpShapeFreeT<cpSegmentShape>);
 }
 DEFINE_PRIM(_VOID, SegmentShape_delete, _IDL);
 static void finalize_Space( _ref(cpSpace)* _this ) { free_ref(_this ,cpSpaceFree); }
@@ -520,59 +533,49 @@ HL_PRIM void HL_NAME(cpContactPointSet_delete)( _ref(cpContactPointSet)* _this )
 	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpContactPointSet_delete, _IDL);
-static void finalize_cpArbiter( _ref(cpArbiter)* _this ) { free_ref(_this ); }
-HL_PRIM void HL_NAME(cpArbiter_delete)( _ref(cpArbiter)* _this ) {
-	free_ref(_this );
-}
-DEFINE_PRIM(_VOID, cpArbiter_delete, _IDL);
 static void finalize_Constraint( _ref(cpConstraint)* _this ) { free_ref(_this ,cpConstraintFree); }
 HL_PRIM void HL_NAME(Constraint_delete)( _ref(cpConstraint)* _this ) {
 	free_ref(_this ,cpConstraintFree);
 }
 DEFINE_PRIM(_VOID, Constraint_delete, _IDL);
-static void finalize_cpDampedRotarySpring( _ref(cpDampedRotarySpring)* _this ) { free_ref(_this ); }
-HL_PRIM void HL_NAME(cpDampedRotarySpring_delete)( _ref(cpDampedRotarySpring)* _this ) {
-	free_ref(_this );
-}
-DEFINE_PRIM(_VOID, cpDampedRotarySpring_delete, _IDL);
-static void finalize_cpDampedSpring( _ref(cpDampedSpring)* _this ) { free_ref(_this ); }
+static void finalize_cpDampedSpring( _ref(cpDampedSpring)* _this ) { free_ref(_this ,cpConstraintFreeT<cpDampedSpring>); }
 HL_PRIM void HL_NAME(cpDampedSpring_delete)( _ref(cpDampedSpring)* _this ) {
-	free_ref(_this );
+	free_ref(_this ,cpConstraintFreeT<cpDampedSpring>);
 }
 DEFINE_PRIM(_VOID, cpDampedSpring_delete, _IDL);
-static void finalize_cpGearJoint( _ref(cpGearJoint)* _this ) { free_ref(_this ); }
+static void finalize_cpGearJoint( _ref(cpGearJoint)* _this ) { free_ref(_this ,cpConstraintFreeT<cpGearJoint>); }
 HL_PRIM void HL_NAME(cpGearJoint_delete)( _ref(cpGearJoint)* _this ) {
-	free_ref(_this );
+	free_ref(_this ,cpConstraintFreeT<cpGearJoint>);
 }
 DEFINE_PRIM(_VOID, cpGearJoint_delete, _IDL);
-static void finalize_cpSimpleMotor( _ref(cpSimpleMotor)* _this ) { free_ref(_this ); }
+static void finalize_cpSimpleMotor( _ref(cpSimpleMotor)* _this ) { free_ref(_this ,cpConstraintFreeT<cpSimpleMotor>); }
 HL_PRIM void HL_NAME(cpSimpleMotor_delete)( _ref(cpSimpleMotor)* _this ) {
-	free_ref(_this );
+	free_ref(_this ,cpConstraintFreeT<cpSimpleMotor>);
 }
 DEFINE_PRIM(_VOID, cpSimpleMotor_delete, _IDL);
-static void finalize_cpGrooveJoint( _ref(cpGrooveJoint)* _this ) { free_ref(_this ); }
+static void finalize_cpGrooveJoint( _ref(cpGrooveJoint)* _this ) { free_ref(_this ,cpConstraintFreeT<cpGrooveJoint>); }
 HL_PRIM void HL_NAME(cpGrooveJoint_delete)( _ref(cpGrooveJoint)* _this ) {
-	free_ref(_this );
+	free_ref(_this ,cpConstraintFreeT<cpGrooveJoint>);
 }
 DEFINE_PRIM(_VOID, cpGrooveJoint_delete, _IDL);
-static void finalize_cpHastySpace( _ref(cpHastySpace)* _this ) { free_ref(_this ); }
-HL_PRIM void HL_NAME(cpHastySpace_delete)( _ref(cpHastySpace)* _this ) {
-	free_ref(_this );
+static void finalize_cpHastySpace( _ref(cpSpace)* _this ) { free_ref(_this ,cpHastySpaceFree); }
+HL_PRIM void HL_NAME(cpHastySpace_delete)( _ref(cpSpace)* _this ) {
+	free_ref(_this ,cpHastySpaceFree);
 }
 DEFINE_PRIM(_VOID, cpHastySpace_delete, _IDL);
-static void finalize_cpPinJoint( _ref(cpPinJoint)* _this ) { free_ref(_this ); }
+static void finalize_cpPinJoint( _ref(cpPinJoint)* _this ) { free_ref(_this ,cpConstraintFreeT<cpPinJoint>); }
 HL_PRIM void HL_NAME(cpPinJoint_delete)( _ref(cpPinJoint)* _this ) {
-	free_ref(_this );
+	free_ref(_this ,cpConstraintFreeT<cpPinJoint>);
 }
 DEFINE_PRIM(_VOID, cpPinJoint_delete, _IDL);
-static void finalize_cpPivotJoint( _ref(cpPivotJoint)* _this ) { free_ref(_this ); }
+static void finalize_cpPivotJoint( _ref(cpPivotJoint)* _this ) { free_ref(_this ,cpConstraintFreeT<cpPivotJoint>); }
 HL_PRIM void HL_NAME(cpPivotJoint_delete)( _ref(cpPivotJoint)* _this ) {
-	free_ref(_this );
+	free_ref(_this ,cpConstraintFreeT<cpPivotJoint>);
 }
 DEFINE_PRIM(_VOID, cpPivotJoint_delete, _IDL);
-static void finalize_cpPolyline( _ref(cpPolyline)* _this ) { free_ref(_this ); }
+static void finalize_cpPolyline( _ref(cpPolyline)* _this ) { free_ref(_this ,cpPolylineFree); }
 HL_PRIM void HL_NAME(cpPolyline_delete)( _ref(cpPolyline)* _this ) {
-	free_ref(_this );
+	free_ref(_this ,cpPolylineFree);
 }
 DEFINE_PRIM(_VOID, cpPolyline_delete, _IDL);
 static void finalize_cpPolylineSet( _ref(cpPolylineSet)* _this ) { free_ref(_this ); }
@@ -580,34 +583,34 @@ HL_PRIM void HL_NAME(cpPolylineSet_delete)( _ref(cpPolylineSet)* _this ) {
 	free_ref(_this );
 }
 DEFINE_PRIM(_VOID, cpPolylineSet_delete, _IDL);
-static void finalize_cpPolyShape( _ref(cpPolyShape)* _this ) { free_ref(_this ); }
+static void finalize_cpPolyShape( _ref(cpPolyShape)* _this ) { free_ref(_this ,cpShapeFreeT<cpPolyShape>); }
 HL_PRIM void HL_NAME(cpPolyShape_delete)( _ref(cpPolyShape)* _this ) {
-	free_ref(_this );
+	free_ref(_this ,cpShapeFreeT<cpPolyShape>);
 }
 DEFINE_PRIM(_VOID, cpPolyShape_delete, _IDL);
-static void finalize_cpRatchetJoint( _ref(cpRatchetJoint)* _this ) { free_ref(_this ); }
+static void finalize_cpRatchetJoint( _ref(cpRatchetJoint)* _this ) { free_ref(_this ,cpShapeFreeT<cpRatchetJoint>); }
 HL_PRIM void HL_NAME(cpRatchetJoint_delete)( _ref(cpRatchetJoint)* _this ) {
-	free_ref(_this );
+	free_ref(_this ,cpShapeFreeT<cpRatchetJoint>);
 }
 DEFINE_PRIM(_VOID, cpRatchetJoint_delete, _IDL);
-static void finalize_cpRotaryLimitJoint( _ref(cpRotaryLimitJoint)* _this ) { free_ref(_this ); }
+static void finalize_cpRotaryLimitJoint( _ref(cpRotaryLimitJoint)* _this ) { free_ref(_this ,cpShapeFreeT<cpRotaryLimitJoint>); }
 HL_PRIM void HL_NAME(cpRotaryLimitJoint_delete)( _ref(cpRotaryLimitJoint)* _this ) {
-	free_ref(_this );
+	free_ref(_this ,cpShapeFreeT<cpRotaryLimitJoint>);
 }
 DEFINE_PRIM(_VOID, cpRotaryLimitJoint_delete, _IDL);
-static void finalize_SlideJoint( _ref(cpSlideJoint)* _this ) { free_ref(_this ); }
+static void finalize_SlideJoint( _ref(cpSlideJoint)* _this ) { free_ref(_this ,cpShapeFreeT<cpSlideJoint>); }
 HL_PRIM void HL_NAME(SlideJoint_delete)( _ref(cpSlideJoint)* _this ) {
-	free_ref(_this );
+	free_ref(_this ,cpShapeFreeT<cpSlideJoint>);
 }
 DEFINE_PRIM(_VOID, SlideJoint_delete, _IDL);
-static void finalize_cpSpaceHash( _ref(cpSpaceHash)* _this ) { free_ref(_this ); }
+static void finalize_cpSpaceHash( _ref(cpSpaceHash)* _this ) { free_ref(_this ,cpSpatialIndexFreeT<cpSpaceHash>); }
 HL_PRIM void HL_NAME(cpSpaceHash_delete)( _ref(cpSpaceHash)* _this ) {
-	free_ref(_this );
+	free_ref(_this ,cpSpatialIndexFreeT<cpSpaceHash>);
 }
 DEFINE_PRIM(_VOID, cpSpaceHash_delete, _IDL);
-static void finalize_cpBBTree( _ref(cpBBTree)* _this ) { free_ref(_this ); }
+static void finalize_cpBBTree( _ref(cpBBTree)* _this ) { free_ref(_this ,cpSpatialIndexFreeT<cpBBTree>); }
 HL_PRIM void HL_NAME(cpBBTree_delete)( _ref(cpBBTree)* _this ) {
-	free_ref(_this );
+	free_ref(_this ,cpSpatialIndexFreeT<cpBBTree>);
 }
 DEFINE_PRIM(_VOID, cpBBTree_delete, _IDL);
 static void finalize_SpatialIndex( _ref(cpSpatialIndex)* _this ) { free_ref(_this ,cpSpatialIndexFree); }
@@ -1425,10 +1428,10 @@ HL_PRIM void HL_NAME(Shape_cpShapeDestroy0)(_ref(cpShape)* _this) {
 }
 DEFINE_PRIM(_VOID, Shape_cpShapeDestroy0, _IDL);
 
-HL_PRIM void HL_NAME(Shape_cpShapeFree0)(_ref(cpShape)* _this) {
+HL_PRIM void HL_NAME(Shape_free0)(_ref(cpShape)* _this) {
 	(cpShapeFree( _unref(_this) ));
 }
-DEFINE_PRIM(_VOID, Shape_cpShapeFree0, _IDL);
+DEFINE_PRIM(_VOID, Shape_free0, _IDL);
 
 HL_PRIM _ref(cpBB)* HL_NAME(Shape_cpShapeCacheBB0)(_ref(cpShape)* _this) {
 	return alloc_ref(new cpBB((cpShapeCacheBB( _unref(_this) ))),cpBB);
@@ -2055,13 +2058,13 @@ HL_PRIM unsigned char HL_NAME(cpDampedRotarySpring_cpConstraintIsDampedRotarySpr
 }
 DEFINE_PRIM(_I8, cpDampedRotarySpring_cpConstraintIsDampedRotarySpring1, _IDL);
 
-HL_PRIM _ref(cpDampedRotarySpring)* HL_NAME(cpDampedRotarySpring_cpDampedRotarySpringAlloc0)() {
-	return alloc_ref((cpDampedRotarySpringAlloc()),cpDampedRotarySpring);
+HL_PRIM HL_CONST _ref(cpDampedRotarySpring)* HL_NAME(cpDampedRotarySpring_cpDampedRotarySpringAlloc0)() {
+	return alloc_ref_const((cpDampedRotarySpringAlloc()),cpDampedRotarySpring);
 }
 DEFINE_PRIM(_IDL, cpDampedRotarySpring_cpDampedRotarySpringAlloc0,);
 
-HL_PRIM _ref(cpDampedRotarySpring)* HL_NAME(cpDampedRotarySpring_cpDampedRotarySpringInit6)(_ref(cpDampedRotarySpring)* joint, _ref(cpBody)* a, _ref(cpBody)* b, double restAngle, double stiffness, double damping) {
-	return alloc_ref((cpDampedRotarySpringInit(_unref(joint), _unref(a), _unref(b), restAngle, stiffness, damping)),cpDampedRotarySpring);
+HL_PRIM HL_CONST _ref(cpDampedRotarySpring)* HL_NAME(cpDampedRotarySpring_cpDampedRotarySpringInit6)(_ref(cpDampedRotarySpring)* joint, _ref(cpBody)* a, _ref(cpBody)* b, double restAngle, double stiffness, double damping) {
+	return alloc_ref_const((cpDampedRotarySpringInit(_unref(joint), _unref(a), _unref(b), restAngle, stiffness, damping)),cpDampedRotarySpring);
 }
 DEFINE_PRIM(_IDL, cpDampedRotarySpring_cpDampedRotarySpringInit6, _IDL _IDL _IDL _F64 _F64 _F64);
 
@@ -2290,30 +2293,30 @@ HL_PRIM void HL_NAME(cpGrooveJoint_cpGrooveJointSetAnchorB2)(_ref(cpConstraint)*
 }
 DEFINE_PRIM(_VOID, cpGrooveJoint_cpGrooveJointSetAnchorB2, _IDL _IDL);
 
-HL_PRIM _ref(cpSpace)* HL_NAME(cpHastySpace_cpHastySpaceNew0)() {
+HL_PRIM _ref(cpSpace)* HL_NAME(cpHastySpace_makeNew0)() {
 	return alloc_ref((cpHastySpaceNew()),Space);
 }
-DEFINE_PRIM(_IDL, cpHastySpace_cpHastySpaceNew0,);
+DEFINE_PRIM(_IDL, cpHastySpace_makeNew0,);
 
-HL_PRIM void HL_NAME(cpHastySpace_cpHastySpaceFree1)(_ref(cpSpace)* space) {
+HL_PRIM void HL_NAME(cpHastySpace_free1)(_ref(cpSpace)* space) {
 	(cpHastySpaceFree(_unref(space)));
 }
-DEFINE_PRIM(_VOID, cpHastySpace_cpHastySpaceFree1, _IDL);
+DEFINE_PRIM(_VOID, cpHastySpace_free1, _IDL);
 
-HL_PRIM void HL_NAME(cpHastySpace_cpHastySpaceSetThreads2)(_ref(cpSpace)* space, unsigned int threads) {
+HL_PRIM void HL_NAME(cpHastySpace_setThreads2)(_ref(cpSpace)* space, unsigned int threads) {
 	(cpHastySpaceSetThreads(_unref(space), threads));
 }
-DEFINE_PRIM(_VOID, cpHastySpace_cpHastySpaceSetThreads2, _IDL _I32);
+DEFINE_PRIM(_VOID, cpHastySpace_setThreads2, _IDL _I32);
 
-HL_PRIM unsigned int HL_NAME(cpHastySpace_cpHastySpaceGetThreads1)(_ref(cpSpace)* space) {
+HL_PRIM unsigned int HL_NAME(cpHastySpace_getThreads1)(_ref(cpSpace)* space) {
 	return (cpHastySpaceGetThreads(_unref(space)));
 }
-DEFINE_PRIM(_I32, cpHastySpace_cpHastySpaceGetThreads1, _IDL);
+DEFINE_PRIM(_I32, cpHastySpace_getThreads1, _IDL);
 
-HL_PRIM void HL_NAME(cpHastySpace_cpHastySpaceStep2)(_ref(cpSpace)* space, double dt) {
+HL_PRIM void HL_NAME(cpHastySpace_step2)(_ref(cpSpace)* space, double dt) {
 	(cpHastySpaceStep(_unref(space), dt));
 }
-DEFINE_PRIM(_VOID, cpHastySpace_cpHastySpaceStep2, _IDL _F64);
+DEFINE_PRIM(_VOID, cpHastySpace_step2, _IDL _F64);
 
 HL_PRIM unsigned char HL_NAME(cpPinJoint_cpConstraintIsPinJoint1)(_ref(cpConstraint)* constraint) {
 	return (cpConstraintIsPinJoint(_unref(constraint)));
@@ -2410,10 +2413,10 @@ HL_PRIM void HL_NAME(cpPivotJoint_cpPivotJointSetAnchorB2)(_ref(cpConstraint)* c
 }
 DEFINE_PRIM(_VOID, cpPivotJoint_cpPivotJointSetAnchorB2, _IDL _IDL);
 
-HL_PRIM void HL_NAME(cpPolyline_cpPolylineFree1)(_ref(cpPolyline)* line) {
+HL_PRIM void HL_NAME(cpPolyline_free1)(_ref(cpPolyline)* line) {
 	(cpPolylineFree(_unref(line)));
 }
-DEFINE_PRIM(_VOID, cpPolyline_cpPolylineFree1, _IDL);
+DEFINE_PRIM(_VOID, cpPolyline_free1, _IDL);
 
 HL_PRIM unsigned char HL_NAME(cpPolyline_cpPolylineIsClosed1)(_ref(cpPolyline)* line) {
 	return (cpPolylineIsClosed(_unref(line)));
@@ -2680,20 +2683,20 @@ HL_PRIM void HL_NAME(SlideJoint_cpSlideJointSetMax2)(_ref(cpConstraint)* constra
 }
 DEFINE_PRIM(_VOID, SlideJoint_cpSlideJointSetMax2, _IDL _F64);
 
-HL_PRIM _ref(cpSpaceHash)* HL_NAME(SpatialIndex_cpSpaceHashAlloc0)() {
+HL_PRIM _ref(cpSpaceHash)* HL_NAME(cpSpaceHash_alloc0)() {
 	return alloc_ref((cpSpaceHashAlloc()),cpSpaceHash);
 }
-DEFINE_PRIM(_IDL, SpatialIndex_cpSpaceHashAlloc0,);
+DEFINE_PRIM(_IDL, cpSpaceHash_alloc0,);
+
+HL_PRIM _ref(cpBBTree)* HL_NAME(cpBBTree_alloc0)() {
+	return alloc_ref((cpBBTreeAlloc()),cpBBTree);
+}
+DEFINE_PRIM(_IDL, cpBBTree_alloc0,);
 
 HL_PRIM void HL_NAME(SpatialIndex_cpSpaceHashResize3)(_ref(cpSpaceHash)* hash, double celldim, int numcells) {
 	(cpSpaceHashResize(_unref(hash), celldim, numcells));
 }
 DEFINE_PRIM(_VOID, SpatialIndex_cpSpaceHashResize3, _IDL _F64 _I32);
-
-HL_PRIM _ref(cpBBTree)* HL_NAME(SpatialIndex_cpBBTreeAlloc0)() {
-	return alloc_ref((cpBBTreeAlloc()),cpBBTree);
-}
-DEFINE_PRIM(_IDL, SpatialIndex_cpBBTreeAlloc0,);
 
 HL_PRIM void HL_NAME(SpatialIndex_cpBBTreeOptimize0)(_ref(cpSpatialIndex)* _this) {
 	(cpBBTreeOptimize( _unref(_this) ));

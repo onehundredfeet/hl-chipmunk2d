@@ -67,7 +67,19 @@ cpShape *cpSpaceSegmentQueryFirstNoFilter(cpSpace *space, cpVect start, cpVect e
 	cpShapeFilter filter = cpShapeFilterNew(0, 0, 0);
 	return cpSpaceSegmentQueryFirst(space, start, end, radius, filter, out);
 };
+template <typename T>
+inline void cpConstraintFreeT( T*ptr ) {
+	cpConstraintFree((cpConstraint *)ptr);
+}
+template <typename T>
+inline void cpShapeFreeT( T*ptr ) {
+	cpShapeFree((cpShape*)ptr);
+}
 
+template <typename T>
+inline void cpSpatialIndexFreeT( T*ptr ) {
+	cpSpatialIndexFree((cpSpatialIndex*)ptr);
+}
 ";
 	
 	public static function generateCpp() {	
