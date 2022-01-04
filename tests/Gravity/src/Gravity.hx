@@ -1,5 +1,6 @@
 // An interactive example where you can mouse click something to happen (UI)
 import hxd.Event;
+import chipmunk.Vector;
 
 class Gravity extends hxd.App{
 
@@ -19,16 +20,12 @@ class Gravity extends hxd.App{
 	public function makeBall(x : Float, y : Float, radius : Float) : chipmunk.Native.Shape{
 		var body = chipmunk.Native.Body.makeNew(10.0, Math.POSITIVE_INFINITY);
 
-		var pos = new chipmunk.Native.Vect();
-		pos.x = x;
-		pos.y = y;
+		var pos = chipmunk.Native.Vect.cpv( x, y);
 		body.setPosition(pos);
 		
 		cpBodyList.push(body);
 
-		var cpvzero = new chipmunk.Native.Vect();
-		cpvzero.x = 0;
-		cpvzero.y = 0;
+		var cpvzero = chipmunk.Native.Vect.cpv( 0., 0.);
 		var shape = chipmunk.Native.CircleShape.makeNew(body, radius, cpvzero);
 		shape.setElasticity(0.0);
 		shape.setFriction(0.0);
@@ -59,9 +56,7 @@ class Gravity extends hxd.App{
 			if (event.kind == hxd.EventKind.EMove){
 				if (mouseDown == false) return;
 
-				var pos = new chipmunk.Native.Vect();
-				pos.x = event.relX;
-				pos.y = event.relY;
+				var pos = chipmunk.Native.Vect.cpv( event.relX, event.relY);
 				cpBodyList[cpBodyList.length - 1].setPosition(pos);
 			}
 		}
@@ -69,26 +64,20 @@ class Gravity extends hxd.App{
 
 		space = chipmunk.Native.Space.makeNew();
 		space.setIterations(1);
-		var gravity = new chipmunk.Native.Vect();
-		gravity.x = 0;
-		gravity.y = 10;
+		var gravity = chipmunk.Native.Vect.cpv( 0., 10.);
 		space.setGravity(gravity);
 
 		// Create segments around the edge of the screen.
 		var staticBody = space.getStaticBody();
 		//var staticBody = chipmunk.Native.Body.makeNew(0.0, 0.0);
 		
-		var floorPos = new chipmunk.Native.Vect();
+		var floorPos = chipmunk.Native.Vect.cpv(0., 0.);
 		// floorPos.x = 200;
 		// floorPos.y = 400;
 		// staticBody.cpBodySetPosition(floorPos);
 
-		var floorBegin = new chipmunk.Native.Vect();
-		floorBegin.x = 1;
-		floorBegin.y = 400;
-		var floorEnd = new chipmunk.Native.Vect();
-		floorEnd.x = 1000;
-		floorEnd.y = 400;
+		var floorBegin = chipmunk.Native.Vect.cpv(1., 400.);
+		var floorEnd = chipmunk.Native.Vect.cpv(1000., 400.);
 		var floorSegment = chipmunk.Native.SegmentShape.newSegmentShape(staticBody, floorBegin, floorEnd, 1.0);
 		floorSegment.setElasticity(1.0);
 		floorSegment.setFriction(1.0);
@@ -131,7 +120,7 @@ class Gravity extends hxd.App{
 	function syncHeapsAndPhysics() {
 		// Sync chipmunk physical objects with heaps GUI
 		for (i in 0...cpShapesList.length){
-			var pos = cpBodyList[i].getPosition();
+			var pos : chipmunk.Vector = cpBodyList[i].getPosition();
 			heapsObjects[i].x = pos.x;
 			heapsObjects[i].y = pos.y;
 		}

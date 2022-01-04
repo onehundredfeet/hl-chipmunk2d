@@ -80,6 +80,51 @@ template <typename T>
 inline void cpSpatialIndexFreeT( T*ptr ) {
 	cpSpatialIndexFree((cpSpatialIndex*)ptr);
 }
+
+
+union Flexible64 {
+	inline Flexible64(void *ip) {
+		ptr = ip;
+	}
+	inline Flexible64(long long x) {
+		i = x;
+	}
+	inline Flexible64(double dd) {
+		d = dd;
+	}
+	inline Flexible64( float fa, float fb) {
+		f.a = fa;
+		f.b = fb;
+	}
+
+	inline Flexible64( const cpVect &p) {
+		f.a = (float)p.x;
+		f.b = (float)p.y;
+	}
+
+	inline cpVect ascpVec() {
+		cpVect p;
+		p.x = f.a;
+		p.y = f.b;
+		return p;
+	}
+	long long i;
+	double d;
+	void *ptr; // only applicable on 64 bit systems, need to check
+	struct {
+		float a;
+		float b;
+	} f;
+};
+
+inline void *cpVect2Ptr(const cpVect &p) {
+	return Flexible64(p).ptr;
+}
+
+inline cpVect Ptr2cpVect(void *p) {
+	return Flexible64(p).ascpVec();
+}
+
 ";
 	
 	public static function generateCpp() {	
