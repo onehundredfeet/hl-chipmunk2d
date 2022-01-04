@@ -388,6 +388,14 @@ union Flexible64 {
 	} f;
 };
 
+inline cpFloat cpVect_x(const cpVect &p) {
+	return p.x;
+}
+
+inline cpFloat cpVect_y(const cpVect &p) {
+	return p.y;
+}
+
 inline void *cpVect2Ptr(const cpVect &p) {
 	return Flexible64(p).ptr;
 }
@@ -662,6 +670,16 @@ HL_PRIM void HL_NAME(SpatialIndex_delete)( _ref(cpSpatialIndex)* _this ) {
 	free_ref(_this ,cpSpatialIndexFree);
 }
 DEFINE_PRIM(_VOID, SpatialIndex_delete, _IDL);
+HL_PRIM double HL_NAME(Vect_x1)(void* v1) {
+	return (cpVect_x(Ptr2cpVect (v1)));
+}
+DEFINE_PRIM(_F64, Vect_x1, _BYTES);
+
+HL_PRIM double HL_NAME(Vect_y1)(void* v1) {
+	return (cpVect_y(Ptr2cpVect (v1)));
+}
+DEFINE_PRIM(_F64, Vect_y1, _BYTES);
+
 HL_PRIM void* HL_NAME(Vect_cpv2)(double x, double y) {
 	return cpVect2Ptr(cpv(x, y));
 }

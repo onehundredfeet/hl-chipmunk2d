@@ -15,6 +15,9 @@ typedef pVect VoidPtr;
 [Internal="cpVect"]
 interface Vect
 {	
+	[Static, Internal="cpVect_x"] cpFloat x([Const,Get="Ptr2cpVect"] pVect v1);
+	[Static, Internal="cpVect_y"] cpFloat y([Const,Get="Ptr2cpVect"] pVect v1);
+
 	[Static, Get="cpVect2Ptr"] pVect cpv([Const] cpFloat x, [Const] cpFloat y);
 
 	[Static] cpBool cpveql([Const,Get="Ptr2cpVect"] pVect v1, [Const,Get="Ptr2cpVect"] pVect v2);

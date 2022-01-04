@@ -5,10 +5,10 @@ abstract Vector( webidl.Types.VoidPtr ) from webidl.Types.VoidPtr to webidl.Type
     public var x(get,never) : Float;
     public var y(get,never) : Float;
     
-    function get_x() : Float {
-        return 0.;
+    inline function get_x() : Float {
+        return chipmunk.Native.Vect.x(this);
     }
-    function get_y() : Float {
-        return 0.;
+    inline function get_y() : Float {
+        return chipmunk.Native.Vect.y(this);
     }
 }

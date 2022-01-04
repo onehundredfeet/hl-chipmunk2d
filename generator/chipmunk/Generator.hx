@@ -117,6 +117,14 @@ union Flexible64 {
 	} f;
 };
 
+inline cpFloat cpVect_x(const cpVect &p) {
+	return p.x;
+}
+
+inline cpFloat cpVect_y(const cpVect &p) {
+	return p.y;
+}
+
 inline void *cpVect2Ptr(const cpVect &p) {
 	return Flexible64(p).ptr;
 }
